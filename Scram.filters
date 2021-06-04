@@ -24,7 +24,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LearnOpenGL.cpp">
+    <ClCompile Include="Scram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
@@ -94,6 +94,5 @@
     <None Include="shaders\postProcessor.frag">
       <Filter>shaders\barrelDistort</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

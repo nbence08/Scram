@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{898dc4d3-637c-493b-bcb9-ac27da6e7073}</ProjectGuid>
-    <RootNamespace>LearnOpenGL</RootNamespace>
+    <RootNamespace>Scram</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Scram</ProjectName>
   </PropertyGroup>
@@ -154,7 +154,7 @@
     <ClCompile Include="BasicRenderer.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Framebuffer.cpp" />
-    <ClCompile Include="LearnOpenGL.cpp" />
+    <ClCompile Include="Scram.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="UniformProvider.cpp" />
@@ -173,7 +173,6 @@
     <ClInclude Include="UniformProvider.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="shaders\postProcessor.frag" />
     <None Include="shaders\postProcessor.vert" />
     <None Include="shaders\basic.frag" />
