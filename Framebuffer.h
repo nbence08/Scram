@@ -2,10 +2,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <memory>
-#include "ConstantHolder.h"
 #include <iostream>
 
-class Texture{};
+#include "ConstantHolder.h"
+#include "ScreenSize.h"
+
+class Texture{
+public:
+	unsigned int id;
+};
 
 class Texture2D {
 public:
@@ -29,6 +34,9 @@ public:
 
 class Framebuffer{
 private:
+	static std::shared_ptr<Framebuffer> defaultFbo;
+	static Framebuffer* boundFramebuffer;
+
 	unsigned int id;
 
 	Texture2D colorBuffer;
@@ -43,8 +51,6 @@ private:
 	int frameWidth;
 	int frameHeight;
 
-	static std::shared_ptr<Framebuffer> defaultFbo;
-	static Framebuffer* boundFramebuffer;
 
 	void hollowBind() {
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
@@ -55,14 +61,44 @@ private:
 	}
 
 public:
-	Framebuffer(int frameWidth = 800, int frameHeight = 800):frameWidth(frameWidth), frameHeight(frameHeight) {
-		unsigned int fbo;
+
+	Framebuffer(unsigned int id) :id(id) {
+		colorBuffer = { 0 };
+		multisampledColorbuffer = { 0 };
+		depthBuffer = { 0 };
+		stencilBuffer = { 0 };
+		multisampledDepthStencilBuffer = { 0 };
+		frameWidth = 0;
+		frameHeight = 0;		
+		finished = false;
+	}
+
+	Framebuffer(ScreenSize size = {800, 800}):frameWidth(size.width), frameHeight(size.height) {
 		glGenFramebuffers(1, &id);
 		finished = false;
 
-
+		colorBuffer = {0};
+		multisampledColorbuffer = {0};
+		depthBuffer = {0};
+		stencilBuffer = {0};
+		multisampledDepthStencilBuffer = {0};
 	}
-	Framebuffer(unsigned int id) :id(id) {}
+
+	Framebuffer(Framebuffer& other) {
+		this->id = other.id;
+
+		this->colorBuffer = other.colorBuffer;
+		this->multisampledColorbuffer = other.multisampledColorbuffer;
+
+		this->depthBuffer = other.depthBuffer;
+		this->stencilBuffer = other.stencilBuffer;
+		this->multisampledDepthStencilBuffer = other.multisampledDepthStencilBuffer;
+
+		this->finished = other.finished;
+
+		this->frameWidth = other.frameWidth;
+		this->frameHeight = other.frameHeight;
+	}
 
 	Framebuffer& setSize(int frameWidth, int frameHeight) {
 		this->frameWidth = frameWidth;
@@ -113,5 +149,5 @@ public:
 	}
 };
 
-std::shared_ptr<Framebuffer> Framebuffer::defaultFbo = std::make_shared<Framebuffer>(0);
+std::shared_ptr<Framebuffer> Framebuffer::defaultFbo = std::shared_ptr<Framebuffer>(new Framebuffer(0));
 Framebuffer* Framebuffer::boundFramebuffer = Framebuffer::defaultFbo.get();
