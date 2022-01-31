@@ -18,10 +18,106 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="components\CTMaterial.cpp" />
+    <ClCompile Include="components\DirectionalLight.cpp" />
+    <ClCompile Include="components\Mesh.cpp" />
+    <ClCompile Include="components\Model.cpp" />
+    <ClCompile Include="components\PerspectiveCamera.cpp" />
+    <ClCompile Include="components\PointLight.cpp" />
+    <ClCompile Include="components\SpotLight.cpp" />
+    <ClCompile Include="core\math\Matrix3.cpp" />
+    <ClCompile Include="core\math\Matrix4.cpp" />
+    <ClCompile Include="core\math\Quaternion.cpp" />
+    <ClCompile Include="core\math\Vector2.cpp" />
+    <ClCompile Include="core\math\Vector3.cpp" />
+    <ClCompile Include="core\math\Vector4.cpp" />
+    <ClCompile Include="core\OpenGL\Buffer.cpp" />
+    <ClCompile Include="core\OpenGL\Framebuffer.cpp" />
+    <ClCompile Include="core\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="core\OpenGL\ShaderProgram.cpp" />
+    <ClCompile Include="core\OpenGL\Texture2D.cpp" />
+    <ClCompile Include="core\OpenGL\TextureUnit.cpp" />
+    <ClCompile Include="core\OpenGL\UniformProvider.cpp" />
+    <ClCompile Include="core\OpenGL\VertexArray.cpp" />
+    <ClCompile Include="core\OpenGL\VertexAttribManager.cpp" />
+    <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="rendering\IncRenderer.cpp" />
+    <ClCompile Include="rendering\Scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="components\CTMaterial.h" />
+    <ClInclude Include="components\DirectionalLight.h" />
+    <ClInclude Include="components\Mesh.h" />
+    <ClInclude Include="components\Model.h" />
+    <ClInclude Include="components\PerspectiveCamera.h" />
+    <ClInclude Include="components\PointLight.h" />
+    <ClInclude Include="components\SpotLight.h" />
+    <ClInclude Include="core\CubeData.hpp" />
+    <ClInclude Include="core\Global_Props.hpp" />
+    <ClInclude Include="core\math\linear_algebra.hpp" />
+    <ClInclude Include="core\math\Math_Functions.hpp" />
+    <ClInclude Include="core\math\Matrix3.h" />
+    <ClInclude Include="core\math\Matrix4.h" />
+    <ClInclude Include="core\math\Quaternion.h" />
+    <ClInclude Include="core\math\Vector2.h" />
+    <ClInclude Include="core\math\Vector3.h" />
+    <ClInclude Include="core\math\Vector4.h" />
+    <ClInclude Include="core\OpenGL\Buffer.h" />
+    <ClInclude Include="core\OpenGL\Framebuffer.h" />
+    <ClInclude Include="core\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="core\OpenGL\ShaderProgram.h" />
+    <ClInclude Include="core\OpenGL\Texture2D.h" />
+    <ClInclude Include="core\OpenGL\TextureUnit.h" />
+    <ClInclude Include="core\OpenGL\UniformProvider.h" />
+    <ClInclude Include="core\OpenGL\VertexArray.h" />
+    <ClInclude Include="core\OpenGL\VertexAttribManager.h" />
+    <ClInclude Include="core\Preprocess_Definitions.h" />
+    <ClInclude Include="core\Struct_Definitions.hpp" />
+    <ClInclude Include="io\IO.h" />
+    <ClInclude Include="rendering\IncRenderer.h" />
+    <ClInclude Include="rendering\Scene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\models\box.blend">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\box.blend1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\box.glb">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\bsg_pegasus.glb">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\bsg_pegasus.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\incremental.frag" />
+    <None Include="shaders\incremental.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="resources\models\BSG_PEGASUS.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\textures\tex.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Image>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{898dc4d3-637c-493b-bcb9-ac27da6e7073}</ProjectGuid>
+    <ProjectGuid>{bc7adb8a-2306-44c0-8f92-810e87c3d6d2}</ProjectGuid>
     <RootNamespace>Scram</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Scram</ProjectName>
@@ -79,23 +175,29 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)include\;$(IncludePath)</IncludePath>
+    <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)include\;$(IncludePath)</IncludePath>
+    <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;USE_FLOAT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;assimp.lib;opengl32.lib;glfw3.lib;glew32.lib;assimp.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,22 +214,23 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;assimp.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_FLOAT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;assimp.lib;opengl32.lib;opengl32.lib;glew32.lib;glfw3.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,48 +239,19 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;assimp.lib;opengl32.lib;opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BasicRenderer.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Framebuffer.cpp" />
-    <ClCompile Include="Scram.cpp" />
-    <ClCompile Include="Window.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="UniformProvider.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BasicRenderer.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="ConstantHolder.h" />
-    <ClInclude Include="Framebuffer.h" />
-    <ClInclude Include="OpenGlOperations.hpp" />
-    <ClInclude Include="ScreenSize.h" />
-    <ClInclude Include="VertexBufferObject.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="UniformProvider.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\postProcessor.frag" />
-    <None Include="shaders\postProcessor.vert" />
-    <None Include="shaders\basic.frag" />
-    <None Include="shaders\basic.vert" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
