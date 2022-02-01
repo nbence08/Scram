@@ -40,8 +40,12 @@ public:
 
 	int getTextureUnitNum();
 	void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);
+	static void bindToNewTextureUnit(std::shared_ptr<Texture2D> self);
+	inline std::shared_ptr<TextureUnit> getTextureUnit(){ return textureUnit.lock(); }
+	void unsetTextureUnit();
 	unsigned int getId() { return id; }
 
 	~Texture2D();
+	bool isBoundToTextureUnit();
 };
 
