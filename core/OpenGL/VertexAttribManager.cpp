@@ -8,7 +8,7 @@ VertexAttribManager::VertexAttribManager() {
 
 void VertexAttribManager::addReal(int size) {
 	if (size > 4 || size < 1) {
-		throw std::runtime_error("Attrib size must be 1,2,3 or 4!");
+		throw std::invalid_argument("Attrib size must be 1,2,3 or 4!");
 	}
 	attributed = false;
 
