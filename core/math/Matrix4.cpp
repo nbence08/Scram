@@ -52,7 +52,7 @@ void Matrix4::operator *=(const Matrix4& other) {
 	matrix[0].x = dot(r1, c1); matrix[1].x = dot(r1, c2); matrix[2].x = dot(r1, c3); matrix[3].x = dot(r1, c4);
 	matrix[0].y = dot(r2, c1); matrix[1].y = dot(r2, c2); matrix[2].y = dot(r2, c3); matrix[3].y = dot(r2, c4);
 	matrix[0].z = dot(r3, c1); matrix[1].z = dot(r3, c2); matrix[2].z = dot(r3, c3); matrix[3].z = dot(r3, c4);
-	matrix[0].w = dot(r4, c1); matrix[1].w = dot(r4, c2); matrix[2].w = dot(r3, c4); matrix[3].w = dot(r4, c4);
+	matrix[0].w = dot(r4, c1); matrix[1].w = dot(r4, c2); matrix[2].w = dot(r4, c3); matrix[3].w = dot(r4, c4);
 }
 
 Vector4 Matrix4::operator*(const Vector4& vec) {
