@@ -1,14 +1,24 @@
 #include "TextureUnit.h"
 
 void TextureUnit::hollowBind() {
-	if (activeTexUnit == unitNum) return;
+	if(bindStack->size() == 0 && activeTexUnit == unitNum) return;
+	bindStack->push(unitNum);
 	glActiveTexture(GL_TEXTURE0 + unitNum);
 	
 }
 
 void TextureUnit::hollowUnbind() {
-	if (activeTexUnit == unitNum) return;
-	glActiveTexture(GL_TEXTURE0);
+	if(bindStack->size() == 0 && activeTexUnit == unitNum) return;
+	if (bindStack->top() != unitNum){
+		throw std::logic_error("Trying to hollow unbind, but other unit is bound.");
+	}
+	bindStack->pop();
+	if (bindStack->size() == 0) {
+		glActiveTexture(GL_TEXTURE0 + activeTexUnit);
+	}
+	else {
+		glActiveTexture(GL_TEXTURE0 + bindStack->top());
+	}
 }
 
 void TextureUnit::initTexture(const Texture2D& tex) {
@@ -20,7 +30,9 @@ void TextureUnit::initTexture(const Texture2D& tex) {
 
 }
 
-TextureUnit::TextureUnit(int unitNum):unitNum(unitNum), boundTexture(nullptr) { }
+TextureUnit::TextureUnit(int unitNum):unitNum(unitNum), boundTexture(nullptr) {
+	deleted = false;
+}
 
 std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 	int minNum = 0;
@@ -40,7 +52,7 @@ std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 }
 
 TextureUnit::~TextureUnit() {
-	if(boundTexture.get() != nullptr) unbindTexture();
+	if (boundTexture.get() == nullptr) return;
 }
 
 void TextureUnit::bind() {
@@ -54,11 +66,14 @@ void TextureUnit::unbind() {
 	glActiveTexture(GL_TEXTURE0);
 }
 
+#include <iostream>
+
 void TextureUnit::bindTexture(std::shared_ptr<Texture2D> tex) {
 	hollowBind();
 
 	if (boundTexture.get() != nullptr) {
-		boundTexture->setTextureUnit(nullptr);
+		if(tex == boundTexture) return;
+		boundTexture->unsetTextureUnit();
 	}
 	boundTexture = tex;
 
@@ -85,8 +100,7 @@ void TextureUnit::unbindTexture() {
 	hollowBind();
 
 	glBindTexture(boundTexture->type, 0);
-
-	boundTexture->textureUnit.reset();
+	boundTexture.reset();
 
 	hollowUnbind();
 }

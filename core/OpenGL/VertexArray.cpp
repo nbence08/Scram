@@ -103,7 +103,14 @@ void VertexArray::attributeFormat() {
 	hollowUnbind();
 }
 
-void VertexArray::attributeBinding(){
+void VertexArray::attributeBinding() {
+	/*hollowBind();
+	vam->attributePointer();
+	hollowUnbind();*/
+}
+
+
+void VertexArray::attributePointer(){
 	hollowBind();
 	vam->attributePointer();
 	hollowUnbind();

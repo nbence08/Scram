@@ -49,7 +49,7 @@ int main() {
 	std::shared_ptr<Model> model = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
 	std::shared_ptr<Model> model2 = IO::importModelFromFile("resources/models/box.glb");
 	
-	model->model = math::translate(0.0f, 0.0, 0.0) * math::rotate(PI / 2.0, Vector3(1.0, 0.0, 0.0)) * math::scale(0.8f, 0.8f, 0.8f);
+	model->model = math::translate(0.0, 0.0, 0.0) * math::rotate(PI / 2.0, Vector3(1.0, 0.0, 0.0)) * math::scale(0.5f, 0.5f, 0.5f);
 	model2->model = math::translate(Vector3(0.0f, 40.0f, 0.0f));
 
 	Scene scene;
@@ -57,7 +57,7 @@ int main() {
 
 	DirectionalLight sun;
 	sun.direction = Vector3(1.0f, 1.0f, 1.0f);
-	sun.intensity = Vector3(10.0f, 8.0f, 7.0f);
+	sun.intensity = Vector3(10.0f, 10.0f, 9.0f);
 	scene.getDirLights().push_back(sun);
 
 	PointLight intense;

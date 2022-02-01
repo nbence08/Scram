@@ -1,5 +1,4 @@
 #include "PerspectiveCamera.h"
-#include "core/math/Math_Functions.hpp"
 
 PerspectiveCamera::PerspectiveCamera() {
 	position = Vector4(0.0f, 0.0f, 2.0f, 1.0f);
@@ -24,26 +23,8 @@ PerspectiveCamera::PerspectiveCamera(const Vector4& position,
 {}
 
 Matrix4 PerspectiveCamera::view() {
-	//UVN coordinate system camera matrix
-	Vector3 N(forward);
-	Vector3 V(up);
-	Vector3 U = cross(N, V);	//right
-
-	N.normalize();
-	V.normalize();
-	U.normalize();
-
 	Vector3 p = math::homogenDivide(position);
-
-	auto tx = dot(U, position);
-	auto ty = dot(V, position);
-	auto tz = dot(N, position);
-
-	return Matrix4(
-		U.x, U.y, U.z, -tx,
-		V.x, V.y, V.z, -ty,
-		N.x, N.y, N.z, -tz,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return math::getLookAt(forward , up, p);
 }
 
 Matrix4 PerspectiveCamera::perspective() {

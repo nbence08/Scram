@@ -1,12 +1,15 @@
-#version 440
+﻿#version 440
 
 precision highp float;
 
 const float PI = 3.141592653589793238;
 
+//TODO: add has_shadow_map bool
 struct DirectionalLight{
 	vec3 intensity;
 	vec3 direction;
+	sampler2D shadowMap;
+	mat4 lightMatrix;
 };
 
 struct PointLight{
@@ -39,11 +42,6 @@ struct Material{
 
 out vec4 color;
 
-in vec3 normal;
-in vec3 fragPos;
-in vec2 texC;
-
-
 uniform vec3 cameraPos;
 
 const int pointLightsLen = 1;
@@ -52,6 +50,12 @@ const int dirLightsLen = 1;
 uniform DirectionalLight dirLights[dirLightsLen];
 const int spotLightsLen = 1;
 uniform SpotLight spotLights[spotLightsLen];
+
+in vec3 normal;
+in vec3 fragPos;
+in vec2 texC;
+in vec4 lightSpacePos;
+
 
 //default material by definition is 0
 uniform Material materials[1];
@@ -125,19 +129,28 @@ vec3 ctPointLights(in vec4 texColor){
 	return  accu;
 }
 
+bool isDirOccluded(int i){
+	vec3 lightProj = lightSpacePos.xyz / lightSpacePos.w;
+	lightProj = 0.5*lightProj + vec3(0.5f);
+
+	return (texture(dirLights[i].shadowMap, lightProj.xy).r < lightProj.z-0.01);
+}
+
 vec3 ctDirLights(in vec4 texColor){
 	vec3 accu = vec3(0.0, 0.0, 0.0);
-	
+
 	for(int i = 0; i < dirLightsLen; i++){
-		DirectionalLight light = dirLights[i];
+		if(isDirOccluded(i)){
+			continue;
+		}
 
 		vec3 L, V, H, F0;
-		L = normalize(light.direction);
+		L = normalize(dirLights[i].direction);
 		V = normalize(cameraPos - fragPos);
 		H = normalize(L+V);
 		F0 = mix(vec3(0.04), texColor.xyz, materials[0].metalness);
 
-		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, light.intensity);
+		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, dirLights[i].intensity);
 	}
 	return  accu;
 }
@@ -200,9 +213,6 @@ void main(){
 	}
 
 	float tcLength = length(texColor.xyz);
-	/*if(tcLength > 1.0){
-		texColor = vec4(normalize(texColor.xyz), 1.0); 
-	}*/
 	
-	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/2.2)), 1.0);	
+	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/2.2)), 1.0);
 }

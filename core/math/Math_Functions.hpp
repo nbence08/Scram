@@ -3,6 +3,8 @@
 #include "linear_algebra.hpp"
 #include "Quaternion.h"
 
+
+
 namespace math {
 	static inline double toRadians(double degree) {
 		return degree *= (PI/180.0);
@@ -53,7 +55,28 @@ namespace math {
 					   0, 0, 0, value);
 	}
 
-	static Matrix4 orthogonal(real_t l, real_t r, real_t t, real_t b, real_t n, real_t f) {
+	static Matrix4 getLookAt(const Vector3& forward, const Vector3& up, const Vector3& pos) {
+		//UVN coordinate system
+		Vector3 N(forward);
+		Vector3 V(up);
+		Vector3 U = cross(N, V);	//right
+
+		N.normalize();
+		V.normalize();
+		U.normalize();
+
+		auto tx = dot(U, pos);
+		auto ty = dot(V, pos);
+		auto tz = dot(N, pos);
+
+		return Matrix4(
+			U.x, U.y, U.z, -tx,
+			V.x, V.y, V.z, -ty,
+			N.x, N.y, N.z, -tz,
+			0.0f, 0.0f, 0.0f, 1.0f);
+	}
+
+	static Matrix4 orthographic(real_t l, real_t r, real_t t, real_t b, real_t n, real_t f) {
 		real_t r_l = r-l;
 		real_t t_b = t-b;
 		real_t f_n = f-n;

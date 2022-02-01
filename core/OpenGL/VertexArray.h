@@ -74,6 +74,7 @@ public:
 	void addReal(int size);
 	void attributeFormat();
 	void attributeBinding();
+	void attributePointer();
 
 };
 

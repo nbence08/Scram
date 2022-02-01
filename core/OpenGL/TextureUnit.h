@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <memory>
+#include <stack>
 
 #include "Texture2D.h"
 #include "core/Struct_Definitions.hpp"
@@ -12,6 +13,7 @@ class Texture2D;
 class TextureUnit;
 
 static std::unordered_map<int, std::shared_ptr<TextureUnit>> textureUnits;
+static std::shared_ptr<std::stack<int>> bindStack = std::make_shared<std::stack<int>>();
 static int activeTexUnit = 0;
 
 class TextureUnit{
@@ -28,6 +30,8 @@ private:
 	TextureUnit(int unitNum);
 
 	bool deleted;
+
+	friend class Texture2D;
 public:
 	
 	TextureUnit(const TextureUnit& other) = delete;

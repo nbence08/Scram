@@ -26,7 +26,17 @@ Texture2D::~Texture2D() {
 	}
 }
 
+bool Texture2D::isBoundToTextureUnit() {
+	if(!this->textureUnit.expired()){
+		return this->textureUnit.lock()->boundTexture.get() == this;
+	}
+	else return false;
+}
+
 int Texture2D::getTextureUnitNum() {
+	if (textureUnit.expired()) {
+		throw std::logic_error("No texture unit is set!");
+	}
 	auto texUSh = textureUnit.lock();
 	return texUSh->getUnitNum();
 }
@@ -37,4 +47,13 @@ void Texture2D::setTextureUnit(std::shared_ptr<TextureUnit> texUnit) {
 			texUSh->unbindTexture();
 		}
 	textureUnit = texUnit;
+}
+
+void Texture2D::bindToNewTextureUnit(std::shared_ptr<Texture2D> self){
+	auto texUnit = TextureUnit::getNewInstance();
+	texUnit->bindTexture(self);
+}
+
+void Texture2D::unsetTextureUnit() {
+	textureUnit.reset();
 }

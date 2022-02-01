@@ -15,6 +15,25 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 
+	ShaderProgram(const ShaderProgram&) = delete;
+
+	ShaderProgram& operator=(const ShaderProgram&) = delete;
+
+	ShaderProgram(ShaderProgram&& other) noexcept {
+		*this = std::move(other);
+	}
+
+	ShaderProgram& operator=(ShaderProgram&& other) noexcept {
+		if(this == &other) return *this;
+
+		id = other.id;
+		other.id = 0;
+
+
+		return *this;
+	}
+
+
 	void addFragment(const char** source);
 
 	void addVertex(const char** source);
