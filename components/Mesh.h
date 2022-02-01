@@ -63,7 +63,7 @@ public:
 		vao.addReal(2);
 
 		vbo.bufferData(&vertices.data()[0], sizeof(Vertex) * vertices.size());
-		vao.attributeBinding();
+		vao.attributePointer();
 		vao.unbind();
 	}
 

@@ -18,7 +18,7 @@
 #include "core/Global_Props.hpp"
 
 //incremental renderer
-class IncRenderer{
+class IncRenderer {
 	/*
 	This could can be used for the occasion, when multiple vbos would be used with a single vao, for the renderer
 	It requires some modification, but it could be used in the future
@@ -34,11 +34,23 @@ class IncRenderer{
 	void loadMeshIndices(Mesh& mesh);
 	*/
 
-	ShaderProgram program;
-	UniformProvider* uProv;
-	Framebuffer shadowBuffer;
-
 	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+
+	void setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+
+	void setMeshMaterial(std::shared_ptr<Mesh> mesh);
+
+
+
+	ShaderProgram processProgram;
+	UniformProvider* processUniforms;
+
+	UniformProvider* shadowUniforms;
+	Framebuffer shadowBuffer;
+	ShaderProgram shadowProgram;
+
+	ShaderProgram quadProgram;
+	UniformProvider* quadUniforms;
 
 public:
 	IncRenderer(std::string defaultShaderName = "shaders/incremental");

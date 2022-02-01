@@ -111,6 +111,9 @@
     <ClCompile Include="main\main.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="rendering\Pass.cpp">
+      <Filter>rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\math\linear_algebra.hpp">
@@ -206,6 +209,9 @@
     <ClInclude Include="rendering\Scene.h">
       <Filter>rendering</Filter>
     </ClInclude>
+    <ClInclude Include="rendering\Pass.h">
+      <Filter>rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\incremental.frag">
@@ -228,6 +234,24 @@
     </None>
     <None Include="resources\models\bsg_pegasus.mtl">
       <Filter>resources\models</Filter>
+    </None>
+    <None Include="shaders\preProcess.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\preProcess.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\postProcessor.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\postProcessor.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\quad.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\quad.frag">
+      <Filter>shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
