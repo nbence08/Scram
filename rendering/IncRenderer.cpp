@@ -11,13 +11,13 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 	const char* fragPtr = frag.data();
 	const char* vertPtr = vert.data();
 
-	program.addVertex(&vertPtr);
-	program.addFragment(&fragPtr);
+	processProgram.addVertex(&vertPtr);
+	processProgram.addFragment(&fragPtr);
 
-	program.linkProgram();
-	program.use();
+	processProgram.linkProgram();
+	processProgram.use();
 
-	uProv = &program.getUniformProvider();
+	processUniforms = &processProgram.getUniformProvider();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -26,39 +26,148 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 	glClearDepth(1.0);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	FboCreateInfo shadowInfo;
-	shadowInfo.depthBuffer = true;
+
+
+	// to be moved away from here
+	std::string prepVert = IO::readFile("shaders/preProcess.vert");
+	std::string prepFrag = IO::readFile("shaders/preProcess.frag");
+
+	const char* prepVertPtr = prepVert.c_str();
+	const char* prepFragPtr = prepFrag.c_str();
+
+	shadowProgram.addVertex(&prepVertPtr);
+	shadowProgram.addFragment(&prepFragPtr);
+
+	shadowProgram.linkProgram();
+	shadowProgram.use();
+
+	shadowUniforms = &shadowProgram.getUniformProvider();
+
+
+	//experimental
+	std::string quadVert = IO::readFile("shaders/quad.vert");
+	std::string quadFrag = IO::readFile("shaders/quad.frag");
+
+	const char* quadVertP = quadVert.c_str();
+	const char* quadFragP = quadFrag.c_str();
+
+	quadProgram.addVertex(&quadVertP);
+	quadProgram.addFragment(&quadFragP);
+
+	quadProgram.linkProgram();
+	quadProgram.use();
+
+	quadUniforms = &quadProgram.getUniformProvider();
 	
-	shadowBuffer.createDepthBuffer(global::screenWidth, global::screenHeight);
 }
 
 void IncRenderer::setCullFace(bool cullFace) {
-	if (cullFace) glEnable(GL_CULL_FACE);
+	if (cullFace) {
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+	}
 	else glDisable(GL_CULL_FACE);
 }
 
+//shadow mapping implementation here is very untidy, it will be moved away, into a different architecture
+// in the future
 void IncRenderer::draw(Scene& scene) {
 
 
 	auto& objects = scene.getObjects();
 	auto& camera = scene.getCamera();
 
-	program.use();
+	shadowProgram.use();
 
 	auto& dirLights = scene.getDirLights();
 	auto& spotLights = scene.getSpotLights();
 	auto& pointLights = scene.getPointLights();
 
-	for (const auto& dirLight : dirLights) {
-		uProv->setLight(dirLight, 0);
-	}
-	for (const auto& pointLight: pointLights) {
-		uProv->setLight(pointLight, 0);
+
+	auto& dirLight = dirLights[0];
+	
+	for (auto& dirLight : dirLights) {
+		if (!dirLight.shadowMap->isBoundToTextureUnit()) {
+			Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
+		}
+
+		shadowUniforms->setLight(dirLight, 0);
+
+		shadowBuffer.setDepthBuffer(dirLight.shadowMap);
+		shadowBuffer.bind();
+
+		glViewport(0, 0, 800, 600);
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		for (std::shared_ptr<Model> model : objects) {
+			for (std::shared_ptr<Mesh> mesh : model->getMeshes()) {
+
+				mesh->getVao().bind();
+
+				//setMeshModelMatrix(mesh, model);
+
+				Matrix4 modelWorld = model->model;
+				Matrix4 meshWorld = modelWorld * mesh->getModel();
+
+				shadowUniforms->setUniform("model", meshWorld);
+
+				glDrawElements(GL_TRIANGLES, mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
+
+				mesh->getVao().unbind();
+			}
+		}
 	}
 
-	/*for (const auto& spotLight: spotLights) {
-		uProv->setLight(spotLight, 0);
-	}*/
+	shadowBuffer.unbind();
+
+	// experimental, draws the shadow map onto the screen, but the lower part of the draw call
+	// has to be disabled in order for it to work
+	/*
+	quadProgram.use();
+
+	float quadData[] = {  -1.0, 1.0, -1.0, 
+						  -1.0,-1.0, -1.0,
+						   1.0,-1.0, -1.0,
+						   1.0,-1.0, -1.0,
+						   1.0, 1.0, -1.0,
+						  -1.0, 1.0, -1.0
+						};
+
+	VertexArray vao;
+
+	vao.bind();
+	vao.addReal(3);
+	Buffer vbo;
+	vao.bindArrayBuffer(vbo);
+
+	vao.attributePointer();
+
+	vbo.bufferData(&quadData, 18*sizeof(float));
+
+	auto depthBuffer = shadowBuffer.getDepthBuffer();
+
+	depthBuffer->getTextureUnit()->bindTexture(depthBuffer);
+
+	quadUniforms->setUniform("quad", depthBuffer->getTextureUnitNum());
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	vao.unbind();
+	*/
+	
+	auto depthBuffer = shadowBuffer.getDepthBuffer();
+	depthBuffer->getTextureUnit()->bindTexture(depthBuffer);
+
+	processProgram.use();
+	for (const auto& dirLight : dirLights) {
+		processUniforms->setLight(dirLight, 0);
+	}
+	for (const auto& pointLight: pointLights) {
+		processUniforms->setLight(pointLight, 0);
+	}
+
+	//for (const auto& spotLight: spotLights) {
+	//	uProv->setLight(spotLight, 0);
+	//}
 
 	for (std::shared_ptr<Model> model : objects) {
 		for (std::shared_ptr<Mesh> mesh : model->getMeshes()) {
@@ -66,9 +175,9 @@ void IncRenderer::draw(Scene& scene) {
 			mesh->getVao().bind();
 
 			setMeshUniforms(mesh, model);
-			uProv->setUniform("view", camera.view());
-			uProv->setUniform("projection", camera.perspective());
-			uProv->setUniform("cameraPos", Vector3(camera.getPosition()));
+			processUniforms->setUniform("view", camera.view());
+			processUniforms->setUniform("projection", camera.perspective());
+			processUniforms->setUniform("cameraPos", Vector3(camera.getPosition()));
 
 			glDrawElements(GL_TRIANGLES, mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
 			
@@ -83,13 +192,23 @@ void IncRenderer::draw(Scene& scene) {
 }
 
 void IncRenderer::setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model) {
+	
+	setMeshModelMatrix(mesh, model);
+
+	setMeshMaterial(mesh);
+}
+
+void IncRenderer::setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model) {
 	Matrix4 modelWorld = model->model;
 	Matrix4 meshWorld = modelWorld * mesh->getModel();
 
-	uProv->setUniform("model", meshWorld);
+	processUniforms->setUniform("model", meshWorld);
+}
+
+void IncRenderer::setMeshMaterial(std::shared_ptr<Mesh> mesh) {
 	const auto& material = mesh->getMaterial();
 
-	uProv->setMaterial(material, 0);
+	processUniforms->setMaterial(material, 0);
 }
 
 /*void IncRenderer::loadMeshVertices(Mesh& mesh) {
