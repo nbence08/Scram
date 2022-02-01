@@ -48,6 +48,7 @@ private:
 
 	void hollowUnbind();
 
+	void setAttachment(GLenum bufferType, std::shared_ptr<Texture2D> texture);
 public:
 	
 	inline Framebuffer() {
@@ -68,6 +69,14 @@ public:
 	void createDepthBuffer(int width, int height);
 	void createStencilBuffer(int width, int height);
 
+
+	void setColorBuffer(std::shared_ptr<Texture2D> colorBuffer);
+	void setDepthBuffer(std::shared_ptr<Texture2D> depthBuffer);
+	void setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer);
+
+	inline unsigned int getId() { return id; }
+
+	inline std::shared_ptr<Texture2D>& getDepthBuffer(){ return depthBuffer; }
 
 	Framebuffer& operator=(Framebuffer&& other) noexcept;
 

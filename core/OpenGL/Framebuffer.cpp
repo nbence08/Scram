@@ -111,6 +111,58 @@ void Framebuffer::createStencilBuffer(int width, int height) {
 	this->hollowUnbind();
 }
 
+void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D> texture) {
+
+	this->hollowBind();
+	if (texture->isBoundToTextureUnit()) {
+		auto texUnit = texture->getTextureUnit();
+		texUnit->bind();
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, texture->getId(), 0);
+
+		texUnit->unbind();
+	}
+	else {
+		auto texUnit = TextureUnit::getNewInstance();
+		texUnit->bind();
+		texUnit->bindTexture(texture);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, texture->getId(), 0);
+
+		texUnit->unbindTexture();
+		texUnit->unbind();
+	}
+
+	this->hollowUnbind();
+}
+
+void Framebuffer::setColorBuffer(std::shared_ptr<Texture2D> colorBuffer) {
+	if(this->colorBuffer == colorBuffer) return;
+
+	this->colorBuffer = colorBuffer;
+	this->hasDepthBuffer = true;
+
+	setAttachment(GL_COLOR_ATTACHMENT0, this->colorBuffer);
+}
+
+void Framebuffer::setDepthBuffer(std::shared_ptr<Texture2D> depthBuffer) {
+	if(this->depthBuffer == depthBuffer) return;
+	
+	this->depthBuffer = depthBuffer;
+	this->hasDepthBuffer = true;
+		
+	setAttachment(GL_DEPTH_ATTACHMENT, this->depthBuffer);
+}
+
+void Framebuffer::setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer) {
+	if(this->stencilBuffer == stencilBuffer) return;
+
+	this->stencilBuffer = stencilBuffer;
+	this->hasDepthBuffer = true;
+
+	setAttachment(GL_STENCIL_ATTACHMENT, this->stencilBuffer);
+}
+
 Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
 	this->colorBuffer = other.colorBuffer;
 	this->depthBuffer = other.depthBuffer;
@@ -139,12 +191,12 @@ Framebuffer::~Framebuffer() {
 }
 
 void Framebuffer::bind() {
-	glBindFramebuffer(GL_FRAMEBUFFER, id);
-
 	if (!hasColorBuffer && hasDepthBuffer) {
 		glNamedFramebufferDrawBuffer(id, GL_NONE);
 		glNamedFramebufferReadBuffer(id, GL_NONE);
 	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
 
 	auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
