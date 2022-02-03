@@ -13,7 +13,6 @@ Texture2D::Texture2D(GLenum magFilter, GLenum minFilter,
 	this->wrapS = wrapS;
 
 	glGenTextures(1, &id);
-	
 
 	parametrized = false;
 }

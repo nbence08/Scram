@@ -23,6 +23,10 @@ VertexArray::VertexArray() {
 	glGenVertexArrays(1, &id);
 	vam = std::make_shared<VertexAttribManager>();
 	vam->vao = this;
+
+	//these need to be called because glVertexArrayVertexBuffer won't accept this vertexArray as existing vaoobj otherwise
+	this->hollowBind();
+	this->hollowUnbind();
 }
 
 VertexArray::~VertexArray() {
@@ -46,6 +50,10 @@ void VertexArray::unbindBuffer(GLenum bufferType) {
 
 //TODO: Possibly has bugs with setting boundBuffers
 void VertexArray::bindBuffer(Buffer& buffer, GLenum bufferType) {
+	if (bufferType == GL_ARRAY_BUFFER) {
+		bindVertexBuffer(buffer);
+		return;
+	}
 	if (isValidBufferType(bufferType)) {
 		if (buffer.vao == this && buffer.bufferType == bufferType) return;
 		if (buffer.vao != this && buffer.vao != nullptr) {
@@ -88,30 +96,55 @@ void VertexArray::unbind() {
 	glBindVertexArray(0);
 }
 
-void VertexArray::bindArrayBuffer(Buffer& buffer) {
-	bindBuffer(buffer, GL_ARRAY_BUFFER);
+void VertexArray::bindVertexBuffer(Buffer& buffer, unsigned int bufferIndex) {
+	
+	if(buffer.getVao() == this || buffer.getBufferType() == GL_VERTEX_ARRAY) return;
+	if(findVertexBuffer(buffer) != end(vertexBuffers)) return;
+
+	if (buffer.vao != this && buffer.vao != nullptr) {
+		buffer.vao->unbindVertexBuffer(buffer);
+	}
+
+	auto foundVbo = vertexBuffers.find(bufferIndex);
+	if (foundVbo != end(vertexBuffers)) {
+		unbindVertexBuffer(*foundVbo->second);
+	}
+
+	glVertexArrayVertexBuffer(this->id, bufferIndex, buffer.getId(), 0, vam->getStride(bufferIndex));
+
+	buffer.setVao(this);
+	buffer.setBufferType(GL_ARRAY_BUFFER);
+
+}
+
+void VertexArray::unbindVertexBuffer(Buffer& buffer) {
+	
+	BufferIndex_t i = 0;
+	for (; i < vertexBuffers.size(); i++) {
+		if(vertexBuffers[i] == &buffer) break;
+	}
+
+	glVertexArrayVertexBuffer(id, i, 0, 0, 0);
+
+	vertexBuffers.erase(i);
+	buffer.setBufferType(0);
+	buffer.setVao(nullptr);
 }
 
 void VertexArray::bindIndexBuffer(Buffer& buffer) {
 	bindBuffer(buffer, GL_ELEMENT_ARRAY_BUFFER);
 }
 
-void VertexArray::addReal(int size) { vam->addReal(size); }
+void VertexArray::addReal(unsigned int size, unsigned int bufferIndex) { vam->addReal(size, bufferIndex); }
 void VertexArray::attributeFormat() {
-	hollowBind();
 	vam->attributeFormat(); 
-	hollowUnbind();
 }
 
 void VertexArray::attributeBinding() {
-	/*hollowBind();
-	vam->attributePointer();
-	hollowUnbind();*/
+	vam->attributeBinding();
 }
 
 
 void VertexArray::attributePointer(){
-	hollowBind();
 	vam->attributePointer();
-	hollowUnbind();
 }

@@ -34,8 +34,11 @@ static bool isValidBufferType(GLenum bufferType) {
 }
 
 class VertexArray{
+	using BufferIndex_t = unsigned int;
+
 	unsigned int id;
 	std::unordered_map<GLenum, Buffer*> boundBuffers;
+	std::unordered_map<BufferIndex_t, Buffer*> vertexBuffers;
 	std::shared_ptr<VertexAttribManager> vam;
 
 	void hollowBind() const;
@@ -47,6 +50,14 @@ class VertexArray{
 	void bindBuffer(Buffer& buffer, GLenum bufferType);
 
 	bool boundBuffersHasBufferType(GLenum bufferType);
+
+	inline auto findVertexBuffer(Buffer& buffer) {
+		auto i = begin(vertexBuffers);
+		for (;i != end(vertexBuffers); i++) {
+			if (i->second == &buffer) return i;
+		}
+		return i;
+	}
 
 	friend Buffer;
 	friend VertexAttribManager;
@@ -67,11 +78,12 @@ public:
 
 	inline unsigned int getId() { return id; }
 
-	void bindArrayBuffer(Buffer& buffer);
 
 	void bindIndexBuffer(Buffer& buffer);
+	void bindVertexBuffer(Buffer& buffer, unsigned int bufferIndex = 0);
+	void unbindVertexBuffer(Buffer& buffer);
 
-	void addReal(int size);
+	void addReal(unsigned int size, unsigned int bufferIndex = 0);
 	void attributeFormat();
 	void attributeBinding();
 	void attributePointer();

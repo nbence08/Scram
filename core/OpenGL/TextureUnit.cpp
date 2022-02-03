@@ -97,12 +97,10 @@ void TextureUnit::bindTexture(std::shared_ptr<Texture2D> tex) {
 
 void TextureUnit::unbindTexture() {
 	if(boundTexture.get() == nullptr) return;
-	hollowBind();
 
-	glBindTexture(boundTexture->type, 0);
+	glBindTextureUnit(this->unitNum, 0);
+
 	boundTexture.reset();
-
-	hollowUnbind();
 }
 
 void TextureUnit::loadTexture(const ImageData2D& d) {
