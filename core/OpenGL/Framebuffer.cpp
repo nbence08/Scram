@@ -37,6 +37,8 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 }
 
 void Framebuffer::createColorBuffer(int width, int height) {
+	this->hollowBind();
+
 	colorBuffer = std::make_shared<Texture2D>();
 	auto texUnit = TextureUnit::getNewInstance();
 	texUnit->bind();
@@ -58,6 +60,7 @@ void Framebuffer::createColorBuffer(int width, int height) {
 
 	this->hollowUnbind();
 	texUnit->unbindTexture();
+	texUnit->unbind();
 }
 
 void Framebuffer::createDepthBuffer(int width, int height) {

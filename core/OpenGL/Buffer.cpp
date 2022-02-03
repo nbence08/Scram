@@ -34,15 +34,6 @@ void Buffer::bufferData(const void* data, GLsizeiptr size, GLenum usage) {
 	if (!isValidUsage(usage)) {
 		throw std::runtime_error("Invalid usage: " + usage);
 	}
-	vao->hollowBind();
-	if (bufferType != 0) {
-		//TODO: check whether this buffer is bound as arrayBuffer's "bufferType" buffer
-		glBufferData(bufferType, size, data, usage);
-	}
-	else {
-		throw std::runtime_error("Buffer is not bound to vertex array");
-	}
-
-	vao->hollowUnbind();
+	glNamedBufferData(id, size, data, usage);
 }
 

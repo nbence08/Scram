@@ -11,8 +11,9 @@ struct VertexAttribProps{
 	GLint size;
 	GLenum type;
 	GLint unitSize;
+	GLuint bufferIndex;
 
-	VertexAttribProps(GLint size, GLenum type, GLint unitSize): size(size), type(type), unitSize(unitSize){}
+	VertexAttribProps(GLint size, GLenum type, GLint unitSize, GLuint bufferIndex): size(size), type(type), unitSize(unitSize), bufferIndex(bufferIndex) {}
 };
 
 class VertexArray;
@@ -22,13 +23,18 @@ class VertexAttribManager{
 	int stride;
 	VertexArray* vao;
 	bool attributed;
+
+	unsigned int getStride(unsigned int bufferIndex = 0);
+	unsigned int getRelativeOffset(unsigned int attribIndex);
 public:
 	VertexAttribManager();
 
-	void addReal(int size);
+	void addReal(unsigned int size, unsigned int bufferIndex = 0);
 
 	//glVertexAttribPointer calls
 	void attributeFormat();
+
+	void attributeBinding();
 
 	//in the future support can be added for multiple buffers for e.g. VertexBuffer
 	void attributePointer();

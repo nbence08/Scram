@@ -39,8 +39,12 @@ public:
 		vbo = (Buffer());
 		ebo = (Buffer());
 
+		vao.addReal(3);
+		vao.addReal(3);
+		vao.addReal(2);
+
 		model = math::diag4(1.0f);
-		vao.bindArrayBuffer(vbo);
+		vao.bindVertexBuffer(vbo);
 		vao.bindIndexBuffer(ebo);
 	}
 
@@ -57,20 +61,12 @@ public:
 	inline Buffer& getEbo() { return ebo; }
 
 	void bufferVertices() {
-		vao.bind();
-		vao.addReal(3);
-		vao.addReal(3);
-		vao.addReal(2);
-
 		vbo.bufferData(&vertices.data()[0], sizeof(Vertex) * vertices.size());
 		vao.attributePointer();
-		vao.unbind();
 	}
 
 	void bufferIndices() {
-		vao.bind();
 		ebo.bufferData(&indices.data()[0], sizeof(unsigned int)*indices.size());
-		vao.unbind();
 	}
 };
 

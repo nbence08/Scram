@@ -101,8 +101,7 @@ void OpenGLContext::init() {
 
 	glEnable(GL_DEBUG_OUTPUT);
 
-	GLDEBUGPROC
-
-	glDebugMessageCallback(errorCallback);
+	glDebugMessageCallback(errorCallback, nullptr);
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 }
