@@ -44,9 +44,13 @@ public:
 	~Buffer();
 
 	void setVao(VertexArray* vao);
+	inline VertexArray* getVao() { return vao; }
+	inline GLenum getBufferType() { return bufferType; }
 
 	void bufferData(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
 
-
+	inline void setBufferType(GLenum bufferType) {
+		this->bufferType = bufferType;
+	}
 };
 
