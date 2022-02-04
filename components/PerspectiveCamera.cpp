@@ -13,20 +13,17 @@ PerspectiveCamera::PerspectiveCamera() {
 PerspectiveCamera::PerspectiveCamera(const Vector4& position,
 	const Vector4& forward,
 	const Vector4& up,
-	const real_t fov,
-	const real_t aspect,
 	const real_t nearPlane,
-	const real_t farPlane) :
-	position(position), forward(forward), up(up),
-	fov(fov), aspect(aspect),
-	nearPlane(nearPlane), farPlane(farPlane)
-{}
+	const real_t farPlane,
+	const real_t fov,
+	const real_t aspect):
+	fov(fov), aspect(aspect), Camera(position, forward, up, nearPlane, farPlane) {}
 
 Matrix4 PerspectiveCamera::view() {
 	Vector3 p = math::homogenDivide(position);
 	return math::getLookAt(forward , up, p);
 }
 
-Matrix4 PerspectiveCamera::perspective() {
+Matrix4 PerspectiveCamera::projection() {
 	return math::perspective(fov, aspect, nearPlane, farPlane);
 }
