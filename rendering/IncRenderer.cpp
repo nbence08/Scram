@@ -2,9 +2,6 @@
 
 IncRenderer::IncRenderer(std::string defaultShaderPath) {
 
-	/*vao.bindArrayBuffer(vbo);
-	vbo.bufferData(&cube, sizeof(cube));*/
-
 	std::string frag = IO::readFile(defaultShaderPath + ".frag");
 	std::string vert = IO::readFile(defaultShaderPath + ".vert");
 
@@ -176,7 +173,7 @@ void IncRenderer::draw(Scene& scene) {
 
 			setMeshUniforms(mesh, model);
 			processUniforms->setUniform("view", camera.view());
-			processUniforms->setUniform("projection", camera.perspective());
+			processUniforms->setUniform("projection", camera.projection());
 			processUniforms->setUniform("cameraPos", Vector3(camera.getPosition()));
 
 			glDrawElements(GL_TRIANGLES, mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
