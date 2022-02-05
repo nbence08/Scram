@@ -51,9 +51,9 @@ uniform DirectionalLight dirLights[dirLightsLen];
 const int spotLightsLen = 1;
 uniform SpotLight spotLights[spotLightsLen];
 
-in vec3 normal;
+in vec3 fNormal;
 in vec3 fragPos;
-in vec2 texC;
+in vec2 fTex;
 in vec4 lightSpacePos;
 
 
@@ -90,7 +90,7 @@ float GeomAtten(in vec3 H, in vec3 N, in vec3 V, in vec3 L, out float VN, out fl
 
 vec3 cookTorranceCalculation(in vec3 texColor, in vec3 L, in vec3 V, in vec3 H, in vec3 F0, in vec3 intensity){
 		float VN, NL;
-		vec3 N = normalize(normal);
+		vec3 N = normalize(fNormal);
 
 		float D = Beckmann(L, V, N, H);
 		vec3 F = Schlick(H, V, F0);
@@ -201,7 +201,7 @@ void main(){
 		
 	vec4 texColor;
 	if(materials[0].albedo_is_texture){
-		texColor = vec4(texture(materials[0].albedoTexture, texC));
+		texColor = vec4(texture(materials[0].albedoTexture, fTex));
 	}
 	else {
 		texColor = vec4(materials[0].albedoVec, 1.0);
@@ -209,7 +209,7 @@ void main(){
 
 	vec3 emission = vec3(0);
 	if(materials[0].has_emission){
-		emission = texture(materials[0].emissionTexture, texC).xyz;
+		emission = texture(materials[0].emissionTexture, fTex).xyz;
 	}
 
 	float tcLength = length(texColor.xyz);
