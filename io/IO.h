@@ -16,7 +16,7 @@
 #include "assimp/postprocess.h"
 #include "core/Struct_Definitions.hpp"
 
-#include "components/Model.h"
+#include "components/Entity.h"
 #include <iomanip>
 
 namespace IO{
@@ -66,7 +66,7 @@ namespace IO{
 		const aiVector3D* aiNormals = aiMesh.mNormals;
 		const aiVector3D* aiTexCoords = aiMesh.mTextureCoords[0];
 
-		for (int i = 0; i < aiMesh.mNumVertices; i++) {
+		for (unsigned int i = 0; i < aiMesh.mNumVertices; i++) {
 			const aiVector3D aiVertex = aiVertices[i];
 			const aiVector3D aiNormal = aiNormals[i];
 			const aiVector3D aiTexCoord = aiTexCoords[i];
@@ -126,9 +126,9 @@ namespace IO{
 			std::vector<unsigned int> indices;
 			indices.reserve(((uint64_t)aiMesh.mNumFaces)*((uint64_t)3));
 
-			for (int i = 0; i < aiMesh.mNumFaces; i++) {
+			for (unsigned int i = 0; i < aiMesh.mNumFaces; i++) {
 				aiFace face = aiMesh.mFaces[i];
-				for (int j = 0; j < face.mNumIndices; j++) {
+				for (unsigned int j = 0; j < face.mNumIndices; j++) {
 					indices.emplace_back(face.mIndices[j]);
 				}
 			}
@@ -143,7 +143,7 @@ namespace IO{
 	}
 
 	//TODO: this function is long, should be broken down into smaller components
-	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh, Model& model) {
+	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh, Entity& model) {
 		if (scene.HasMaterials()) {
 
 			int materialIndex = aiMesh.mMaterialIndex;
@@ -191,6 +191,8 @@ namespace IO{
 				ctMat.metalness = metalness;
 			}
 
+			#pragma warning (push)
+			#pragma warning (disable : 4244)
 			const auto hasRoughness = aiMaterial->Get(AI_MATKEY_ROUGHNESS_FACTOR, roughness);
 			if (hasRoughness == aiReturn_FAILURE) {
 				throw std::runtime_error("Could not load material roughness!");
@@ -198,6 +200,7 @@ namespace IO{
 			else {
 				ctMat.smoothness = 1.0 - roughness;
 			}
+			#pragma warning (pop)
 
 			//const auto emissions = aiMaterial->GetTextureCount(aiTextureType_EMISSION_COLOR);
 			auto emissiveTexCount = aiMaterial->GetTextureCount(aiTextureType_EMISSIVE);
@@ -223,10 +226,10 @@ namespace IO{
 		}
 	}
 
-	static void parseScene(const aiScene& scene, Model& model) {
+	static void parseScene(const aiScene& scene, Entity& model) {
 
 		auto& meshes = model.getMeshes();
-		for (int i = 0; i < scene.mNumMeshes; i++) {
+		for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
 			const auto& aiMesh = *scene.mMeshes[i];
 
 			Mesh mesh;
@@ -238,7 +241,7 @@ namespace IO{
 		}
 	}
 
-	static std::shared_ptr<Model> importModelFromFile(const std::string& path) {
+	static std::shared_ptr<Entity> importModelFromFile(const std::string& path) {
 		Assimp::Importer importer;
 		std::ifstream in(path.c_str());
 
@@ -259,7 +262,7 @@ namespace IO{
 
 		auto& scene = *scenePtr;
 
-		std::shared_ptr<Model> model = std::make_shared<Model>();
+		std::shared_ptr<Entity> model = std::make_shared<Entity>();
 
 		parseScene(scene, *model);
 

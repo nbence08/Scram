@@ -34,9 +34,9 @@ class IncRenderer {
 	void loadMeshIndices(Mesh& mesh);
 	*/
 
-	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
 
-	void setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+	void setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
 
 	void setMeshMaterial(std::shared_ptr<Mesh> mesh);
 
