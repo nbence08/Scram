@@ -3,7 +3,7 @@
 #include "core/math/linear_algebra.hpp"
 #include "Camera.h"
 
-class PerspectiveCamera : public Camera{
+class PerspectiveCamera : public Camera<PerspectiveCamera>{
 	real_t fov;
 	real_t aspect;
 

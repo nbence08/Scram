@@ -1,6 +1,7 @@
 #pragma once
 #include "core/math/linear_algebra.hpp"
 
+template <typename T>
 class Camera {
 protected:
 	Vector4 position;
@@ -45,7 +46,13 @@ public:
 	inline real_t getFarPlane() const { return farPlane; }
 	inline void setFarPlane(const real_t farPlane) { this->farPlane = farPlane; }
 
-	virtual Matrix4 view() = 0;
+	Matrix4 view() {
+		T& t = static_cast<T>(*this);
+		return t.view();
+	};
 
-	virtual Matrix4 projection() = 0;
+	Matrix4 projection() {
+		T& t = static_cast<T>(*this);
+		return t.projection();
+	};
 };
