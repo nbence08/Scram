@@ -1,0 +1,29 @@
+#pragma once
+#include "core/math/linear_algebra.hpp"
+#include "core/math/Quaternion.h"
+#include "ComponentBase.hpp"
+
+class Transform : public ComponentBase{
+	//rotation around x, y, z axes
+	Vector3 scale;
+	Vector3 rotation;
+	Vector3 translation;
+public:
+
+	Transform(): scale(Vector3(1.0, 1.0, 1.0)), rotation(Vector3(0.0, 0.0, 0.0)), translation(Vector3(0.0, 0.0, 0.0)) {}
+
+	Transform(const Vector3& scale, const Vector3& rotation, const Vector3& translation):
+			scale(scale), rotation(rotation), translation(translation) {}
+
+	int getTypeId() override {
+		return getComponentTypeId<Transform>();
+	}
+
+	Matrix4 model() {
+		return math::translate(translation)*
+			   math::rotate(rotation.x, Vector3(1.0, 0.0, 0.0))*
+			   math::rotate(rotation.y, Vector3(0.0, 1.0, 0.0))*
+			   math::rotate(rotation.z, Vector3(0.0, 0.0, 1.0))*
+			   math::scale(scale.x, scale.y, scale.z);
+	}
+};
