@@ -1,8 +1,9 @@
 #pragma once
 #include "core/math/linear_algebra.hpp"
+#include "ComponentBase.hpp"
 
 template <typename T>
-class Camera {
+class Camera : public ComponentBase{
 protected:
 	Vector4 position;
 	Vector4 forward;
@@ -11,6 +12,10 @@ protected:
 	real_t farPlane;
 
 public:
+	
+	int getTypeId () override {
+		return getComponentTypeId<Camera>();
+	}
 
 	Camera(const Vector4& position = Vector4(0.0, 0.0, 0.0),
 		   const Vector4& forward = Vector4(0.0, 0.0, -1.0),

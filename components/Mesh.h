@@ -4,9 +4,10 @@
 #include "core/OpenGL/Texture2D.h"
 #include "CTMaterial.h"
 #include "core/math/linear_algebra.hpp"
-#include "Model.h"
+#include "Entity.h"
 #include "core/OpenGL/VertexArray.h"
 #include "core/OpenGL/Buffer.h"
+#include "ComponentBase.hpp"
 
 struct Vertex {
 	Vector3 position;
@@ -16,7 +17,7 @@ struct Vertex {
 
 static uint64_t topMeshId = 0;
 
-class Mesh{
+class Mesh : public ComponentBase{
 
 	VertexArray vao;
 	Buffer vbo;
@@ -29,8 +30,12 @@ class Mesh{
 	//uid for identifying mesh to renderers
 	CTMaterial material;
 	
-	friend class Model;
+	friend class Entity;
 public:
+
+	inline int getTypeId() override {
+		return getComponentTypeId<Mesh>();
+	}
 
 	const uint64_t uid;
 

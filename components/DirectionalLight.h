@@ -3,12 +3,17 @@
 #include "core/math/Math_Functions.hpp"
 #include "core/OpenGL/Texture2D.h"
 #include "core/Global_Props.hpp"
+#include "ComponentBase.hpp"
 
 //this will be managable, and most definitely not a const in the future
 const real_t ORTHOGONAL_EDGE_SIZE = 400;
 
-class DirectionalLight {
+class DirectionalLight : public ComponentBase {
 public:
+	int getTypeId() override {
+		return getComponentTypeId<DirectionalLight>();
+	}
+
 	Vector3 intensity;
 	//direction of fragments to light source
 	Vector3 direction;

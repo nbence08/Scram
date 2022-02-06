@@ -19,8 +19,8 @@ Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 	auto right = cross(-up, -normDir);
 	auto trueUp = cross(right, -normDir);
 
-	float edgeRight = global::screenWidth/4;
-	float edgeTop = global::screenHeight/4;
+	float edgeRight = (float)global::screenWidth/4;
+	float edgeTop = (float)global::screenHeight/4;
 
 	Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
 	//ideally position for the getLookAt would be ahead of the position of the camera, in its direction
