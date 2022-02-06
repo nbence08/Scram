@@ -15,7 +15,7 @@
 #include "io/IO.h"
 #include "glm/glm.hpp"
 #include "components/PerspectiveCamera.h"
-
+#include "components/Transform.h"
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
 
@@ -48,9 +48,9 @@ int main() {
 	
 	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
 	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
-	
-	ent->model = math::translate(0.0, 0.0, 0.0) * math::rotate(PI / 2.0, Vector3(1.0, 0.0, 0.0)) * math::scale(0.5f, 0.5f, 0.5f);
-	ent2->model = math::translate(Vector3(0.0f, 40.0f, 0.0f));
+
+	ent->addComponent(Transform(Vector3(0.0, 0.0, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
+	ent2->addComponent(Transform(Vector3(0.0, 40.0f, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
 
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
