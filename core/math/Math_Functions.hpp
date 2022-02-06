@@ -35,13 +35,15 @@ namespace math {
 		return Matrix4(rotMat3);
 	}
 
+	#pragma warning (push)
+	#pragma warning (disable : 4244)
 	static Matrix4 scale(const double x, const double y, const double z) {
 		return Matrix4(x, 0.0, 0.0, 0.0,
 					   0.0, y, 0.0, 0.0,
 					   0.0, 0.0, z, 0.0,
 					   0.0, 0.0, 0.0, 1);
 	}
-
+	#pragma warning(pop)
 
 	static Vector3 homogenDivide(const Vector4& vec4) {
 		if (vec4.w == 1.0f) return Vector3(vec4.x, vec4.y, vec4.z);
@@ -76,6 +78,8 @@ namespace math {
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
+	#pragma warning (push)
+	#pragma warning (disable : 4244)
 	static Matrix4 orthographic(real_t l, real_t r, real_t t, real_t b, real_t n, real_t f) {
 		real_t r_l = r-l;
 		real_t t_b = t-b;
@@ -88,10 +92,13 @@ namespace math {
 			0, 0, 0,				1
 		);
 	}
+	#pragma warning (pop)
 
+	#pragma warning (push)
+	#pragma warning (disable : 4244)
 	static Matrix4 perspective(real_t fov, real_t aspect, real_t nearPlane, real_t farPlane) {
-		real_t fovDiv2 = math::toRadians((double)fov / 2.0);
-		real_t x = 1.0 / (tan(fovDiv2) * aspect);
+		real_t fovDiv2 = math::toRadians(((double)fov) / 2.0);
+		real_t x = 1.0 / (tan((double)fovDiv2) * aspect);
 		real_t y = 1.0 / (tan(fovDiv2));
 		real_t A = -(nearPlane + farPlane) / (nearPlane - farPlane);
 		real_t B = 2.0 * ((double)nearPlane * (double)farPlane) / ((double)nearPlane - (double)farPlane);
@@ -102,4 +109,5 @@ namespace math {
 			0.0, 0.0, 1.0, 0.0
 		);
 	}
+	#pragma warning (pop)
 }

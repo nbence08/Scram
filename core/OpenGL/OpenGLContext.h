@@ -28,7 +28,8 @@ public:
 		moveSpeed = 1.0;
 		cursorSpeed = 1.0;
 	}
-
+	#pragma warning (push)
+	#pragma warning (disable : 4244)
 	void handleInputs(PerspectiveCamera& camera, real_t deltaTime) {
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			camera.moveForward(deltaTime * moveSpeed);
@@ -77,6 +78,7 @@ public:
 		cursorX = curCursorX;
 		cursorY = curCursorY;
 	}
+	#pragma warning (pop)
 
 };
 

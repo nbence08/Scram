@@ -34,6 +34,8 @@ public:
 		return val;
 	}
 
+	#pragma warning (push)
+	#pragma warning(disable : 4244)
 	//rotation matrix, to be rotated vector should be multiplied from left with this matrix
 	Matrix3 getRotationMatrix() {
 		double iSq = i*i, jSq = j*j, kSq = k*k;
@@ -44,6 +46,7 @@ public:
 					   s*(ij+kr), 1.0-s*(iSq+kSq), s*(jk-ir), 
 					   s*(ik-jr), s*(jk+ir), 1.0-s*(iSq+jSq));
 	}
+	#pragma warning (pop)
 
 	static Quaternion rotation(double arc, double axisX, double axisY, double axisZ) {
 		double cosCoeff = cos(arc/2.0);
