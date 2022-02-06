@@ -5,14 +5,14 @@
 
 class Transform : public ComponentBase{
 	//rotation around x, y, z axes
-	Vector3 scale;
-	Vector3 rotation;
 	Vector3 translation;
+	Vector3 rotation;
+	Vector3 scale;
 public:
 
 	Transform(): scale(Vector3(1.0, 1.0, 1.0)), rotation(Vector3(0.0, 0.0, 0.0)), translation(Vector3(0.0, 0.0, 0.0)) {}
 
-	Transform(const Vector3& scale, const Vector3& rotation, const Vector3& translation):
+	Transform(const Vector3& translation, const Vector3& rotation, const Vector3& scale):
 			scale(scale), rotation(rotation), translation(translation) {}
 
 	int getTypeId() override {
