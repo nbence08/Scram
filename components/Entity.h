@@ -9,7 +9,7 @@
 
 #include "components/Mesh.h"
 #include "components/ComponentBase.hpp"
-
+#include "components/Transform.h"
 class Mesh;
 
 class Entity{
@@ -23,6 +23,7 @@ public:
 
 	Entity() {
 		components.resize(MAX_COMPONENTS);
+		addComponent(Transform());
 	}
 
 	std::vector<std::shared_ptr<ComponentBase>> components;

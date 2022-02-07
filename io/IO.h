@@ -266,8 +266,6 @@ namespace IO{
 
 		parseScene(scene, *entity);
 
-		entity->model = math::diag4(1.0f);
-
 		return entity;
 	}
 
