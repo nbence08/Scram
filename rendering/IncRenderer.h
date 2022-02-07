@@ -35,11 +35,11 @@ class IncRenderer {
 	void loadMeshIndices(Mesh& mesh);
 	*/
 
-	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
+	void setEntityUniforms(std::shared_ptr<Entity> model);
 
-	void setProcessMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
+	void setProcessMeshModelMatrix(std::shared_ptr<Entity> model);
 
-	void setMeshMaterial(std::shared_ptr<Mesh> mesh);
+	void setEntityMaterial(std::shared_ptr<Entity> entity);
 
 
 
@@ -59,5 +59,7 @@ public:
 	void setCullFace(bool cullFace);
 
 	void draw(Scene& scene);
+	void shadowRenderEntity(std::shared_ptr<Entity> entity);
+	void renderEntity(std::shared_ptr<Entity> entity, PerspectiveCamera& camera);
 };
 

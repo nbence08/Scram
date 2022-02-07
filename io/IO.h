@@ -143,7 +143,7 @@ namespace IO{
 	}
 
 	//TODO: this function is long, should be broken down into smaller components
-	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh, Entity& entity) {
+	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Entity& entity) {
 		if (scene.HasMaterials()) {
 
 			int materialIndex = aiMesh.mMaterialIndex;
@@ -155,7 +155,9 @@ namespace IO{
 
 			//const auto albedoLoadRes = aiMaterial->GetTexture(aiTextureType_BASE_COLOR, 0, );
 
-			CTMaterial& ctMat = mesh.getMaterial();
+			entity.addComponent<CTMaterial>();
+			CTMaterial& ctMat = entity.getComponent<CTMaterial>();
+
 
 			if (albedoTexCount > 0) {
 				aiString path;
@@ -226,19 +228,38 @@ namespace IO{
 		}
 	}
 
-	static void parseScene(const aiScene& scene, Entity& entity) {
-
+	static void processNode(const aiScene& scene, const aiNode& node, Entity& entity) {
 		auto& meshes = entity.getMeshes();
-		for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
-			const auto& aiMesh = *scene.mMeshes[i];
+
+		if (node.mNumMeshes > 1) {
+			throw std::runtime_error("Scram doesn't support multiple meshes per single node.");
+		}
+
+		for (unsigned int i = 0; i < node.mNumMeshes; i++) {
+			
+			const auto& aiMesh = *scene.mMeshes[node.mMeshes[i]];
 
 			Mesh mesh;
 			parseMeshVertices(aiMesh, mesh);
 			parseMeshIndices(scene, aiMesh, mesh);
-			parseSceneMaterials(scene, aiMesh, mesh, entity);
-			
-			meshes.push_back(std::make_shared<Mesh>(std::move(mesh)));
+
+			parseSceneMaterials(scene, aiMesh, entity);
+
+			entity.addComponent<Mesh>(std::move(mesh));
 		}
+
+		for (int i = 0; i < node.mNumChildren; i++) {
+			auto subEntity = entity.addChild();
+			processNode(scene, *node.mChildren[i], *subEntity);
+		}
+
+	}
+
+	static void parseScene(const aiScene& scene, Entity& rootEntity) {
+
+		const auto& rootNode = *scene.mRootNode;
+
+		processNode(scene, rootNode, rootEntity);
 	}
 
 	static std::shared_ptr<Entity> importModelFromFile(const std::string& path) {

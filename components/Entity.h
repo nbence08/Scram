@@ -15,51 +15,75 @@ class Mesh;
 class Entity{
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	std::vector<std::shared_ptr<Texture2D>> textures;
+
+	std::vector<std::shared_ptr<ComponentBase>> components;
 	std::bitset<MAX_COMPONENTS> componentBits;
+
+	std::vector<std::shared_ptr<Entity>> children;
+	Entity* parent;
 
 public:
 	inline std::vector<std::shared_ptr<Mesh>>& getMeshes(){ return meshes; }
 	inline std::vector<std::shared_ptr<Texture2D>>& getTextures() { return textures; }
 
-	Entity() {
-		components.resize(MAX_COMPONENTS);
-		addComponent(Transform());
-	}
-
-	std::vector<std::shared_ptr<ComponentBase>> components;
-	Matrix4 model;
+	Entity();
 
 	template <typename T>
-	void addComponent(T&& component){
-		int typeId = component.getTypeId();
+	bool hasComponent() {
+		int typeId = getTypeId<T>();
+
+		return componentBits.test(typeId);
+	}
+
+	template <typename T>
+	void addComponent() {
+		int typeId = getTypeId<T>();
 
 		if (componentBits.test(typeId)) {
 			components.at(typeId).reset();
 		}
 
-		components.at(typeId) = std::make_shared<T>(component);
+		components.at(typeId) = std::make_shared<T>();
+		componentBits.set(typeId);
+	}
+
+	template <typename T>
+	void addComponent(T&& component) {
+		int typeId = getTypeId<T>();
+
+		if (componentBits.test(typeId)) {
+			components.at(typeId).reset();
+		}
+
+		components.at(typeId) = std::make_shared<T>(std::forward<T>(component));
 		componentBits.set(typeId);
 	}
 
 	template <typename T>
 	T& getComponent() {
-		int typeId = getComponentTypeId<T>();
+		int typeId = getTypeId<T>();
 		if (componentBits.test(typeId)) {
 			T* t = reinterpret_cast<T*>(components[typeId].get());
 			return *t;
 		}
 		else {
-			throw std::domain_error("Enttiy does not contain component of type: "+std::to_string(typeId));
+			throw std::domain_error("Enttiy does not contain component of type: " + std::to_string(typeId));
 		}
 	}
 
 	template <typename T>
-	void removeComponent(){
-		int typeId = getComponentTypeId<T>();
+	void removeComponent() {
+		int typeId = getTypeId<T>();
 		if (componentBits.test(typeId)) {
 			components.at(typeId).reset();
 
 		}
 	}
+
+	std::shared_ptr<Entity> addChild();
+
+	std::vector<std::shared_ptr<Entity>>& getChildren();
+
+	Matrix4 model();
 };
 

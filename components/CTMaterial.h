@@ -12,10 +12,6 @@
 class CTMaterial : public ComponentBase{
 public:
 
-	int getTypeId() override {
-		return getComponentTypeId<CTMaterial>();
-	}
-
 	CTMaterial() {
 		metalness = 0.5;
 		smoothness = 0.5;

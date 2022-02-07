@@ -12,10 +12,7 @@ protected:
 	real_t farPlane;
 
 public:
-	
-	int getTypeId () override {
-		return getComponentTypeId<Camera>();
-	}
+
 
 	Camera(const Vector4& position = Vector4(0.0, 0.0, 0.0),
 		   const Vector4& forward = Vector4(0.0, 0.0, -1.0),

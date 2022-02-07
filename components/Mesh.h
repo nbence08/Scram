@@ -23,19 +23,11 @@ class Mesh : public ComponentBase{
 	Buffer vbo;
 	Buffer ebo;
 
-	Matrix4 model;
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
 
-	//uid for identifying mesh to renderers
-	CTMaterial material;
-	
 	friend class Entity;
 public:
-
-	inline int getTypeId() override {
-		return getComponentTypeId<Mesh>();
-	}
 
 	const uint64_t uid;
 
@@ -48,15 +40,12 @@ public:
 		vao.addReal(3);
 		vao.addReal(2);
 
-		model = math::diag4(1.0f);
 		vao.bindVertexBuffer(vbo);
 		vao.bindIndexBuffer(ebo);
 	}
 
 	inline std::vector<Vertex>& getVertices() { return vertices; }
-	inline CTMaterial& getMaterial() { return material; }
 	inline std::vector<unsigned int>& getIndices(){ return indices; }
-	inline Matrix4 getModel(){ return model; }
 
 	inline void setIndices(std::vector<unsigned int>& indices) { this->indices = indices; }
 	inline void setIndices(std::vector<unsigned int>&& indices) { this->indices = indices; }

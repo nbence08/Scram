@@ -1,4 +1,7 @@
 #pragma once
+
+extern int componentTypeCounter = 0;
+
 #include <iostream>
 
 #include <fstream>
@@ -27,7 +30,6 @@
 
 #include "components/Entity.h"
 
-
 int main() {
 
 	OpenGLContext context;
@@ -45,12 +47,19 @@ int main() {
 	auto lastFrame = glfwGetTime();
 	
 	//model->model = math::scale(0.05f, 0.05f, 0.05f)*math::rotate(PI/2.0, Vector3(1.0, 0.0, 0.0));
-	
+
 	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
 	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
 
-	ent->addComponent(Transform(Vector3(0.0, 0.0, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
-	ent2->addComponent(Transform(Vector3(0.0, 40.0f, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
+	auto& entTransform = ent->getComponent<Transform>();
+	auto& ent2Transform = ent2->getComponent<Transform>();
+	
+	entTransform.setRotation(Vector3(PI / 2.0, 0.0, 0.0));
+	entTransform.setScale(Vector3(0.5, 0.5, 0.5));
+	ent2Transform.setTranslation(Vector3(0.0, 40.0f, 0.0));
+
+	/*ent->addComponent(Transform(Vector3(0.0, 0.0, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));*/
+	//ent2->addComponent(Transform(Vector3(0.0, 40.0f, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(1, 1, 1)));
 
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
