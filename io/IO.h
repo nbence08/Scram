@@ -3,6 +3,7 @@
 #include <iterator>
 #include <string>
 #include <stdexcept>
+#include <iomanip>
 #include "GLFW/glfw3.h"
 #include "GL/glew.h"
 
@@ -17,7 +18,6 @@
 #include "core/Struct_Definitions.hpp"
 
 #include "components/Entity.h"
-#include <iomanip>
 
 namespace IO{
 	//reads a file of path given as parameter
@@ -143,7 +143,7 @@ namespace IO{
 	}
 
 	//TODO: this function is long, should be broken down into smaller components
-	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh, Entity& model) {
+	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh, Entity& entity) {
 		if (scene.HasMaterials()) {
 
 			int materialIndex = aiMesh.mMaterialIndex;
@@ -168,7 +168,7 @@ namespace IO{
 					std::shared_ptr<Texture2D> texture = transferTextureToOpenGL(scene, strPath);
 
 					ctMat.albedo = texture;
-					model.getTextures().push_back(texture);
+					entity.getTextures().push_back(texture);
 				}
 				else {
 					//TODO: load texture from file system...
@@ -213,7 +213,7 @@ namespace IO{
 						std::shared_ptr<Texture2D> texture = transferTextureToOpenGL(scene, strPath);
 
 						ctMat.emission = texture;
-						model.getTextures().push_back(texture);
+						entity.getTextures().push_back(texture);
 					}
 					else {
 						//try to load emissive vector
@@ -226,16 +226,16 @@ namespace IO{
 		}
 	}
 
-	static void parseScene(const aiScene& scene, Entity& model) {
+	static void parseScene(const aiScene& scene, Entity& entity) {
 
-		auto& meshes = model.getMeshes();
+		auto& meshes = entity.getMeshes();
 		for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
 			const auto& aiMesh = *scene.mMeshes[i];
 
 			Mesh mesh;
 			parseMeshVertices(aiMesh, mesh);
 			parseMeshIndices(scene, aiMesh, mesh);
-			parseSceneMaterials(scene, aiMesh, mesh, model);
+			parseSceneMaterials(scene, aiMesh, mesh, entity);
 			
 			meshes.push_back(std::make_shared<Mesh>(std::move(mesh)));
 		}
@@ -262,13 +262,13 @@ namespace IO{
 
 		auto& scene = *scenePtr;
 
-		std::shared_ptr<Entity> model = std::make_shared<Entity>();
+		std::shared_ptr<Entity> entity = std::make_shared<Entity>();
 
-		parseScene(scene, *model);
+		parseScene(scene, *entity);
 
-		model->model = math::diag4(1.0f);
+		entity->model = math::diag4(1.0f);
 
-		return model;
+		return entity;
 	}
 
 
