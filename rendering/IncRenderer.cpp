@@ -96,19 +96,21 @@ void IncRenderer::draw(Scene& scene) {
 		glViewport(0, 0, 800, 600);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		for (std::shared_ptr<Model> model : objects) {
-			for (std::shared_ptr<Mesh> mesh : model->getMeshes()) {
+		for (std::shared_ptr<Entity> ent : objects) {
+			for (std::shared_ptr<Mesh> mesh : ent->getMeshes()) {
 
 				mesh->getVao().bind();
 
 				//setMeshModelMatrix(mesh, model);
 
-				Matrix4 modelWorld = model->model;
+				Matrix4 modelWorld = ent->getComponent<Transform>().model();
 				Matrix4 meshWorld = modelWorld * mesh->getModel();
 
 				shadowUniforms->setUniform("model", meshWorld);
 
-				glDrawElements(GL_TRIANGLES, mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
+				//shadowUniforms->setUniform("model", meshWorld);
+
+				glDrawElements(GL_TRIANGLES, (GLsizei)mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
 				mesh->getVao().unbind();
 			}
@@ -166,7 +168,7 @@ void IncRenderer::draw(Scene& scene) {
 	//	uProv->setLight(spotLight, 0);
 	//}
 
-	for (std::shared_ptr<Model> model : objects) {
+	for (std::shared_ptr<Entity> model : objects) {
 		for (std::shared_ptr<Mesh> mesh : model->getMeshes()) {
 
 			mesh->getVao().bind();
@@ -176,27 +178,27 @@ void IncRenderer::draw(Scene& scene) {
 			processUniforms->setUniform("projection", camera.projection());
 			processUniforms->setUniform("cameraPos", Vector3(camera.getPosition()));
 
-			glDrawElements(GL_TRIANGLES, mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, (GLsizei)mesh->getIndices().size(), GL_UNSIGNED_INT, nullptr);
 			
 
 			//TODO
 			//A different type of mesh, and IO model read function could be added, which handles the vertices, and indices of the meshes
-			//as one big data structure, this way, the Model class would be the one containing all the vertices and indices
+			//as one big data structure, this way, the Entity class would be the one containing all the vertices and indices
 			//this could make rendering faster, where there is only one mesh, or the meshes contain few vertices
 
 		}
 	}
 }
 
-void IncRenderer::setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model) {
+void IncRenderer::setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> entity) {
 	
-	setMeshModelMatrix(mesh, model);
+	setProcessMeshModelMatrix(mesh, entity);
 
 	setMeshMaterial(mesh);
 }
 
-void IncRenderer::setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model) {
-	Matrix4 modelWorld = model->model;
+void IncRenderer::setProcessMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> entity) {
+	Matrix4 modelWorld = entity->getComponent<Transform>().model();
 	Matrix4 meshWorld = modelWorld * mesh->getModel();
 
 	processUniforms->setUniform("model", meshWorld);

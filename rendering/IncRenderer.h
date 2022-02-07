@@ -11,6 +11,7 @@
 #include "io/IO.h"
 #include "core/CubeData.hpp"
 #include "components/PerspectiveCamera.h"
+#include "components/Transform.h"
 #include "core/math/linear_algebra.hpp"
 #include "Scene.h"
 #include "core/OpenGL/Framebuffer.h"
@@ -34,9 +35,9 @@ class IncRenderer {
 	void loadMeshIndices(Mesh& mesh);
 	*/
 
-	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+	void setMeshUniforms(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
 
-	void setMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Model> model);
+	void setProcessMeshModelMatrix(std::shared_ptr<Mesh> mesh, std::shared_ptr<Entity> model);
 
 	void setMeshMaterial(std::shared_ptr<Mesh> mesh);
 

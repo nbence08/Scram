@@ -5,8 +5,8 @@ PerspectiveCamera::PerspectiveCamera() {
 	forward = Vector4(0.0f, 0.0f, -1.0f, 0.0f);
 	up = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
 	fov = 80.0f;
-	aspect = 800.0 / 600.0;
-	nearPlane = 0.01;
+	aspect = (real_t) (800.0 / 600.0);
+	nearPlane = (real_t) 0.01;
 	farPlane = 100.0;
 }
 

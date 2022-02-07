@@ -15,7 +15,7 @@
 #include "io/IO.h"
 #include "glm/glm.hpp"
 #include "components/PerspectiveCamera.h"
-
+#include "components/Transform.h"
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
 
@@ -25,7 +25,7 @@
 #include "rendering/Scene.h"
 #include "rendering/IncRenderer.h"
 
-#include "components/Model.h"
+#include "components/Entity.h"
 
 
 int main() {
@@ -46,11 +46,11 @@ int main() {
 	
 	//model->model = math::scale(0.05f, 0.05f, 0.05f)*math::rotate(PI/2.0, Vector3(1.0, 0.0, 0.0));
 	
-	std::shared_ptr<Model> model = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
-	std::shared_ptr<Model> model2 = IO::importModelFromFile("resources/models/box.glb");
-	
-	model->model = math::translate(0.0, 0.0, 0.0) * math::rotate(PI / 2.0, Vector3(1.0, 0.0, 0.0)) * math::scale(0.5f, 0.5f, 0.5f);
-	model2->model = math::translate(Vector3(0.0f, 40.0f, 0.0f));
+	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
+	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
+
+	ent->addComponent(Transform(Vector3(0.0, 0.0, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
+	ent2->addComponent(Transform(Vector3(0.0, 40.0f, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));
 
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
@@ -68,8 +68,8 @@ int main() {
 
 	IncRenderer renderer;
 
-	scene.addObject((model));
-	scene.addObject((model2));
+	scene.addObject((ent));
+	scene.addObject((ent2));
 
 	context.moveSpeed = 50.0f;
 	
@@ -80,7 +80,7 @@ int main() {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		context.handleInputs(scene.getCamera(), deltaTime);
+		context.handleInputs(scene.getCamera(), (real_t)deltaTime);
 
 		/*auto cam = scene.getCamera().getPosition();
 		std::cout << "X: " << cam.x << " Y: " << cam.y << " Z: " << cam.z << '\n';*/

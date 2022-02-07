@@ -2,6 +2,7 @@
 #include "core/Preprocess_Definitions.h"
 #include "core/math/linear_algebra.hpp"
 #include "Camera.h"
+#include "ComponentBase.hpp"
 
 class PerspectiveCamera : public Camera<PerspectiveCamera>{
 	real_t fov;

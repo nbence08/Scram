@@ -1,12 +1,12 @@
 #pragma once
-#include "components/Model.h"
+#include "components/Entity.h"
 #include "components/SpotLight.h"
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
 #include "components/PerspectiveCamera.h"
 
 class Scene{
-	std::vector<std::shared_ptr<Model>> objects;
+	std::vector<std::shared_ptr<Entity>> objects;
 	std::vector<DirectionalLight> dirLights;
 	std::vector<PointLight> pointLights;
 	std::vector<SpotLight> spotLights;
@@ -15,11 +15,11 @@ class Scene{
 public:
 	Scene();
 
-	inline void addObject(std::shared_ptr<Model> model) {
+	inline void addObject(std::shared_ptr<Entity> model) {
 		objects.emplace_back(model);
 	}
 
-	inline std::vector<std::shared_ptr<Model>>& getObjects(){ return objects; }
+	inline std::vector<std::shared_ptr<Entity>>& getObjects(){ return objects; }
 
 	//these getter functions could be modified so that there is only a single vector containing std::variants,
 	//and the std::variant defines which type of light it contains
