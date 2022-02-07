@@ -20,7 +20,7 @@ public:
 	ShaderProgram& operator=(const ShaderProgram&) = delete;
 
 	ShaderProgram(ShaderProgram&& other) noexcept {
-		*this = std::move(other);
+		*this = std::forward<ShaderProgram>(other);
 	}
 
 	ShaderProgram& operator=(ShaderProgram&& other) noexcept {

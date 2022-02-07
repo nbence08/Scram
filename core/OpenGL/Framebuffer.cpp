@@ -185,7 +185,7 @@ Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
 }
 
 Framebuffer::Framebuffer(Framebuffer&& other) noexcept {
-	*this = std::move(other);
+	*this = std::forward<Framebuffer>(other);
 }
 
 Framebuffer::~Framebuffer() {

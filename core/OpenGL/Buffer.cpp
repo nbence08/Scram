@@ -1,7 +1,7 @@
 #include "Buffer.h"
 
 Buffer::Buffer(Buffer&& other) noexcept{
-	*this = std::move(other);
+	*this = std::forward<Buffer>(other);
 }
 
 Buffer& Buffer::operator=(Buffer&& other) noexcept {
