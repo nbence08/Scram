@@ -46,8 +46,6 @@ int main() {
 	auto currentFrame = glfwGetTime();
 	auto lastFrame = glfwGetTime();
 	
-	//model->model = math::scale(0.05f, 0.05f, 0.05f)*math::rotate(PI/2.0, Vector3(1.0, 0.0, 0.0));
-
 	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
 	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
 
@@ -58,8 +56,7 @@ int main() {
 	entTransform.setScale(Vector3(0.5, 0.5, 0.5));
 	ent2Transform.setTranslation(Vector3(0.0, 40.0f, 0.0));
 
-	/*ent->addComponent(Transform(Vector3(0.0, 0.0, 0.0), Vector3(PI / 2.0, 0.0, 0.0), Vector3(0.5, 0.5, 0.5)));*/
-	//ent2->addComponent(Transform(Vector3(0.0, 40.0f, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(1, 1, 1)));
+
 
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
@@ -81,7 +78,6 @@ int main() {
 	scene.addObject((ent2));
 
 	context.moveSpeed = 50.0f;
-	
 
 	while (!glfwWindowShouldClose(context.window)) {
 		currentFrame = glfwGetTime();
@@ -90,9 +86,6 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		context.handleInputs(scene.getCamera(), (real_t)deltaTime);
-
-		/*auto cam = scene.getCamera().getPosition();
-		std::cout << "X: " << cam.x << " Y: " << cam.y << " Z: " << cam.z << '\n';*/
 
 		renderer.draw(scene);
 
@@ -106,28 +99,6 @@ int main() {
 		lastFrame = currentFrame;
 	}
 
-
-	/*catch (std::exception e) {
-		std::cout << e.what() << "\n";
-		return -1;
-	}*/
 	textureUnits.clear();
 	glfwTerminate();
 }
-
-// #include <iomanip>
-//Matrix4 mat(1.0f, 2.3f, 2.4f, 1.0f,
-//			0.0f, 0.0f, 0.0f, 0.0f,
-//			1.0f, 2.0f, 3.0f, 4.0f,
-//			0.0f, 0.0f, 0.0f, 1.0f);
-
-//std::cout << sizeof(mat) << "\n";
-//uint8_t* ptr = reinterpret_cast<uint8_t*>(&mat);
-
-//for (int i = 0; i < sizeof(mat); i++) {
-//	
-//	std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)*ptr++;
-//	std::cout << " ";
-//	if(i % 4 == 3) std::cout << "| ";
-//}
-//return 0;
