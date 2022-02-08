@@ -10,27 +10,27 @@ ShaderProgram::ShaderProgram() {
 
 
 void ShaderProgram::addFragment(const char** source) {
-	unsigned int fragId = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragId, 1, source, nullptr);
-	glCompileShader(fragId);
-
-	checkShaderErorrs(fragId);
-
-	glAttachShader(id, fragId);
-
-	glDeleteShader(fragId);
+	addShader(source, GL_FRAGMENT_SHADER);
 }
 
 void ShaderProgram::addVertex(const char** source) {
-	unsigned int vertId = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertId, 1, source, nullptr);
-	glCompileShader(vertId);
+	addShader(source, GL_VERTEX_SHADER);
+}
 
-	checkShaderErorrs(vertId);
+void ShaderProgram::addGeometry(const char** source) {
+	addShader(source, GL_GEOMETRY_SHADER);
+}
 
-	glAttachShader(id, vertId);
+void ShaderProgram::addShader(const char** source, GLenum shaderType) {
+	unsigned int shaderId = glCreateShader(shaderType);
+	glShaderSource(shaderId, 1, source, nullptr);
+	glCompileShader(shaderId);
 
-	glDeleteShader(vertId);
+	checkShaderErorrs(shaderId);
+
+	glAttachShader(id, shaderId);
+
+	glDeleteShader(shaderId);
 }
 
 void ShaderProgram::linkProgram() {

@@ -11,6 +11,8 @@ class ShaderProgram {
 	unsigned id;
 	void checkShaderErorrs(unsigned int id);
 	UniformProvider up;
+
+	void addShader(const char** source, GLenum shaderType);
 public:
 	ShaderProgram();
 	~ShaderProgram();
@@ -37,6 +39,8 @@ public:
 	void addFragment(const char** source);
 
 	void addVertex(const char** source);
+
+	void addGeometry(const char** source);
 
 	void linkProgram();
 
