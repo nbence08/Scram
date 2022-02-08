@@ -63,7 +63,7 @@ public:
 	T& getComponent() {
 		int typeId = getTypeId<T>();
 		if (componentBits.test(typeId)) {
-			T* t = reinterpret_cast<T*>(components[typeId].get());
+			T* t = static_cast<T*>(components[typeId].get());
 			return *t;
 		}
 		else {
