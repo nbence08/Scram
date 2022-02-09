@@ -67,9 +67,9 @@ public:
 	Framebuffer(int width, int height, FboCreateInfo createInfo);
 	Framebuffer(FboCreateInfo createInfo);
 
-	void createColorBuffer(int width, int height);
-	void createDepthBuffer(int width, int height);
-	void createStencilBuffer(int width, int height);
+	void createColorBuffer();
+	void createDepthBuffer();
+	void createStencilBuffer();
 
 
 	void setColorBuffer(std::shared_ptr<Texture2D> colorBuffer);
