@@ -36,6 +36,8 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 	this->hollowUnbind();
 }
 
+Framebuffer::Framebuffer(FboCreateInfo createInfo):Framebuffer(createInfo.width, createInfo.height, createInfo) {}
+
 void Framebuffer::createColorBuffer(int width, int height) {
 	this->hollowBind();
 

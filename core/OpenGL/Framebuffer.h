@@ -11,7 +11,7 @@
 
 /// <summary>
 /// struct for signalling the Framebuffer constructor
-/// the types of buffers it should create
+/// the types of buffers it should create, and the width, and height of those buffers
 /// multisampled versions are to be added later for antialiasing and different postprocessing methods
 /// </summary>
 struct FboCreateInfo {
@@ -19,6 +19,7 @@ struct FboCreateInfo {
 	bool depthBuffer;
 	bool stencilBuffer;
 	bool depthStencilBuffer;
+	int width, height;
 };
 
 class Framebuffer;
@@ -64,6 +65,7 @@ public:
 	Framebuffer(const Framebuffer&) = delete;
 	Framebuffer& operator=(const Framebuffer&) = delete;
 	Framebuffer(int width, int height, FboCreateInfo createInfo);
+	Framebuffer(FboCreateInfo createInfo);
 
 	void createColorBuffer(int width, int height);
 	void createDepthBuffer(int width, int height);
