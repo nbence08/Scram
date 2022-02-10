@@ -2,9 +2,7 @@
 #include <vector>
 
 #include "core/OpenGL/Texture2D.h"
-#include "CTMaterial.h"
 #include "core/math/linear_algebra.hpp"
-#include "Entity.h"
 #include "core/OpenGL/VertexArray.h"
 #include "core/OpenGL/Buffer.h"
 #include "ComponentBase.hpp"
@@ -26,7 +24,6 @@ class Mesh : public ComponentBase{
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
 
-	friend class Entity;
 public:
 
 	const uint64_t uid;
