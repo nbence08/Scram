@@ -9,7 +9,7 @@
 #include "TextureUnit.h"
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
-#include "components/CTMaterial.h"
+#include "components/Material.h"
 
 class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;
@@ -18,8 +18,6 @@ class UniformProvider{
 		std::variant<float, double, int, Vector2, Vector3, Vector4, Matrix3, Matrix4>
 	> valueCache;*/
 	
-	//TOTO: add tracking to track uniform array indexes, so no need to specify array indices
-
 	unsigned int programId;
 
 	unsigned int getUniformLocation(std::string name) {
@@ -126,7 +124,7 @@ public:
 
 	//TODO: add setLight for SpotLights
 
-	void setMaterial(const CTMaterial& material,int index, std::string arrayName = "materials") {
+	void setMaterial(const Material& material,int index, std::string arrayName = "materials") {
 		bool albedo_is_texture;
 		if (material.albedo.index() == 0) { //Vector3
 			

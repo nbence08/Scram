@@ -9,10 +9,10 @@
 
 //TODO: doesn't work when using doubles as real_t
 //Cook-Torrance material
-class CTMaterial : public ComponentBase{
+class Material : public ComponentBase{
 public:
 
-	CTMaterial() {
+	Material() {
 		metalness = 0.5;
 		smoothness = 0.5;
 	}
@@ -44,4 +44,4 @@ public:
 };
 
 
-static std::unordered_map<int, CTMaterial*> materials;
+static std::unordered_map<int, Material*> materials;

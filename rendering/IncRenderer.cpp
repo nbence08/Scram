@@ -55,7 +55,7 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 	quadProgram.use();
 
 	quadUniforms = &quadProgram.getUniformProvider();
-	
+
 }
 
 void IncRenderer::setCullFace(bool cullFace) {
@@ -93,7 +93,7 @@ void IncRenderer::draw(Scene& scene) {
 		shadowBuffer.setDepthBuffer(dirLight.shadowMap);
 		shadowBuffer.bind();
 
-		glViewport(0, 0, 800, 600);
+		//glViewport(0, 0, 800, 600);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		for (std::shared_ptr<Entity> entity : objects) {
@@ -221,7 +221,7 @@ void IncRenderer::setProcessMeshModelMatrix(std::shared_ptr<Entity> entity) {
 }
 
 void IncRenderer::setEntityMaterial(std::shared_ptr<Entity> entity) {
-	const auto& material = entity->getComponent<CTMaterial>();
+	const auto& material = entity->getComponent<Material>();
 
 	processUniforms->setMaterial(material, 0);
 }

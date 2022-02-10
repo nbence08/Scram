@@ -22,7 +22,7 @@ extern int componentTypeCounter = 0;
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
 
-#include "components/CTMaterial.h"
+#include "components/Material.h"
 #include "core/CubeData.hpp"
 
 #include "rendering/Scene.h"

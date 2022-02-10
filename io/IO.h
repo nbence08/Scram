@@ -155,8 +155,8 @@ namespace IO{
 
 			//const auto albedoLoadRes = aiMaterial->GetTexture(aiTextureType_BASE_COLOR, 0, );
 
-			entity.addComponent<CTMaterial>();
-			CTMaterial& ctMat = entity.getComponent<CTMaterial>();
+			entity.addComponent<Material>();
+			Material& ctMat = entity.getComponent<Material>();
 
 
 			if (albedoTexCount > 0) {
