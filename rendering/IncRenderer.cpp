@@ -89,6 +89,7 @@ void IncRenderer::draw(Scene& scene) {
 		}
 
 		shadowUniforms->setLight(dirLight, 0);
+		shadowUniforms->setUniform("lightIndex", 0);
 
 		shadowBuffer.setDepthBuffer(dirLight.shadowMap);
 		shadowBuffer.bind();
