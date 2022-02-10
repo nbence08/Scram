@@ -5,6 +5,7 @@ VertexArray::VertexArray(VertexArray&& vao) noexcept {
 }
 
 VertexArray& VertexArray::operator=(VertexArray&& vao) noexcept{
+	if (this == &vao) return *this;
 	this->id = vao.id;
 	this->boundBuffers = std::move(vao.boundBuffers);
 	this->vam = vao.vam;

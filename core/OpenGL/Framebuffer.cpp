@@ -169,6 +169,7 @@ void Framebuffer::setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer) {
 }
 
 Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
+	if(this == &other) return *this;
 	this->colorBuffer = other.colorBuffer;
 	this->depthBuffer = other.depthBuffer;
 	this->stencilBuffer = other.stencilBuffer;

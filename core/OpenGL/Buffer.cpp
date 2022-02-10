@@ -5,6 +5,7 @@ Buffer::Buffer(Buffer&& other) noexcept{
 }
 
 Buffer& Buffer::operator=(Buffer&& other) noexcept {
+	if(this == &other) return *this;
 	this->id = other.id;
 	this->vao = other.vao;
 	this->bufferType = other.bufferType;
