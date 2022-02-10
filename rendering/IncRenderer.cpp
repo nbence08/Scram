@@ -26,8 +26,8 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 
 
 	// to be moved away from here
-	std::string prepVert = IO::readFile("shaders/preProcess.vert");
-	std::string prepFrag = IO::readFile("shaders/preProcess.frag");
+	std::string prepVert = IO::readFile("shaders/dirShadow.vert");
+	std::string prepFrag = IO::readFile("shaders/dirShadow.frag");
 
 	const char* prepVertPtr = prepVert.c_str();
 	const char* prepFragPtr = prepFrag.c_str();
