@@ -6,6 +6,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "core/Global_Props.hpp"
 #include "Texture2D.h"
 
 
@@ -50,6 +51,26 @@ private:
 	void hollowUnbind();
 
 	void setAttachment(GLenum bufferType, std::shared_ptr<Texture2D> texture);
+
+	inline Framebuffer(unsigned int id) {
+		if (id == 0) {
+			this->id = id;
+			hasColorBuffer = true;
+			hasDepthBuffer = true;
+			hasStencilBuffer = true;
+			hasDepthStencilBuffer = true;
+			frameWidth = global::screenWidth;
+			frameHeight = global::screenHeight;
+		}
+
+		this->id = false;
+		hasColorBuffer = false;
+		hasDepthBuffer = false;
+		hasStencilBuffer = false;
+		hasDepthStencilBuffer = false;
+		frameWidth = global::screenWidth;
+		frameHeight = global::screenHeight;
+	}
 public:
 	
 	inline Framebuffer() {
@@ -60,6 +81,11 @@ public:
 		hasStencilBuffer = false;
 		hasDepthStencilBuffer = false;
 	}
+
+	static inline Framebuffer getDefault() {
+		return Framebuffer(0);
+	}
+
 	Framebuffer(Framebuffer&& other) noexcept;
 	~Framebuffer();
 	Framebuffer(const Framebuffer&) = delete;
