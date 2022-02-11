@@ -10,6 +10,7 @@
 #include "components/PointLight.h"
 #include "components/DirectionalLight.h"
 #include "components/Material.h"
+#include "main/Logger.h"
 
 class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;
@@ -34,11 +35,9 @@ public:
 	UniformProvider() { programId = 0; }
 	UniformProvider(unsigned int programId):programId(programId) {}
 
-
 	void setUniform(std::string name, bool value) {
 		setUniform(name, (int)value);
 	}
-
 
 	void setUniform(std::string name, float value) {
 		unsigned int location = getUniformLocation(name);

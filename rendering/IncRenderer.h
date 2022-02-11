@@ -8,32 +8,26 @@
 #include "core/OpenGL/VertexArray.h"
 #include "core/OpenGL/Buffer.h"
 #include "core/OpenGL/ShaderProgram.h"
-#include "io/IO.h"
+#include "core/OpenGL/Framebuffer.h"
 #include "core/CubeData.hpp"
+#include "core/Global_Props.hpp"
+#include "core/math/linear_algebra.hpp"
+
+#include "io/IO.h"
+
 #include "components/PerspectiveCamera.h"
 #include "components/Transform.h"
-#include "core/math/linear_algebra.hpp"
-#include "Scene.h"
-#include "core/OpenGL/Framebuffer.h"
 
-#include "core/Global_Props.hpp"
+#include "Scene.h"
+#include "Pass.h"
+#include "PassBuilder.h"
 
 //incremental renderer
 class IncRenderer {
-	/*
-	This could can be used for the occasion, when multiple vbos would be used with a single vao, for the renderer
-	It requires some modification, but it could be used in the future
 
-	//mesh uid -> vbo id
-	using meshId = uint64_t;
-
-	std::unordered_map<meshId, std::shared_ptr<Buffer>> vbos;
-	std::unordered_map<meshId, std::shared_ptr<Buffer>> ebos;
-
-	void loadMeshVertices(Mesh& mesh);
-
-	void loadMeshIndices(Mesh& mesh);
-	*/
+	std::vector<std::shared_ptr<Pass>> preProcess;
+	std::shared_ptr<Pass> process;
+	std::vector<std::shared_ptr<Pass>> postProcess;
 
 	void setEntityUniforms(std::shared_ptr<Entity> model);
 
@@ -41,7 +35,18 @@ class IncRenderer {
 
 	void setEntityMaterial(std::shared_ptr<Entity> entity);
 
+	void addDefaultShaders();
+	void addPreProcessPass(Pass&& pass) {
+		preProcess.emplace_back(std::make_shared<Pass>(pass));
+	}
 
+	void addProcessPass(Pass&& pass) {
+		process = std::make_shared<Pass>(pass);
+	}
+
+	void addPostProcessPass(Pass&& pass) {
+		postProcess.emplace_back(std::make_shared<Pass>(pass));
+	}
 
 	ShaderProgram processProgram;
 	UniformProvider* processUniforms;
