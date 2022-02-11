@@ -50,6 +50,11 @@ public:
 		return id;
 	}
 
+	template <typename... T>
+	void inline setUniform(std::string name, T... t) {
+		up.setUniform(name, t...);
+	}
+
 	UniformProvider& getUniformProvider() { return up; }
 };
 
