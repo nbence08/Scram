@@ -15,10 +15,6 @@ public:
 	Transform(const Vector3& translation, const Vector3& rotation, const Vector3& scale):
 			scale(scale), rotation(rotation), translation(translation) {}
 
-	int getTypeId() override {
-		return getComponentTypeId<Transform>();
-	}
-
 	Matrix4 model() {
 		return math::translate(translation)*
 			   math::rotate(rotation.x, Vector3(1.0, 0.0, 0.0))*
@@ -26,4 +22,8 @@ public:
 			   math::rotate(rotation.z, Vector3(0.0, 0.0, 1.0))*
 			   math::scale(scale.x, scale.y, scale.z);
 	}
+
+	void setScale(const Vector3& scale){ this->scale = scale; }
+	void setTranslation(const Vector3& translation) { this->translation = translation; }
+	void setRotation(const Vector3& rotation) { this->rotation = rotation; }
 };

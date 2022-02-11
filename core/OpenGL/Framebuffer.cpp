@@ -14,7 +14,7 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 	glGenFramebuffers(1, &id);
 	this->hollowBind();
 	if (createInfo.colorBuffer) {
-		createColorBuffer(width, height);
+		createColorBuffer();
 	}
 
 	if (createInfo.depthStencilBuffer) {
@@ -22,10 +22,10 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 		//TODO: implement it
 	}
 	if (createInfo.depthBuffer && !createInfo.depthStencilBuffer) {
-		createDepthBuffer(width, height);
+		createDepthBuffer();
 	}
 	if (createInfo.stencilBuffer && !createInfo.depthStencilBuffer) {
-		createStencilBuffer(width, height);
+		createStencilBuffer();
 	}
 
 	if (!createInfo.colorBuffer) {
@@ -36,7 +36,9 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 	this->hollowUnbind();
 }
 
-void Framebuffer::createColorBuffer(int width, int height) {
+Framebuffer::Framebuffer(FboCreateInfo createInfo):Framebuffer(createInfo.width, createInfo.height, createInfo) {}
+
+void Framebuffer::createColorBuffer() {
 	this->hollowBind();
 
 	colorBuffer = std::make_shared<Texture2D>();
@@ -46,8 +48,8 @@ void Framebuffer::createColorBuffer(int width, int height) {
 	ImageData2D allocData;
 	allocData.format = GL_RGBA;
 	allocData.internalFormat = GL_RGBA;
-	allocData.width = width;
-	allocData.height = height;
+	allocData.width = frameWidth;
+	allocData.height = frameHeight;
 	allocData.level = 0;
 	allocData.type = GL_UNSIGNED_BYTE;
 	allocData.pixels = nullptr;
@@ -63,7 +65,7 @@ void Framebuffer::createColorBuffer(int width, int height) {
 	texUnit->unbind();
 }
 
-void Framebuffer::createDepthBuffer(int width, int height) {
+void Framebuffer::createDepthBuffer() {
 	this->hollowBind();
 
 	colorBuffer = std::make_shared<Texture2D>();
@@ -73,8 +75,8 @@ void Framebuffer::createDepthBuffer(int width, int height) {
 	ImageData2D allocData;
 	allocData.format = GL_DEPTH_COMPONENT;
 	allocData.internalFormat = GL_DEPTH_COMPONENT;
-	allocData.width = width;
-	allocData.height = height;
+	allocData.width = frameWidth;
+	allocData.height = frameHeight;
 	allocData.level = 0;
 	allocData.type = GL_UNSIGNED_BYTE;
 	allocData.pixels = nullptr;
@@ -89,7 +91,7 @@ void Framebuffer::createDepthBuffer(int width, int height) {
 	this->hollowUnbind();
 }
 
-void Framebuffer::createStencilBuffer(int width, int height) {
+void Framebuffer::createStencilBuffer() {
 	this->hollowBind();
 
 	colorBuffer = std::make_shared<Texture2D>();
@@ -99,8 +101,8 @@ void Framebuffer::createStencilBuffer(int width, int height) {
 	ImageData2D allocData;
 	allocData.format = GL_STENCIL_INDEX;
 	allocData.internalFormat = GL_STENCIL_INDEX;
-	allocData.width = width;
-	allocData.height = height;
+	allocData.width = frameWidth;
+	allocData.height = frameHeight;
 	allocData.level = 0;
 	allocData.type = GL_UNSIGNED_BYTE;
 	allocData.pixels = nullptr;
@@ -167,6 +169,7 @@ void Framebuffer::setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer) {
 }
 
 Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
+	if(this == &other) return *this;
 	this->colorBuffer = other.colorBuffer;
 	this->depthBuffer = other.depthBuffer;
 	this->stencilBuffer = other.stencilBuffer;
@@ -185,7 +188,7 @@ Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
 }
 
 Framebuffer::Framebuffer(Framebuffer&& other) noexcept {
-	*this = std::move(other);
+	*this = std::forward<Framebuffer>(other);
 }
 
 Framebuffer::~Framebuffer() {

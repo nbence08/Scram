@@ -2,11 +2,13 @@
 #include <stdexcept>
 #include <string>
 
-static int componentTypeCounter = 0;
+
+extern int componentTypeCounter;
 const static int MAX_COMPONENTS = 32;
 
+
 template <typename T>
-int getComponentTypeId() {
+int getTypeId() {
 	if (componentTypeCounter == 32) {
 		throw std::logic_error("Maximum number of components cannot exceed "+ std::to_string(MAX_COMPONENTS));
 	}
@@ -15,6 +17,5 @@ int getComponentTypeId() {
 }
 
 class ComponentBase {
-public:
-	virtual int getTypeId() = 0;
+
 };

@@ -12,10 +12,11 @@ struct DirectionalLight{
 };
 
 const int dirLightsLen = 1;
-uniform DirectionalLight dirLights[dirLightsLen];
 
+uniform DirectionalLight dirLights[dirLightsLen];
+uniform int lightIndex;
 uniform mat4 model;
 
 void main(){
-	gl_Position = (dirLights[0].lightMatrix*model*vec4(pos, 1.0));
+	gl_Position = (dirLights[lightIndex].lightMatrix*model*vec4(pos, 1.0));
 }

@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/rendering/ShaderUniformManager.h
+/rendering/ShaderUniformManager.cpp
+/rendering/ShaderOutput.h
+/rendering/ShaderOutput.cpp
+/rendering/ShaderInput.h
+/rendering/ShaderInput.cpp
+/rendering/AttribDescriptor.h
+/rendering/AttribDescriptor.cpp

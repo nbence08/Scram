@@ -11,6 +11,8 @@ class ShaderProgram {
 	unsigned id;
 	void checkShaderErorrs(unsigned int id);
 	UniformProvider up;
+
+	void addShader(const char** source, GLenum shaderType);
 public:
 	ShaderProgram();
 	~ShaderProgram();
@@ -20,7 +22,7 @@ public:
 	ShaderProgram& operator=(const ShaderProgram&) = delete;
 
 	ShaderProgram(ShaderProgram&& other) noexcept {
-		*this = std::move(other);
+		*this = std::forward<ShaderProgram>(other);
 	}
 
 	ShaderProgram& operator=(ShaderProgram&& other) noexcept {
@@ -38,12 +40,19 @@ public:
 
 	void addVertex(const char** source);
 
+	void addGeometry(const char** source);
+
 	void linkProgram();
 
 	void use();
 
 	inline unsigned int getId() const {
 		return id;
+	}
+
+	template <typename... T>
+	void inline setUniform(std::string name, T... t) {
+		up.setUniform(name, t...);
 	}
 
 	UniformProvider& getUniformProvider() { return up; }

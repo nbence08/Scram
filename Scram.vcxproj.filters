@@ -81,7 +81,7 @@
     <ClCompile Include="core\OpenGL\ShaderProgram.cpp">
       <Filter>core\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="components\CTMaterial.cpp">
+    <ClCompile Include="components\Material.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="components\DirectionalLight.cpp">
@@ -90,7 +90,7 @@
     <ClCompile Include="components\Mesh.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="components\Model.cpp">
+    <ClCompile Include="components\Entity.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="components\PerspectiveCamera.cpp">
@@ -112,6 +112,15 @@
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="rendering\Pass.cpp">
+      <Filter>rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Camera.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="main\Logger.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="rendering\PassBuilder.cpp">
       <Filter>rendering</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,7 +188,7 @@
     <ClInclude Include="core\Struct_Definitions.hpp">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="components\CTMaterial.h">
+    <ClInclude Include="components\Material.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\DirectionalLight.h">
@@ -188,7 +197,7 @@
     <ClInclude Include="components\Mesh.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="components\Model.h">
+    <ClInclude Include="components\Entity.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\PerspectiveCamera.h">
@@ -210,6 +219,21 @@
       <Filter>rendering</Filter>
     </ClInclude>
     <ClInclude Include="rendering\Pass.h">
+      <Filter>rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentBase.hpp">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Camera.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Transform.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="main\Logger.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="rendering\PassBuilder.h">
       <Filter>rendering</Filter>
     </ClInclude>
   </ItemGroup>
@@ -235,10 +259,10 @@
     <None Include="resources\models\bsg_pegasus.mtl">
       <Filter>resources\models</Filter>
     </None>
-    <None Include="shaders\preProcess.frag">
+    <None Include="shaders\dirShadow.frag">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\preProcess.vert">
+    <None Include="shaders\dirShadow.vert">
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\postProcessor.frag">

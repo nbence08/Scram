@@ -10,9 +10,6 @@ const real_t ORTHOGONAL_EDGE_SIZE = 400;
 
 class DirectionalLight : public ComponentBase {
 public:
-	int getTypeId() override {
-		return getComponentTypeId<DirectionalLight>();
-	}
 
 	Vector3 intensity;
 	//direction of fragments to light source
