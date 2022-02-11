@@ -47,4 +47,3 @@ public:
 	void setCullFace(bool cullFace);
 	void draw(Scene& scene);
 };
-

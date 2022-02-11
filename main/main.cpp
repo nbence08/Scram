@@ -3,7 +3,6 @@
 extern int componentTypeCounter = 0;
 
 #include <iostream>
-
 #include <fstream>
 #include <iterator>
 
@@ -20,7 +19,7 @@ int main() {
 	}
 	catch (std::runtime_error err) {
 		std::cout << err.what() <<"\n";
-		return -1;
+		return EXIT_FAILURE;
 	}
 
 	auto currentFrame = glfwGetTime();
@@ -81,4 +80,5 @@ int main() {
 
 	textureUnits.clear();
 	glfwTerminate();
+	return EXIT_SUCCESS;
 }
