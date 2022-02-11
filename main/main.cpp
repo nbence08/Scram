@@ -3,32 +3,11 @@
 extern int componentTypeCounter = 0;
 
 #include <iostream>
-
 #include <fstream>
 #include <iterator>
 
 #include "core/OpenGL/OpenGLContext.h"
-#include "core/Preprocess_Definitions.h"
-
-#include "core/OpenGL/ShaderProgram.h"
-#include "core/math/linear_algebra.hpp"
-#include "core/OpenGL/VertexArray.h"
-#include "core/OpenGL/Buffer.h"
-
-#include "io/IO.h"
-#include "glm/glm.hpp"
-#include "components/PerspectiveCamera.h"
-#include "components/Transform.h"
-#include "components/PointLight.h"
-#include "components/DirectionalLight.h"
-
-#include "components/Material.h"
-#include "core/CubeData.hpp"
-
-#include "rendering/Scene.h"
 #include "rendering/IncRenderer.h"
-
-#include "components/Entity.h"
 
 int main() {
 
@@ -40,7 +19,7 @@ int main() {
 	}
 	catch (std::runtime_error err) {
 		std::cout << err.what() <<"\n";
-		return -1;
+		return EXIT_FAILURE;
 	}
 
 	auto currentFrame = glfwGetTime();
@@ -101,4 +80,5 @@ int main() {
 
 	textureUnits.clear();
 	glfwTerminate();
+	return EXIT_SUCCESS;
 }

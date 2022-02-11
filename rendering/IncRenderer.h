@@ -29,42 +29,21 @@ class IncRenderer {
 	std::shared_ptr<Pass> process;
 	std::vector<std::shared_ptr<Pass>> postProcess;
 
-	void setEntityUniforms(std::shared_ptr<Entity> model);
-
-	void setProcessMeshModelMatrix(std::shared_ptr<Entity> model);
-
-	void setEntityMaterial(std::shared_ptr<Entity> entity);
-
 	void addDefaultShaders();
-	void addPreProcessPass(Pass&& pass) {
+	inline void addPreProcessPass(Pass&& pass) {
 		preProcess.emplace_back(std::make_shared<Pass>(pass));
 	}
 
-	void addProcessPass(Pass&& pass) {
+	inline void addProcessPass(Pass&& pass) {
 		process = std::make_shared<Pass>(pass);
 	}
 
-	void addPostProcessPass(Pass&& pass) {
+	inline void addPostProcessPass(Pass&& pass) {
 		postProcess.emplace_back(std::make_shared<Pass>(pass));
 	}
 
-	ShaderProgram processProgram;
-	UniformProvider* processUniforms;
-
-	UniformProvider* shadowUniforms;
-	Framebuffer shadowBuffer;
-	ShaderProgram shadowProgram;
-
-	ShaderProgram quadProgram;
-	UniformProvider* quadUniforms;
-
 public:
 	IncRenderer(std::string defaultShaderName = "shaders/incremental");
-
 	void setCullFace(bool cullFace);
-
 	void draw(Scene& scene);
-	void shadowRenderEntity(std::shared_ptr<Entity> entity);
-	void renderEntity(std::shared_ptr<Entity> entity, PerspectiveCamera& camera);
 };
-
