@@ -1,4 +1,5 @@
 #pragma once
+#include "Preprocess_Definitions.h"
 #include <string>
 
 namespace global {
@@ -9,4 +10,5 @@ namespace global {
 	static int shadowHeight = 1200;
 
 	static std::string shaderNamePrefix = "shaders/";
+	static real_t shadowProjEdgeSize = 400.0;
 }

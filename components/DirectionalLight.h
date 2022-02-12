@@ -5,9 +5,6 @@
 #include "core/Global_Props.hpp"
 #include "ComponentBase.hpp"
 
-//this will be managable, and most definitely not a const in the future
-const real_t ORTHOGONAL_EDGE_SIZE = 400;
-
 class DirectionalLight : public ComponentBase {
 public:
 

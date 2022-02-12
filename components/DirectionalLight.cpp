@@ -24,7 +24,7 @@ Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 
 	Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
 	//ideally position for the getLookAt would be ahead of the position of the camera, in its direction
-	Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * ORTHOGONAL_EDGE_SIZE/2);
+	Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize /2);
 
 	return mat4_1 * mat4_2;
 }
