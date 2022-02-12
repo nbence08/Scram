@@ -55,6 +55,11 @@ public:
 		up.setUniform(name, t...);
 	}
 
+	template <typename... T>
+	void inline setUniform(T... t) {
+		up.setUniform(t...);
+	}
+
 	UniformProvider& getUniformProvider() { return up; }
 };
 
