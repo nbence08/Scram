@@ -13,18 +13,17 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 
 	auto pass = std::make_shared<Pass>(shaderName, createInfo);
 
-	pass->prepareEntity = [pass = pass.get(), &up = pass->getProgram()->getUniformProvider()](Entity& entity) {
-		up.setUniform("model", entity.model());
+	pass->prepareEntity = [program = pass->getProgram().get()](Entity& entity) {
+		program->setUniform("model", entity.model());
 	};
 
-	pass->prepareScene = [pass = pass.get()](Scene& scene) {
+	pass->prepareScene = [pass = pass.get(), program = pass->getProgram().get()](Scene& scene) {
 
-		auto& up = pass->getProgram()->getUniformProvider();
 		auto& dirLights = scene.getDirLights();
 		for (size_t i = 0; i < dirLights.size(); i++) {
 			auto& dirLight = dirLights[i];
 			if (dirLight.shadowMap.get() != nullptr) {
-				up.setLight(dirLight, i);
+				program->setUniform((const DirectionalLight)dirLight, (int)i);
 
 				pass->addTextureOutput("dirLightShadow[" + i + ']', dirLight.shadowMap);
 			}
@@ -53,7 +52,7 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 	return pass;
 }
 
-std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo = true) {
+std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 
 	std::string shaderName = "incremental";
 
@@ -73,19 +72,19 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo = true) {
 		pass = std::make_shared<Pass>(shaderName, createInfo);
 	}
 
-	pass->prepareScene = [pass = pass.get(), &up = pass->getProgram()->getUniformProvider()](Scene& scene) {
+	pass->prepareScene = [pass = pass.get(), program = pass->getProgram()](Scene& scene) {
 
 		auto& dirLights = scene.getDirLights();
 		for (size_t i = 0; i < dirLights.size(); i++) {
 			auto& dirLight = dirLights[i];
-			up.setLight(dirLight, i);
+			program->setUniform(dirLight, i);
 			pass->addTextureInput("dirLightShadow[" + i + ']', dirLight.shadowMap);
 		}
 
 		auto& pointLights = scene.getPointLights();
 		for (size_t i = 0; i < pointLights.size(); i++) {
 			auto& pointLight = pointLights[i];
-			up.setLight(pointLight, i);
+			program->setUniform(pointLight, i);
 			//pass->addTextureInput("pointLightShadow[" + i + ']', pointLight.shadowMap);
 		}
 
@@ -97,9 +96,9 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo = true) {
 		}*/
 
 		auto& camera = scene.getCamera();
-		up.setUniform("view", camera.view());
-		up.setUniform("projection", camera.projection());
-		up.setUniform("cameraPos", Vector3(camera.getPosition()));
+		program->setUniform("view", camera.view());
+		program->setUniform("projection", camera.projection());
+		program->setUniform("cameraPos", Vector3(camera.getPosition()));
 	};
 
 	pass->prepareEntity = [pass = pass.get(), &up = pass->getProgram()->getUniformProvider()](Entity& entity) {

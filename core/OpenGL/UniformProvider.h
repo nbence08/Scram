@@ -121,6 +121,14 @@ public:
 		}
 	}
 
+	void setUniform(const DirectionalLight& light, int index, std::string arrayName = "dirLights") {
+		setLight(light, index, arrayName);
+	}
+
+	void setUniform(const PointLight& light, int index, std::string arrayName = "pointLights") {
+		setLight(light, index, arrayName);
+	}
+
 	//TODO: add setLight for SpotLights
 
 	void setMaterial(const Material& material,int index, std::string arrayName = "materials") {
@@ -167,5 +175,8 @@ public:
 		}
 	}
 
+	void setUniform(const Material& material, int index, std::string arrayName = "materials") {
+		setMaterial(material, index, arrayName);
+	}
 };
 
