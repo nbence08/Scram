@@ -22,7 +22,7 @@
 
 class TextureUnit;
 
-class Texture2D{
+class Texture2D {
 	unsigned int id;
 	std::weak_ptr<TextureUnit> textureUnit;
 
@@ -44,6 +44,7 @@ public:
 	inline std::shared_ptr<TextureUnit> getTextureUnit(){ return textureUnit.lock(); }
 	void unsetTextureUnit();
 	unsigned int getId() { return id; }
+	void initialize();
 
 	~Texture2D();
 	bool isBoundToTextureUnit();

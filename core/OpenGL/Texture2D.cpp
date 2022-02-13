@@ -27,7 +27,7 @@ Texture2D::~Texture2D() {
 
 bool Texture2D::isBoundToTextureUnit() {
 	if(!this->textureUnit.expired()){
-		return this->textureUnit.lock()->boundTexture.get() == this;
+		return this->textureUnit.lock()->doesBoundTextureMatch(this);
 	}
 	else return false;
 }
@@ -55,4 +55,13 @@ void Texture2D::bindToNewTextureUnit(std::shared_ptr<Texture2D> self){
 
 void Texture2D::unsetTextureUnit() {
 	textureUnit.reset();
+}
+
+void Texture2D::initialize() {
+
+	glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
+	glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
+	glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
+	glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+
 }

@@ -123,6 +123,9 @@
     <ClCompile Include="rendering\PassBuilder.cpp">
       <Filter>rendering</Filter>
     </ClCompile>
+    <ClCompile Include="core\OpenGL\TextureCube.cpp">
+      <Filter>core\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\math\linear_algebra.hpp">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="rendering\PassBuilder.h">
       <Filter>rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="core\OpenGL\TextureCube.h">
+      <Filter>core\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
