@@ -23,7 +23,7 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 		for (size_t i = 0; i < dirLights.size(); i++) {
 			auto& dirLight = dirLights[i];
 			if (dirLight.shadowMap.get() != nullptr) {
-				program->setUniform((const DirectionalLight)dirLight, (int)i);
+				program->setUniform(dirLight, i);
 
 				pass->addTextureOutput("dirLightShadow[" + i + ']', dirLight.shadowMap);
 			}
@@ -101,12 +101,12 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 		program->setUniform("cameraPos", Vector3(camera.getPosition()));
 	};
 
-	pass->prepareEntity = [pass = pass.get(), &up = pass->getProgram()->getUniformProvider()](Entity& entity) {
+	pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](Entity& entity) {
 		if (entity.hasComponent<Material>()) {
 			auto material = entity.getComponent<Material>();
-			up.setMaterial(material, 0);
+			program->setUniform(material, 0);
 		}
-		up.setUniform("model", entity.model());
+		program->setUniform("model", entity.model());
 	};
 	return pass;
 }
