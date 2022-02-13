@@ -47,40 +47,13 @@ private:
 
 
 	void hollowBind();
-
 	void hollowUnbind();
-
 	void setAttachment(GLenum bufferType, std::shared_ptr<Texture2D> texture);
 
-	inline Framebuffer(unsigned int id) {
-		if (id == 0) {
-			this->id = id;
-			hasColorBuffer = true;
-			hasDepthBuffer = true;
-			hasStencilBuffer = true;
-			hasDepthStencilBuffer = true;
-			frameWidth = global::screenWidth;
-			frameHeight = global::screenHeight;
-		}
-
-		this->id = false;
-		hasColorBuffer = false;
-		hasDepthBuffer = false;
-		hasStencilBuffer = false;
-		hasDepthStencilBuffer = false;
-		frameWidth = global::screenWidth;
-		frameHeight = global::screenHeight;
-	}
+	Framebuffer(unsigned int id);
 public:
 	
-	inline Framebuffer() {
-		glGenFramebuffers(1, &id);
-		frameHeight = frameWidth = 0;
-		hasColorBuffer = false;
-		hasDepthBuffer = false;
-		hasStencilBuffer = false;
-		hasDepthStencilBuffer = false;
-	}
+	Framebuffer();
 
 	static inline Framebuffer getDefault() {
 		return Framebuffer(0);

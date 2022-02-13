@@ -1,5 +1,34 @@
 #include "Framebuffer.h"
 
+Framebuffer::Framebuffer(unsigned int id) {
+	if (id == 0) {
+		this->id = id;
+		hasColorBuffer = true;
+		hasDepthBuffer = true;
+		hasStencilBuffer = true;
+		hasDepthStencilBuffer = true;
+		frameWidth = global::screenWidth;
+		frameHeight = global::screenHeight;
+	}
+
+	this->id = false;
+	hasColorBuffer = false;
+	hasDepthBuffer = false;
+	hasStencilBuffer = false;
+	hasDepthStencilBuffer = false;
+	frameWidth = global::screenWidth;
+	frameHeight = global::screenHeight;
+}
+
+Framebuffer::Framebuffer() {
+	glGenFramebuffers(1, &id);
+	frameHeight = frameWidth = 0;
+	hasColorBuffer = false;
+	hasDepthBuffer = false;
+	hasStencilBuffer = false;
+	hasDepthStencilBuffer = false;
+}
+
 void Framebuffer::hollowBind() {
 	if (boundFramebuffer == this->id) return;
 	glBindFramebuffer(GL_FRAMEBUFFER, id);
