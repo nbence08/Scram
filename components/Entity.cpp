@@ -6,7 +6,7 @@ Entity::Entity() {
 	parent = nullptr;
 }
 
-std::shared_ptr<Entity> Entity::addChild() {
+std::shared_ptr<Entity> Entity::createChild() {
 	children.push_back(std::make_shared<Entity>());
 	auto child = children[children.size() - 1];
 	child->parent = this;
@@ -18,8 +18,7 @@ std::vector<std::shared_ptr<Entity>>& Entity::getChildren() {
 }
 
 Matrix4 Entity::model() {
-	auto transformId = getTypeId<Transform>();
-	if (componentBits.test(transformId)) {
+	if (hasComponent<Transform>()) {
 		if (parent != nullptr) {
 			return parent->model() * getComponent<Transform>().model();
 		}
