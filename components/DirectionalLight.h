@@ -16,5 +16,9 @@ public:
 	Matrix4 getLightSpaceMatrix() const;
 
 	DirectionalLight();
+
+	inline bool hasShadowMap() const {
+		return shadowMap.get() != nullptr;
+	}
 };
 
