@@ -145,8 +145,31 @@ void Framebuffer::createStencilBuffer() {
 	this->hollowUnbind();
 }
 
-void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D> texture) {
 
+void Framebuffer::setColorBuffer(std::shared_ptr<Texture2D> colorBuffer) {
+	if(this->colorBuffer == colorBuffer) return;
+
+	this->colorBuffer = colorBuffer;
+	this->hasDepthBuffer = true;
+
+	setAttachment(GL_COLOR_ATTACHMENT0, this->colorBuffer);
+}
+
+template <typename T>
+void Framebuffer::setDepthBuffer(std::shared_ptr<T> depthBuffer) {
+	
+	if(depthBufferEquals(depthBuffer)) return;
+	
+	this->depthBuffer = depthBuffer;
+	this->hasDepthBuffer = true;
+
+	setAttachment(GL_DEPTH_ATTACHMENT, depthBuffer);
+}
+template void Framebuffer::setDepthBuffer<Texture2D>(std::shared_ptr<Texture2D> depthBuffer);
+template void Framebuffer::setDepthBuffer<TextureCube>(std::shared_ptr<TextureCube> depthBuffer);
+
+//WARNING: non-DRY friendly code ahead
+void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D> texture) {
 	this->hollowBind();
 	if (texture->isBoundToTextureUnit()) {
 		auto texUnit = texture->getTextureUnit();
@@ -169,24 +192,34 @@ void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D
 
 	this->hollowUnbind();
 }
+void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<TextureCube> texture) {
+	this->hollowBind();
+	if (texture->isBoundToTextureUnit()) {
+		auto texUnit = texture->getTextureUnit();
+		texUnit->bind();
 
-void Framebuffer::setColorBuffer(std::shared_ptr<Texture2D> colorBuffer) {
-	if(this->colorBuffer == colorBuffer) return;
 
-	this->colorBuffer = colorBuffer;
-	this->hasDepthBuffer = true;
+		glFramebufferTexture(GL_FRAMEBUFFER, attachmentType, texture->getId(), 0);
 
-	setAttachment(GL_COLOR_ATTACHMENT0, this->colorBuffer);
+
+		texUnit->unbind();
+	}
+	else {
+		auto texUnit = TextureUnit::getNewInstance();
+		texUnit->bind();
+		texUnit->bindTexture(texture);
+
+
+		glFramebufferTexture(GL_FRAMEBUFFER, attachmentType, texture->getId(), 0);
+
+
+		texUnit->unbindTexture();
+		texUnit->unbind();
+	}
+
+	this->hollowUnbind();
 }
-
-void Framebuffer::setDepthBuffer(std::shared_ptr<Texture2D> depthBuffer) {
-	if(this->depthBuffer == depthBuffer) return;
-	
-	this->depthBuffer = depthBuffer;
-	this->hasDepthBuffer = true;
-		
-	setAttachment(GL_DEPTH_ATTACHMENT, this->depthBuffer);
-}
+//end of non-DRY friendly code
 
 void Framebuffer::setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer) {
 	if(this->stencilBuffer == stencilBuffer) return;
