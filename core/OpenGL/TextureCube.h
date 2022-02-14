@@ -19,8 +19,8 @@ class TextureCube {
 	friend class TextureUnit;
 public:
 
-	TextureCube(GLenum magFilter = GL_LINEAR, GLenum minFilter = GL_LINEAR,
-		GLenum wrapR = GL_REPEAT, GLenum wrapS = GL_REPEAT, GLenum wrapT = GL_REPEAT);
+	TextureCube(GLenum magFilter = GL_NEAREST, GLenum minFilter = GL_NEAREST,
+		GLenum wrapR = GL_CLAMP_TO_EDGE, GLenum wrapS = GL_CLAMP_TO_EDGE, GLenum wrapT = GL_CLAMP_TO_EDGE);
 
 	int getTextureUnitNum();
 	void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);

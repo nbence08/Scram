@@ -3,7 +3,7 @@
 TextureCube::TextureCube(GLenum magFilter, GLenum minFilter,
 	GLenum wrapR, GLenum wrapS, GLenum wrapT) {
 
-	type = GL_TEXTURE_CUBE_MAP;;
+	type = GL_TEXTURE_CUBE_MAP;
 
 	//if type not in validTextureTypes, then reject
 
