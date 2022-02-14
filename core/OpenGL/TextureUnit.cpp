@@ -127,10 +127,13 @@ void TextureUnit::loadTexture(const ImageDataCube& d) {
 		std::shared_ptr<TextureCube> tex = std::get<std::shared_ptr<TextureCube>>(boundTexture);
 		hollowBind();
 
+		bool null = false;
 		for (int i = 0; i < 6; i++) {
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, d.level, d.internalFormat, d.width, d.height, 0, d.format, d.type, d.pixels[i]);
-			glGenerateMipmap(GL_TEXTURE_2D);
+			if(d.pixels[i] == nullptr) null = true;
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, d.level, d.internalFormat, d.size, d.size, 0, d.format, d.type, d.pixels[i]);
 		}
+
+		if (!null) glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
 		hollowUnbind();
 	}

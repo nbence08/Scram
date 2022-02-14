@@ -15,8 +15,7 @@ struct ImageData2D {
 struct ImageDataCube {
 	GLint level;
 	GLint internalFormat;
-	GLsizei width;
-	GLsizei height;
+	GLsizei size;
 	GLenum format;
 	GLenum type;
 
