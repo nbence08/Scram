@@ -16,6 +16,8 @@ struct PointLight{
 	vec3 intensity;
 	vec3 attenuation;
 	vec3 position;
+	mat4 lightMatrices[6];
+	float farPlane;
 	//effective range of light should be added to be able to optimize point lights calculations
 	//by being able to remove light calculations based completely on distance from fragPos
 };
@@ -46,8 +48,11 @@ uniform vec3 cameraPos;
 
 const int pointLightsLen = 1;
 uniform PointLight pointLights[pointLightsLen];
+uniform samplerCube pointLightsShadowMap[pointLightsLen];
+
 const int dirLightsLen = 1;
 uniform DirectionalLight dirLights[dirLightsLen];
+
 const int spotLightsLen = 1;
 uniform SpotLight spotLights[spotLightsLen];
 
@@ -106,12 +111,39 @@ vec3 cookTorranceCalculation(in vec3 texColor, in vec3 L, in vec3 V, in vec3 H, 
 		return clamp((fCookTorrance * ks + fLambert * kd) * (intensity) * NL, 0, 1000000);
 }
 
+//Percentage closer filtering for point lights
+float pointLitnessFactor(int i){
+	PointLight light = pointLights[i];
+
+	vec3 light2frag = fragPos - light.position.xyz;
+
+	float offset = 0.01*length(light2frag);
+	float factor = 0.0;
+	int maxOffset = 1;
+	for(int i = -maxOffset; i <= maxOffset; i++){
+		for(int j = -maxOffset; j <= maxOffset; j++){
+			for(int k = -maxOffset; k <= maxOffset; k++){
+				float texEl = texture(pointLightsShadowMap[i], vec3(light2frag.x+offset*i, light2frag.y+offset*j, light2frag.z+offset*k)).r;
+				factor += (texEl < length(light2frag)/light.farPlane - 0.01f)? 0:1;
+			}
+		}
+	}
+	float divided = factor/(pow(maxOffset*2+1, 3));
+	return clamp(divided/0.3, 0.0, 1.0);
+}
+
+
 //Cook-Torrance Point Lights
 vec3 ctPointLights(in vec4 texColor){
 	vec3 accu = vec3(0.0, 0.0, 0.0);
 	
 	for(int i = 0; i < pointLightsLen; i++){
 		PointLight light = pointLights[i];
+
+		float litness = pointLitnessFactor(i);
+		if(litness < 0.01){
+			continue;
+		}
 
 		vec3 L, V, H, F0;
 		L = normalize(light.position - fragPos);
@@ -123,8 +155,7 @@ vec3 ctPointLights(in vec4 texColor){
 	
 		float attenuationCoeff = 1.0/ (light.attenuation.x + light.attenuation.y*d + light.attenuation.z*d*d);
 
-		
-		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, light.intensity) * attenuationCoeff;
+		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, light.intensity) * attenuationCoeff * litness;
 	}
 	return  accu;
 }
@@ -136,11 +167,31 @@ bool isDirOccluded(int i){
 	return (texture(dirLights[i].shadowMap, lightProj.xy).r < lightProj.z-0.01);
 }
 
+//Percentage closer filtering for directional lights
+float dirLitnessFactor(int i){
+	vec3 lightProj = lightSpacePos.xyz / lightSpacePos.w;
+	lightProj = 0.5*lightProj + vec3(0.5f);
+
+	vec2 offset = 1.0/textureSize(dirLights[i].shadowMap,0);
+	float factor = 0.0;
+	int maxOffset = 1;
+	for(int i = -maxOffset; i <= maxOffset; i++){
+		for(int j = -maxOffset; j <= maxOffset; j++){
+			factor += (texture(dirLights[i].shadowMap, vec2(lightProj.x+offset.x*i, lightProj.y+offset.y*j)).r < lightProj.z)? 0:1;
+		}
+	}
+
+	float divided = factor/pow(maxOffset*2+1, 2);
+	if(divided > 0.3) return 1.0;
+	return clamp(divided, 0.0, 1.0);
+}
+
 vec3 ctDirLights(in vec4 texColor){
 	vec3 accu = vec3(0.0, 0.0, 0.0);
 
 	for(int i = 0; i < dirLightsLen; i++){
-		if(isDirOccluded(i)){
+		float litness = dirLitnessFactor(i);
+		if(litness < 0.01){
 			continue;
 		}
 
@@ -150,9 +201,9 @@ vec3 ctDirLights(in vec4 texColor){
 		H = normalize(L+V);
 		F0 = mix(vec3(0.04), texColor.xyz, materials[0].metalness);
 
-		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, dirLights[i].intensity);
+		accu += cookTorranceCalculation(texColor.xyz, L, V, H,  F0, dirLights[i].intensity) * litness;
 	}
-	return  accu;
+	return accu;
 }
 
 vec3 ctSpotLights(in vec4 texColor){
@@ -213,6 +264,6 @@ void main(){
 	}
 
 	float tcLength = length(texColor.xyz);
-	
+
 	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/2.2)), 1.0);
 }

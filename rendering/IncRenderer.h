@@ -46,4 +46,13 @@ public:
 	IncRenderer(std::string defaultShaderName = "shaders/incremental");
 	void setCullFace(bool cullFace);
 	void draw(Scene& scene);
+
+	void drawEntity(std::shared_ptr<Entity> obj);
+
+	std::shared_ptr<Framebuffer> sBuffer;
+	std::shared_ptr<ShaderProgram> sProgram;
+	UniformProvider* sUniforms;
+	std::shared_ptr<TextureCube> sTexture;
+
+
 };
