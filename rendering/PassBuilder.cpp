@@ -18,6 +18,9 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 	};
 
 	pass->prepareScene = [pass = pass.get(), program = pass->getProgram().get()](Scene& scene) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(0, 0, global::shadowWidth, global::shadowHeight);
+		glCullFace(GL_FRONT);
 
 		auto& dirLights = scene.getDirLights();
 		for (size_t i = 0; i < dirLights.size(); i++) {
@@ -31,7 +34,6 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 	};
 
 	auto passScene = [pass = pass.get()](Scene& scene){
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		auto program = pass->getProgram();
 		auto& up = pass->getProgram()->getUniformProvider();
@@ -73,26 +75,31 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 	}
 
 	pass->prepareScene = [pass = pass.get(), program = pass->getProgram()](Scene& scene) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(0, 0, global::screenWidth, global::screenHeight);
+		glCullFace(GL_BACK);
 
 		auto& dirLights = scene.getDirLights();
 		for (size_t i = 0; i < dirLights.size(); i++) {
 			auto& dirLight = dirLights[i];
 			program->setUniform(dirLight, i);
-			pass->addTextureInput("dirLightShadow[" + i + ']', dirLight.shadowMap);
+			pass->addTextureInput("dirLightShadow[" + std::to_string(i) + "].shadowMap", dirLight.shadowMap);
+			pass->addTextureOutput("dirLightShadow[" + std::to_string(i) + "].shadowMap", dirLight.shadowMap);
 		}
 
 		auto& pointLights = scene.getPointLights();
 		for (size_t i = 0; i < pointLights.size(); i++) {
 			auto& pointLight = pointLights[i];
 			program->setUniform(pointLight, i);
-			//pass->addTextureInput("pointLightShadow[" + i + ']', pointLight.shadowMap);
+			pass->addTextureInput("pointLights[" + std::to_string(i) + "].shadowCube", pointLight.shadowMap);
+			pass->addTextureOutput("pointLights[" + std::to_string(i) + "].shadowCube", pointLight.shadowMap);
 		}
 
 		/*auto& spotLights = scene.getSpotLights();
 		for (size_t i = 0; i < spotLights.size(); i++) {
 			auto& spotLight = spotLights[i];
 			up.setLight(spotLight, i);
-			//pass->addTextureInput("pointLightShadow[" + i + ']', pointLight.shadowMap);
+			//pass->addTextureInput("spotLights[" + i + ']', pointLight.shadowMap);
 		}*/
 
 		auto& camera = scene.getCamera();
@@ -109,4 +116,8 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 		program->setUniform("model", entity.model());
 	};
 	return pass;
+}
+
+std::shared_ptr<Pass> PassBuilder::buildPointShadowPass() {
+	return std::shared_ptr<Pass>(nullptr);
 }
