@@ -30,9 +30,7 @@ void TextureUnit::initTexture(const Texture2D& tex) {
 
 }
 
-TextureUnit::TextureUnit(int unitNum):unitNum(unitNum) {
-	deleted = false;
-}
+TextureUnit::TextureUnit(int unitNum):unitNum(unitNum) {}
 
 std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 	int minNum = 0;
