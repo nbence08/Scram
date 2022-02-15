@@ -34,6 +34,12 @@
     <Filter Include="main">
       <UniqueIdentifier>{fa326b76-3bea-454c-8e4e-d1e16700a4d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\lights">
+      <UniqueIdentifier>{85e6ad9b-3e38-4c9c-9936-54295db1a8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\visual">
+      <UniqueIdentifier>{c862167d-d8b9-4d19-ac23-a29713a583bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\math\Matrix3.cpp">
@@ -81,25 +87,7 @@
     <ClCompile Include="core\OpenGL\ShaderProgram.cpp">
       <Filter>core\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="components\Material.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\DirectionalLight.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\Mesh.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
     <ClCompile Include="components\Entity.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\PerspectiveCamera.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\PointLight.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\SpotLight.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="rendering\IncRenderer.cpp">
@@ -114,9 +102,6 @@
     <ClCompile Include="rendering\Pass.cpp">
       <Filter>rendering</Filter>
     </ClCompile>
-    <ClCompile Include="components\Camera.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
     <ClCompile Include="main\Logger.cpp">
       <Filter>main</Filter>
     </ClCompile>
@@ -125,6 +110,27 @@
     </ClCompile>
     <ClCompile Include="core\OpenGL\TextureCube.cpp">
       <Filter>core\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="components\DirectionalLight.cpp">
+      <Filter>components\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="components\PointLight.cpp">
+      <Filter>components\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="components\SpotLight.cpp">
+      <Filter>components\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="components\PerspectiveCamera.cpp">
+      <Filter>components\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Camera.cpp">
+      <Filter>components\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Material.cpp">
+      <Filter>components\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Mesh.cpp">
+      <Filter>components\visual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,25 +197,7 @@
     <ClInclude Include="core\Struct_Definitions.hpp">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="components\Material.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\DirectionalLight.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Mesh.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Entity.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\PerspectiveCamera.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\PointLight.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\SpotLight.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="io\IO.h">
@@ -227,9 +215,6 @@
     <ClInclude Include="components\ComponentBase.hpp">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="components\Camera.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Transform.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -241,6 +226,27 @@
     </ClInclude>
     <ClInclude Include="core\OpenGL\TextureCube.h">
       <Filter>core\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="components\DirectionalLight.h">
+      <Filter>components\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="components\PointLight.h">
+      <Filter>components\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="components\SpotLight.h">
+      <Filter>components\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="components\PerspectiveCamera.h">
+      <Filter>components\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Camera.h">
+      <Filter>components\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Material.h">
+      <Filter>components\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Mesh.h">
+      <Filter>components\visual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +287,15 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\quad.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\pointShadow.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\pointShadow.geom">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\pointShadow.vert">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

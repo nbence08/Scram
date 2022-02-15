@@ -56,6 +56,7 @@ uniform DirectionalLight dirLights[dirLightsLen];
 const int spotLightsLen = 1;
 uniform SpotLight spotLights[spotLightsLen];
 
+
 in vec3 fNormal;
 in vec3 fragPos;
 in vec2 fTex;
@@ -64,6 +65,7 @@ in vec4 lightSpacePos;
 
 //default material by definition is 0
 uniform Material materials[1];
+uniform float gamma;
 
 //Beckmann distribution
 float Beckmann(in vec3 L, in vec3 V, in vec3 N, in vec3 H ){
@@ -265,5 +267,5 @@ void main(){
 
 	float tcLength = length(texColor.xyz);
 
-	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/2.2)), 1.0);
+	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/gamma)), 1.0);
 }

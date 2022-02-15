@@ -79,6 +79,7 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 		glViewport(0, 0, global::screenWidth, global::screenHeight);
 		glCullFace(GL_BACK);
 
+		program->setUniform("gamma", global::gamma);
 		auto& dirLights = scene.getDirLights();
 		for (size_t i = 0; i < dirLights.size(); i++) {
 			auto& dirLight = dirLights[i];
