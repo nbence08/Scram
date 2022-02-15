@@ -19,9 +19,11 @@ class Pass {
 	UniformProvider* programUniforms;
 	std::shared_ptr<Framebuffer> fbo;
 
-	std::unordered_map<std::string, std::shared_ptr<Texture2D>> inputs;
-	std::unordered_map<std::string, std::shared_ptr<Texture2D>> outputs;
+	std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DInputs;
+	std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DOutputs;
 
+	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeInputs;
+	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeOutputs;
 
 	std::function<void(Mesh&)> passMeshLambda;
 	std::function<void(Entity&)> passEntityLambda;
@@ -50,16 +52,21 @@ public:
 	void makeFramebuffer(FboCreateInfo& fboInfo);
 
 	void addTextureInput(std::string name, std::shared_ptr<Texture2D> texture);
+	void addTextureInput(std::string name, std::shared_ptr<TextureCube> texture);
 
 	void addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture);
+	void addTextureOutput(std::string name, std::shared_ptr<TextureCube> texture);
 	
 	inline std::shared_ptr<ShaderProgram> getProgram() { return program; }
 	inline std::shared_ptr<Framebuffer> getFbo() { return fbo; }
 	inline void setFbo(std::shared_ptr<Framebuffer> fbo){ this->fbo = fbo; }
 	inline void setProgram(std::shared_ptr<ShaderProgram> program) { this->program = program; }
 
-	inline auto& getInputs() { return inputs; }
-	inline auto& getOutputs() { return outputs; }
+	inline auto& get2DTextureInputs() { return texture2DInputs; }
+	inline auto& get2DTextureOutputs() { return texture2DOutputs; }
+
+	inline auto& getCubeTextureInputs() { return textureCubeInputs; }
+	inline auto& getCubeTextureOutputs() { return textureCubeOutputs; }
 
 	inline void setPassMesh(std::function<void(Mesh&)> lambda) {
 		this->passMeshLambda = lambda;

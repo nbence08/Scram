@@ -59,21 +59,39 @@ void Pass::makeFramebuffer(FboCreateInfo& fboInfo) {
 }
 
 void Pass::addTextureInput(std::string name, std::shared_ptr<Texture2D> texture) {
-	auto input = inputs.find(name);
-	if (input != inputs.end() && input->second == texture) {
+	auto input = texture2DInputs.find(name);
+	if (input != texture2DInputs.end() && input->second == texture) {
 		return;
 	}
 
-	outputs[name] = texture;
+	texture2DInputs[name] = texture;
 }
 
 void Pass::addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture) {
-	auto output = outputs.find(name);
-	if (output != outputs.end() && output->second == texture) {
+	auto output = texture2DOutputs.find(name);
+	if (output != texture2DOutputs.end() && output->second == texture) {
 		return;
 	}
 
-	outputs[name] = texture;
+	texture2DOutputs[name] = texture;
+}
+
+void Pass::addTextureInput(std::string name, std::shared_ptr<TextureCube> texture) {
+	auto input = textureCubeInputs.find(name);
+	if (input != textureCubeInputs.end() && input->second == texture) {
+		return;
+	}
+
+	textureCubeInputs[name] = texture;
+}
+
+void Pass::addTextureOutput(std::string name, std::shared_ptr<TextureCube> texture) {
+	auto input = textureCubeOutputs.find(name);
+	if (input != textureCubeOutputs.end() && input->second == texture) {
+		return;
+	}
+
+	textureCubeOutputs[name] = texture;
 }
 
 void Pass::passMesh(Mesh& mesh) {
