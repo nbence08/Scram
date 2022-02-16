@@ -11,7 +11,7 @@ Framebuffer::Framebuffer(unsigned int id) {
 		frameHeight = global::screenHeight;
 	}
 
-	this->id = false;
+	this->id = id;
 	hasColorBuffer = false;
 	hasDepthBuffer = false;
 	hasStencilBuffer = false;
@@ -61,6 +61,11 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 		glNamedFramebufferDrawBuffer(id, GL_NONE);
 		glNamedFramebufferReadBuffer(id, GL_NONE);
 	}
+	this->hasColorBuffer = createInfo.colorBuffer;
+	this->hasDepthBuffer = createInfo.depthBuffer;
+	this->hasStencilBuffer = createInfo.stencilBuffer;
+	this->hasDepthStencilBuffer = createInfo.depthStencilBuffer;
+
 
 	this->hollowUnbind();
 }
