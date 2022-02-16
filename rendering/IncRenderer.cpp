@@ -9,10 +9,10 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 	glClearDepth(1.0);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	addDefaultShaders();
+	addDefaultPasses();
 }
 
-void IncRenderer::addDefaultShaders() {
+void IncRenderer::addDefaultPasses() {
 	preProcess.push_back(PassBuilder::buildDirShadowPass());
 	preProcess.push_back(PassBuilder::buildPointShadowPass());
 
