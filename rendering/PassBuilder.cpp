@@ -18,7 +18,6 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 	};
 
 	pass->prepareScene = [pass = pass.get(), program = pass->getProgram().get()](Scene& scene) {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, global::shadowWidth, global::shadowHeight);
 		glCullFace(GL_FRONT);
 
@@ -29,6 +28,10 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 				program->setUniform(dirLight, i);
 
 				pass->addTextureOutput("dirLightShadow[" + i + ']', dirLight.shadowMap);
+
+				if (!dirLight.shadowMap->isBoundToTextureUnit()) {
+					Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
+				}
 			}
 		}
 	};
@@ -42,6 +45,7 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 			if (dirLight.shadowMap.get() != nullptr) {
 				auto fbo = pass->getFbo();
 				fbo->setDepthBuffer(dirLight.shadowMap);
+				glClear(GL_DEPTH_BUFFER_BIT);
 
 				program->setUniform("lightIndex", i);
 				for (auto& entity : scene.getObjects()) {
@@ -85,7 +89,6 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 			auto& dirLight = dirLights[i];
 			program->setUniform(dirLight, i);
 			pass->addTextureInput("dirLightShadow[" + std::to_string(i) + "].shadowMap", dirLight.shadowMap);
-			pass->addTextureOutput("dirLightShadow[" + std::to_string(i) + "].shadowMap", dirLight.shadowMap);
 		}
 
 		auto& pointLights = scene.getPointLights();
@@ -93,7 +96,6 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 			auto& pointLight = pointLights[i];
 			program->setUniform(pointLight, i);
 			pass->addTextureInput("pointLights[" + std::to_string(i) + "].shadowCube", pointLight.shadowMap);
-			pass->addTextureOutput("pointLights[" + std::to_string(i) + "].shadowCube", pointLight.shadowMap);
 		}
 
 		/*auto& spotLights = scene.getSpotLights();
@@ -120,5 +122,59 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 }
 
 std::shared_ptr<Pass> PassBuilder::buildPointShadowPass() {
-	return std::shared_ptr<Pass>(nullptr);
+	FboCreateInfo createInfo;
+	createInfo.colorBuffer = false;
+	createInfo.depthStencilBuffer = false;
+	createInfo.stencilBuffer = false;
+	createInfo.depthBuffer = true;
+	createInfo.height = global::shadowHeight;
+	createInfo.width = global::shadowWidth;
+
+	std::string shaderName = "pointShadow";
+
+	auto pass = std::make_shared<Pass>(shaderName, createInfo);
+
+	pass->prepareEntity = [program = pass->getProgram().get()](Entity& entity) {
+		program->setUniform("model", entity.model());
+	};
+
+	pass->prepareScene = [pass = pass.get(), program = pass->getProgram().get()](Scene& scene) {
+		glViewport(0, 0, global::shadowWidth, global::shadowHeight);
+		glCullFace(GL_FRONT);
+
+		auto& pointLights = scene.getPointLights();
+		for (size_t i = 0; i < pointLights.size(); i++) {
+			auto& pointLight = pointLights[i];
+			if (pointLight.shadowMap.get() != nullptr) {
+				program->setUniform(pointLight, i);
+				pass->addTextureOutput("pointLightShadow[" + i + ']', pointLight.shadowMap);
+
+				if (!pointLight.shadowMap->isBoundToTextureUnit()) {
+					TextureCube::bindToNewTextureUnit(pointLight.shadowMap);
+				}
+			}
+		}
+	};
+
+	auto passScene = [pass = pass.get()](Scene& scene){
+
+		auto program = pass->getProgram();
+		auto& up = pass->getProgram()->getUniformProvider();
+		auto& pointLights = scene.getPointLights();
+		for (int i = 0; i < pointLights.size(); i++) {
+			auto dirLight = pointLights[i];
+			if (dirLight.shadowMap.get() != nullptr) {
+				auto fbo = pass->getFbo();
+				fbo->setDepthBuffer(dirLight.shadowMap);
+				glClear(GL_DEPTH_BUFFER_BIT);
+
+				program->setUniform("lightIndex", i);
+				for (auto& entity : scene.getObjects()) {
+					pass->passEntity(*entity);
+				}
+			}
+		}
+	};
+	pass->setPassScene(passScene);
+	return pass;
 }

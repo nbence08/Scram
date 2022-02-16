@@ -120,7 +120,7 @@ void Pass::passEntity(Entity& entity) {
 void Pass::passScene(Scene& scene) {
 	fbo->bind();
 	program->use();
-	prepareScene(scene);
+ 	prepareScene(scene);
 
 	passSceneLambda(scene);
 	/*default passSceneLambda:
