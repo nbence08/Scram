@@ -249,7 +249,7 @@ namespace IO{
 		}
 
 		for (int i = 0; i < node.mNumChildren; i++) {
-			auto subEntity = entity.addChild();
+			auto subEntity = entity.createChild();
 			processNode(scene, *node.mChildren[i], *subEntity);
 		}
 

@@ -9,10 +9,13 @@ IncRenderer::IncRenderer(std::string defaultShaderPath) {
 	glClearDepth(1.0);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	addDefaultShaders();
+	addDefaultPasses();
 }
-void IncRenderer::addDefaultShaders() {
+
+void IncRenderer::addDefaultPasses() {
 	preProcess.push_back(PassBuilder::buildDirShadowPass());
+	preProcess.push_back(PassBuilder::buildPointShadowPass());
+
 	process = PassBuilder::buildStandardPass();
 }
 
@@ -28,13 +31,6 @@ void IncRenderer::draw(Scene& scene) {
 	auto& dirLights = scene.getDirLights();
 	auto& spotLights = scene.getSpotLights();
 	auto& pointLights = scene.getPointLights();
-
-
-	for (auto& dirLight : dirLights) {
-		if (!dirLight.shadowMap->isBoundToTextureUnit()) {
-			Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
-		}
-	}
 
 	for (size_t i = 0; i < preProcess.size(); i++) {
 		auto curPreProcess = preProcess[i];

@@ -80,7 +80,7 @@ public:
 		}
 	}
 
-	std::shared_ptr<Entity> addChild();
+	std::shared_ptr<Entity> createChild();
 
 	std::vector<std::shared_ptr<Entity>>& getChildren();
 

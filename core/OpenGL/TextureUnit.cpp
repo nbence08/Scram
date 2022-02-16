@@ -30,9 +30,7 @@ void TextureUnit::initTexture(const Texture2D& tex) {
 
 }
 
-TextureUnit::TextureUnit(int unitNum):unitNum(unitNum), boundTexture(nullptr) {
-	deleted = false;
-}
+TextureUnit::TextureUnit(int unitNum):unitNum(unitNum) {}
 
 std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 	int minNum = 0;
@@ -41,7 +39,7 @@ std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 			minNum = i;
 			break;
 		}
-		if (textureUnits[i].use_count() == 1 && textureUnits[i]->boundTexture.get() == nullptr) {
+		if (textureUnits[i].use_count() == 1 && !textureUnits[i]->hasBoundTexture()) {
 			return textureUnits[i];
 		}
 	}
@@ -51,9 +49,7 @@ std::shared_ptr<TextureUnit> TextureUnit::getNewInstance() {
 	return textureUnits[minNum];
 }
 
-TextureUnit::~TextureUnit() {
-	if (boundTexture.get() == nullptr) return;
-}
+TextureUnit::~TextureUnit() {}
 
 void TextureUnit::bind() {
 	activeTexUnit = unitNum;
@@ -66,51 +62,85 @@ void TextureUnit::unbind() {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-#include <iostream>
-
-void TextureUnit::bindTexture(std::shared_ptr<Texture2D> tex) {
+template<typename T>
+void TextureUnit::bindTexture(std::shared_ptr<T> tex) {
 	hollowBind();
 
-	if (boundTexture.get() != nullptr) {
-		if(tex == boundTexture) return;
-		boundTexture->unsetTextureUnit();
+	if(!isBoundTextureEmpty()){
+	//if (boundTexture.get() != nullptr) {
+		if(doesBoundTextureMatch(tex.get())) return;
+
+		std::visit([](auto& arg){ arg->unsetTextureUnit(); }, boundTexture);
 	}
 	boundTexture = tex;
 
 	for (auto& pair : textureUnits) {
 		if (pair.second.get() == this) {
-			boundTexture->setTextureUnit(pair.second);
+			std::visit([&pair](auto& tex){ tex->setTextureUnit(pair.second); }, boundTexture);
 			break;
 		}
 	}
 
 	glBindTexture(tex->type, tex->id);
 	
+	std::visit([](auto& tex) {
+		if (!tex->parametrized) {
+			tex->initialize();
+			tex->parametrized = true;
+		}
+	}, boundTexture);
 
-	if (!tex->parametrized) {
-		initTexture(*tex);
-		tex->parametrized = true;
-	}
 
 	hollowUnbind();
 }
+template void TextureUnit::bindTexture<Texture2D>(std::shared_ptr<Texture2D> tex);
+template void TextureUnit::bindTexture<TextureCube>(std::shared_ptr<TextureCube> tex);
 
 void TextureUnit::unbindTexture() {
-	if(boundTexture.get() == nullptr) return;
+	if(isBoundTextureEmpty()) return;
 
 	glBindTextureUnit(this->unitNum, 0);
 
-	boundTexture.reset();
+	std::visit([](auto& tex){ tex.reset();}, boundTexture);
 }
 
 void TextureUnit::loadTexture(const ImageData2D& d) {
-	if (boundTexture.get() == nullptr) {
-		throw std::runtime_error("Texture object is not bound");
+	try {
+		std::shared_ptr<Texture2D> tex = std::get<std::shared_ptr<Texture2D>>(boundTexture);
+		hollowBind();
+
+		glTexImage2D(tex->type, 0, d.internalFormat, d.width, d.height, 0, d.format, d.type, d.pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	
+		hollowUnbind();
 	}
-	hollowBind();
-	glTexImage2D(boundTexture->type, 0, d.internalFormat, d.width, d.height, 0, d.format, d.type, d.pixels);
-	
-	glGenerateMipmap(GL_TEXTURE_2D);
-	
-	hollowUnbind();
+	catch (std::bad_variant_access e) {
+		throw std::runtime_error("Texture2D object is not bound.");
+	}
+}
+
+
+void TextureUnit::loadTexture(const ImageDataCube& d) {
+	try {
+		std::shared_ptr<TextureCube> tex = std::get<std::shared_ptr<TextureCube>>(boundTexture);
+		hollowBind();
+
+		bool null = false;
+		for (int i = 0; i < 6; i++) {
+			if(d.pixels[i] == nullptr) null = true;
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, d.level, d.internalFormat, d.size, d.size, 0, d.format, d.type, d.pixels[i]);
+		}
+
+		if (!null) glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+
+		hollowUnbind();
+	}
+	catch (std::bad_variant_access e) {
+		throw std::runtime_error("TextureCube object is not bound.");
+	}
+}
+
+bool TextureUnit::isBoundTextureEmpty() {
+	if (boundTexture.valueless_by_exception()) return true;
+	return std::visit([](auto& arg){ return arg.get() == nullptr;}, boundTexture);
 }

@@ -4,11 +4,14 @@
 #include <stdexcept>
 #include <memory>
 #include <stack>
+#include <variant>
 
 #include "Texture2D.h"
+#include "TextureCube.h"
 #include "core/Struct_Definitions.hpp"
 
 class Texture2D;
+class TextureCube;
 
 class TextureUnit;
 
@@ -19,38 +22,52 @@ static int activeTexUnit = 0;
 class TextureUnit{
 private:
 	unsigned int unitNum;
-	std::shared_ptr<Texture2D> boundTexture;
+	
+	std::variant<std::shared_ptr<Texture2D>, std::shared_ptr<TextureCube>> boundTexture;
 
 	void hollowBind();
-
 	void hollowUnbind();
-
 	void initTexture(const Texture2D& tex);
-
 	TextureUnit(int unitNum);
-
-	bool deleted;
 
 	friend class Texture2D;
 public:
 	
 	TextureUnit(const TextureUnit& other) = delete;
-
 	TextureUnit& operator=(const TextureUnit& other) = delete;
-
 	~TextureUnit();
-
 	static std::shared_ptr<TextureUnit> getNewInstance();
 
 	void bind();
-
 	static void unbind();
 
-	void bindTexture(std::shared_ptr<Texture2D> tex);
-
+	template <typename T>
+	void bindTexture(std::shared_ptr<T> tex);
 	void unbindTexture();
-
 	void loadTexture(const ImageData2D& d);
+	void loadTexture(const ImageDataCube& d);
 
 	inline int getUnitNum() const {return unitNum;}
+
+	template <typename T>
+	inline bool doesBoundTextureMatch(T* tex){
+
+		return static_cast<void*>(tex) == std::visit([](auto& boundTex){ return static_cast<void*>(boundTex.get());}, boundTexture);
+		//auto texPtr = std::get<std::shared_ptr<Texture2D>>(boundTexture);
+
+	}
+	/*
+	inline bool doesBoundTextureMatch(TextureCube* tex) {
+		if (boundTexture.index() == 1) {
+			auto texPtr = std::get<std::shared_ptr<TextureCube>>(boundTexture);
+			return texPtr.get() == tex;
+		}
+		return false;
+	}
+	*/
+	inline bool hasBoundTexture() {
+		return !boundTexture.valueless_by_exception();
+	}
+
+	bool isBoundTextureEmpty();
 };

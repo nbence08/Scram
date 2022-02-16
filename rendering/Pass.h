@@ -19,9 +19,11 @@ class Pass {
 	UniformProvider* programUniforms;
 	std::shared_ptr<Framebuffer> fbo;
 
-	std::unordered_map<std::string, std::shared_ptr<Texture2D>> inputs;
-	std::unordered_map<std::string, std::shared_ptr<Texture2D>> outputs;
+	std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DInputs;
+	std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DOutputs;
 
+	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeInputs;
+	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeOutputs;
 
 	std::function<void(Mesh&)> passMeshLambda;
 	std::function<void(Entity&)> passEntityLambda;
@@ -34,142 +36,54 @@ public:
 	void* object;
 	std::function<void()> onDestroy;
 
-	Pass():programUniforms(nullptr), object(nullptr) {
-		passMeshLambda = [](Mesh& mesh){
-			glDrawElements(GL_TRIANGLES, (GLsizei)mesh.getIndices().size(), GL_UNSIGNED_INT, nullptr);
-		};
+	Pass();
 
-		passEntityLambda = [this](Entity& entity) {
-			if (entity.hasComponent<Mesh>()) {
-				passMesh(entity.getComponent<Mesh>());
-			}
-		};
-
-		passSceneLambda = [this](Scene& scene) {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			for (auto entity : scene.getObjects()) {
-				prepareEntity(*entity);
-				passEntity(*entity);
-			}
-		};
-
-		onDestroy = [](){};
-	}
-
-	Pass(std::string& shaderName, FboCreateInfo& fboInfo):Pass() {
+	inline Pass(std::string& shaderName, FboCreateInfo& fboInfo):Pass() {
 		makeShaderProgram(shaderName);
 		makeFramebuffer(fboInfo);
 	}
 
-	Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo) :Pass() {
-		makeShaderProgram(shaderName);
-		this->fbo = fbo;
-	}
+	Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo);
 
-	~Pass() {
-		onDestroy();
-	}
+	~Pass();
 
-	void makeShaderProgram(std::string& shaderName) {
-		this->program = std::make_shared<ShaderProgram>();
-		std::string frag = IO::readFile(global::shaderNamePrefix+shaderName + ".frag");
-		std::string vert = IO::readFile(global::shaderNamePrefix + shaderName + ".vert");
+	void makeShaderProgram(std::string& shaderName);
 
-		const char* fragPtr = frag.data();
-		const char* vertPtr = vert.data();
+	void makeFramebuffer(FboCreateInfo& fboInfo);
 
-		program->addVertex(&vertPtr);
-		program->addFragment(&fragPtr);
+	void addTextureInput(std::string name, std::shared_ptr<Texture2D> texture);
+	void addTextureInput(std::string name, std::shared_ptr<TextureCube> texture);
 
-
-		std::string geom = IO::readFile(global::shaderNamePrefix + shaderName + ".geom");
-
-		if (geom.size() > 0) {
-			const char* geomPtr = geom.data();
-
-			program->addGeometry(&geomPtr);
-		}
-
-		program->linkProgram();
-	}
-
-	void makeFramebuffer(FboCreateInfo& fboInfo) {
-		this->fbo = std::make_shared<Framebuffer>(fboInfo);
-	}
-
-	void addTextureInput(std::string name, std::shared_ptr<Texture2D> texture) {
-		auto input = inputs.find(name);
-		if (input != inputs.end() && input->second == texture) {
-			return;
-		}
-
-		outputs[name] = texture;
-	}
-
-	void addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture) {
-		auto output = outputs.find(name);
-		if (output != outputs.end() && output->second == texture) {
-			return;
-		}
-		
-		outputs[name] = texture;
-	}
+	void addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture);
+	void addTextureOutput(std::string name, std::shared_ptr<TextureCube> texture);
 	
-	std::shared_ptr<ShaderProgram> getProgram() { return program; }
-	std::shared_ptr<Framebuffer> getFbo() { return fbo; }
-	void setFbo(std::shared_ptr<Framebuffer> fbo){ this->fbo = fbo; }
-	void setProgram(std::shared_ptr<ShaderProgram> program) { this->program = program; }
+	inline std::shared_ptr<ShaderProgram> getProgram() { return program; }
+	inline std::shared_ptr<Framebuffer> getFbo() { return fbo; }
+	inline void setFbo(std::shared_ptr<Framebuffer> fbo){ this->fbo = fbo; }
+	inline void setProgram(std::shared_ptr<ShaderProgram> program) { this->program = program; }
 
-	auto& getInputs() { return inputs; }
-	auto& getOutputs() { return outputs; }
+	inline auto& get2DTextureInputs() { return texture2DInputs; }
+	inline auto& get2DTextureOutputs() { return texture2DOutputs; }
 
-	void setPassMesh(std::function<void(Mesh&)> lambda) {
+	inline auto& getCubeTextureInputs() { return textureCubeInputs; }
+	inline auto& getCubeTextureOutputs() { return textureCubeOutputs; }
+
+	inline void setPassMesh(std::function<void(Mesh&)> lambda) {
 		this->passMeshLambda = lambda;
 	}
 
-	void setPassEntity(std::function<void(Entity&)> lambda) {
+	inline void setPassEntity(std::function<void(Entity&)> lambda) {
 		this->passEntityLambda = lambda;
 	}
 
-	void setPassScene(std::function<void(Scene&)> lambda) {
+	inline void setPassScene(std::function<void(Scene&)> lambda) {
 		this->passSceneLambda = lambda;
 	}
 	
-	void passMesh(Mesh& mesh) {
-		auto& vao = mesh.getVao();
-		vao.bind();
+	void passMesh(Mesh& mesh);
 
-		passMeshLambda(mesh);
-		/*default passMeshLambda:
-		glDrawElements(GL_TRIANGLES, (GLsizei)mesh.getIndices().size(), GL_UNSIGNED_INT, nullptr);*/
+	void passEntity(Entity& entity);
 
-		vao.unbind();
-	}
-
-	void passEntity(Entity& entity) {
-		prepareEntity(entity);
-		passEntityLambda(entity);
-		/*default passEntityLambda:
-		if (entity.hasComponent<Mesh>()) {
-			passMesh(entity.getComponent<Mesh>());
-		}*/
-		for (auto subEntity : entity.getChildren()) {
-			passEntity(*subEntity);
-		}
-	}
-
-	void passScene(Scene& scene) {
-		fbo->bind();
-		program->use();
-		prepareScene(scene);
-
-		passSceneLambda(scene);
-		/*default passSceneLambda:
-		for (auto entity : scene.getObjects()) {
-			passEntity(*entity);
-		}*/
-
-		fbo->unbind();
-	}
+	void passScene(Scene& scene);
 };
 

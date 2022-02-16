@@ -109,15 +109,22 @@ public:
 		setUniform(arrayName + "[" + std::to_string(index) + "].intensity", light.intensity);
 		setUniform(arrayName + "[" + std::to_string(index) + "].attenuation", light.attenuation);
 		setUniform(arrayName + "[" + std::to_string(index) + "].position", light.position);
+		if (light.hasShadowMap()) {
+			setUniform(arrayName + "ShadowMap[" + std::to_string(index) + "]", light.shadowMap->getTextureUnitNum());
+			auto lightSpaceMatrices = light.getLightSpaceMatrices();
+			setUniform(arrayName + "[" + std::to_string(index) + "].farPlane", light.farPlane);
+			for (int i = 0; i < 6; i++) {
+				setUniform(arrayName + "[" + std::to_string(index) + "].lightMatrices["+std::to_string(i)+"]", lightSpaceMatrices[i]);
+			}
+		}
 	}
 
 	void setLight(const DirectionalLight& light, int index, std::string arrayName = "dirLights") {
 		setUniform(arrayName + "[" + std::to_string(index) + "].intensity", light.intensity);
 		setUniform(arrayName + "[" + std::to_string(index) + "].direction", light.direction.normalized());
 		setUniform(arrayName + "[" + std::to_string(index) + "].lightMatrix", light.getLightSpaceMatrix());
-		if (light.shadowMap.get() != nullptr) {
+		if (light.hasShadowMap()) {
 			setUniform(arrayName + "[" + std::to_string(index) + "].shadowMap", light.shadowMap->getTextureUnitNum());
-
 		}
 	}
 

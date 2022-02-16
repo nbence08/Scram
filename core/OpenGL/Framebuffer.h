@@ -35,7 +35,7 @@ private:
 	std::shared_ptr<Texture2D> colorBuffer;
 
 	bool hasDepthBuffer;
-	std::shared_ptr<Texture2D> depthBuffer;
+	std::variant<std::shared_ptr<Texture2D>, std::shared_ptr<TextureCube>> depthBuffer;
 
 	bool hasStencilBuffer;
 	std::shared_ptr<Texture2D> stencilBuffer;
@@ -47,40 +47,14 @@ private:
 
 
 	void hollowBind();
-
 	void hollowUnbind();
+	void setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D> texture);
+	void setAttachment(GLenum attachmentType, std::shared_ptr<TextureCube> texture);
 
-	void setAttachment(GLenum bufferType, std::shared_ptr<Texture2D> texture);
-
-	inline Framebuffer(unsigned int id) {
-		if (id == 0) {
-			this->id = id;
-			hasColorBuffer = true;
-			hasDepthBuffer = true;
-			hasStencilBuffer = true;
-			hasDepthStencilBuffer = true;
-			frameWidth = global::screenWidth;
-			frameHeight = global::screenHeight;
-		}
-
-		this->id = false;
-		hasColorBuffer = false;
-		hasDepthBuffer = false;
-		hasStencilBuffer = false;
-		hasDepthStencilBuffer = false;
-		frameWidth = global::screenWidth;
-		frameHeight = global::screenHeight;
-	}
+	Framebuffer(unsigned int id);
 public:
 	
-	inline Framebuffer() {
-		glGenFramebuffers(1, &id);
-		frameHeight = frameWidth = 0;
-		hasColorBuffer = false;
-		hasDepthBuffer = false;
-		hasStencilBuffer = false;
-		hasDepthStencilBuffer = false;
-	}
+	Framebuffer();
 
 	static inline Framebuffer getDefault() {
 		return Framebuffer(0);
@@ -99,12 +73,21 @@ public:
 
 
 	void setColorBuffer(std::shared_ptr<Texture2D> colorBuffer);
-	void setDepthBuffer(std::shared_ptr<Texture2D> depthBuffer);
 	void setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer);
 
 	inline unsigned int getId() { return id; }
 
-	inline std::shared_ptr<Texture2D>& getDepthBuffer(){ return depthBuffer; }
+	template <typename T>
+	inline std::shared_ptr<T> getDepthBuffer(){ return std::get<std::shared_ptr<T>>(depthBuffer); }
+
+	template <typename T>
+	inline bool depthBufferEquals(std::shared_ptr<T> val) {
+		if(!hasDepthBuffer) return false;
+		return static_cast<void*>(val.get()) ==  std::visit([](auto& depthBuffer) { return static_cast<void*>(depthBuffer.get()); }, depthBuffer);
+	}
+
+	template <typename T>
+	void setDepthBuffer(std::shared_ptr<T> depthBuffer);
 
 	Framebuffer& operator=(Framebuffer&& other) noexcept;
 

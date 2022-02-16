@@ -19,12 +19,12 @@ Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 	auto right = cross(-up, -normDir);
 	auto trueUp = cross(right, -normDir);
 
-	float edgeRight = (float)global::screenWidth/4;
-	float edgeTop = (float)global::screenHeight/4;
+	float edgeRight = (float)global::shadowProjEdgeSize/1.5f;
+	float edgeTop = (float)global::shadowProjEdgeSize/1.5f;
 
 	Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
 	//ideally position for the getLookAt would be ahead of the position of the camera, in its direction
-	Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * ORTHOGONAL_EDGE_SIZE/2);
+	Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize);
 
 	return mat4_1 * mat4_2;
 }
@@ -39,8 +39,8 @@ DirectionalLight::DirectionalLight() {
 	ImageData2D allocData;
 	allocData.format = GL_DEPTH_COMPONENT;
 	allocData.internalFormat = GL_DEPTH_COMPONENT;
-	allocData.width = global::screenWidth;
-	allocData.height = global::screenHeight;
+	allocData.width = global::shadowWidth;
+	allocData.height = global::shadowHeight;
 	allocData.level = 0;
 	allocData.type = GL_UNSIGNED_BYTE;
 	allocData.pixels = nullptr;

@@ -29,7 +29,7 @@ class IncRenderer {
 	std::shared_ptr<Pass> process;
 	std::vector<std::shared_ptr<Pass>> postProcess;
 
-	void addDefaultShaders();
+	void addDefaultPasses();
 	inline void addPreProcessPass(Pass&& pass) {
 		preProcess.emplace_back(std::make_shared<Pass>(pass));
 	}

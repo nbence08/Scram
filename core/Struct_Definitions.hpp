@@ -11,3 +11,19 @@ struct ImageData2D {
 	GLenum type;
 	void* pixels;
 };
+
+struct ImageDataCube {
+	GLint level;
+	GLint internalFormat;
+	GLsizei size;
+	GLenum format;
+	GLenum type;
+
+	/*void* posX;
+	void* negX;
+	void* posY;
+	void* negY;
+	void* posZ;
+	void* negZ;*/
+	void* pixels[6];
+};

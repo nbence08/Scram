@@ -38,6 +38,7 @@
     <ClCompile Include="core\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="core\OpenGL\ShaderProgram.cpp" />
     <ClCompile Include="core\OpenGL\Texture2D.cpp" />
+    <ClCompile Include="core\OpenGL\TextureCube.cpp" />
     <ClCompile Include="core\OpenGL\TextureUnit.cpp" />
     <ClCompile Include="core\OpenGL\UniformProvider.cpp" />
     <ClCompile Include="core\OpenGL\VertexArray.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="core\OpenGL\OpenGLContext.h" />
     <ClInclude Include="core\OpenGL\ShaderProgram.h" />
     <ClInclude Include="core\OpenGL\Texture2D.h" />
+    <ClInclude Include="core\OpenGL\TextureCube.h" />
     <ClInclude Include="core\OpenGL\TextureUnit.h" />
     <ClInclude Include="core\OpenGL\UniformProvider.h" />
     <ClInclude Include="core\OpenGL\VertexArray.h" />
@@ -128,6 +130,24 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="shaders\incremental.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\pointShadow.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\pointShadow.geom">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\pointShadow.vert">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
