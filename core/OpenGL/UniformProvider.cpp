@@ -1,12 +1,12 @@
 #include "UniformProvider.h"
 
 /// <summary>
-	/// Gets the location identifier of a uniform variable in the shader 
-	/// with name supplied as parameter. It caches the locations of the uniforms.
-	/// It uses the class member locationCache, which is an std::unordered_map<std::string, unsigned int>
-	/// </summary>
-	/// <param name="name">Name of the uniform in the shader, whose location is to be queried</param>
-	/// <returns>Location identifier of the uniform</returns>
+/// Gets the location identifier of a uniform variable in the shader 
+/// with name supplied as parameter. It caches the locations of the uniforms.
+/// It uses the class member locationCache, which is an std::unordered_map<std::string, unsigned int>
+/// </summary>
+/// <param name="name">Name of the uniform in the shader, whose location is to be queried</param>
+/// <returns>Location identifier of the uniform</returns>
 unsigned int UniformProvider::getUniformLocation(std::string name) {
 	if (locationCache.find(name) == end(locationCache)) {
 		unsigned int location = glGetUniformLocation(programId, name.c_str());
