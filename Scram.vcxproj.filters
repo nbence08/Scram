@@ -132,6 +132,9 @@
     <ClCompile Include="components\Mesh.cpp">
       <Filter>components\visual</Filter>
     </ClCompile>
+    <ClCompile Include="core\OpenGL\Renderbuffer.cpp">
+      <Filter>core\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\math\linear_algebra.hpp">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="components\Mesh.h">
       <Filter>components\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="core\OpenGL\Renderbuffer.h">
+      <Filter>core\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
