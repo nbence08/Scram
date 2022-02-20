@@ -22,6 +22,9 @@
 
 class TextureUnit;
 
+/// <summary>
+/// class representing a 2D texture in OpenGL
+/// </summary>
 class Texture2D {
 	unsigned int id;
 	std::weak_ptr<TextureUnit> textureUnit;

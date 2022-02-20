@@ -26,6 +26,9 @@ struct FboCreateInfo {
 class Framebuffer;
 static int boundFramebuffer;
 
+/// <summary>
+/// Framebuffer class which represents a framebuffer in OpenGL
+/// </summary>
 class Framebuffer {
 private:
 

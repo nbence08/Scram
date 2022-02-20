@@ -9,6 +9,10 @@
 #include <limits>
 #include <iostream>
 
+/// <summary>
+/// class which creates the GLFW openglcontext and opengl window
+/// it also handles mouse and keyboard inputs
+/// </summary>
 class OpenGLContext {
 public:
 	GLFWwindow* window;

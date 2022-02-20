@@ -17,6 +17,11 @@ public:
 
 	Vector3& operator[](int index);
 
+	/// <summary>
+	/// Returns the appropriate column vector of the matrix
+	/// </summary>
+	/// <param name="index"></param>
+	/// <returns></returns>
 	Vector3 operator[](int index) const;
 
 	Matrix3 operator*(const Matrix3& other);

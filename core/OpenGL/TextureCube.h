@@ -6,6 +6,9 @@
 
 class TextureUnit;
 
+/// <summary>
+/// class representing a cube texture in OpenGL
+/// </summary>
 class TextureCube {
 	unsigned int id;
 	std::weak_ptr<TextureUnit> textureUnit;

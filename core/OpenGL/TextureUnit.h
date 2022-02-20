@@ -19,6 +19,9 @@ static std::unordered_map<int, std::shared_ptr<TextureUnit>> textureUnits;
 static std::shared_ptr<std::stack<int>> bindStack = std::make_shared<std::stack<int>>();
 static int activeTexUnit = 0;
 
+/// <summary>
+/// Class representing an OpenGL texture unit 
+/// </summary>
 class TextureUnit{
 private:
 	unsigned int unitNum;
