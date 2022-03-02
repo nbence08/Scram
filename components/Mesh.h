@@ -8,9 +8,9 @@
 #include "ComponentBase.hpp"
 
 struct Vertex {
-	Vector3 position;
-	Vector3 normal;
-	Vector2 texCoord;
+	SMath::Vector3 position;
+	SMath::Vector3 normal;
+	SMath::Vector2 texCoord;
 };
 
 static uint64_t topMeshId = 0;

@@ -31,9 +31,9 @@ int main() {
 	auto& entTransform = ent->getComponent<Transform>();
 	auto& ent2Transform = ent2->getComponent<Transform>();
 	
-	entTransform.setRotation(Vector3(PI / 2.0, 0.0, 0.0));
-	entTransform.setScale(Vector3(0.5, 0.5, 0.5));
-	ent2Transform.setTranslation(Vector3(0.0, 40.0f, 0.0));
+	entTransform.setRotation(SMath::Vector3(PI / 2.0, 0.0, 0.0));
+	entTransform.setScale(SMath::Vector3(0.5, 0.5, 0.5));
+	ent2Transform.setTranslation(SMath::Vector3(0.0, 40.0f, 0.0));
 
 
 
@@ -41,14 +41,14 @@ int main() {
 	scene.getCamera().setFarPlane(2000.0f);
 
 	DirectionalLight sun;
-	sun.direction = Vector3(1.0f, 1.0f, 1.0f);
-	sun.intensity = Vector3(10.0f, 10.0f, 9.0f);
+	sun.direction = SMath::Vector3(1.0f, 1.0f, 1.0f);
+	sun.intensity = SMath::Vector3(10.0f, 10.0f, 9.0f);
 	scene.getDirLights().push_back(sun);
 
 	PointLight intense;
-	intense.attenuation = Vector3(0.0, 0.0, 0.2);
-	intense.intensity = Vector3(1.0, 100.0, 1.0);
-	intense.position = Vector3(0.0, -30.0, -78.0);
+	intense.attenuation = SMath::Vector3(0.0, 0.0, 0.2);
+	intense.intensity = SMath::Vector3(1.0, 100.0, 1.0);
+	intense.position = SMath::Vector3(0.0, -30.0, -78.0);
 	scene.getPointLights().push_back(intense);
 
 	IncRenderer renderer;

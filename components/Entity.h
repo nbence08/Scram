@@ -84,6 +84,6 @@ public:
 
 	std::vector<std::shared_ptr<Entity>>& getChildren();
 
-	Matrix4 model();
+	SMath::Matrix4 model();
 };
 

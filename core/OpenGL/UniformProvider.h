@@ -11,12 +11,13 @@
 #include "components/DirectionalLight.h"
 #include "components/Material.h"
 #include "main/Logger.h"
+using namespace SMath;
 
 class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;
 	
 	/*std::unordered_map<std::string,
-		std::variant<float, double, int, Vector2, Vector3, Vector4, Matrix3, Matrix4>
+		std::variant<float, double, int, Vector2, SMath::SMath:: SMath::Vector4, SMath:: SMath::Vector4, Matrix3,  SMath::Matrix4>
 	> valueCache;*/
 	
 	unsigned int programId;
@@ -61,7 +62,7 @@ public:
 		}
 	}
 
-	void setUniform(std::string name, const Vector3& value) {
+	void setUniform(std::string name, const Vector4& value) {
 		unsigned int location = getUniformLocation(name);
 		if (GL_REAL == GL_FLOAT) {
 			glUniform3f(location, value.x, value.y, value.z);
@@ -81,7 +82,7 @@ public:
 		}
 	}
 
-	void setUniform(std::string name, const Matrix4& value) {
+	void setUniform(std::string name, const  Vector4& value) {
 		unsigned int location = getUniformLocation(name);
 
 		if (GL_REAL == GL_FLOAT) {
@@ -140,9 +141,9 @@ public:
 
 	void setMaterial(const Material& material,int index, std::string arrayName = "materials") {
 		bool albedo_is_texture;
-		if (material.albedo.index() == 0) { //Vector3
+		if (material.albedo.index() == 0) { //SMath::SMath:: SMath::Vector4
 			
-			Vector3 albedo = std::get<Vector3>(material.albedo);
+			SMath::Vector4 albedo = std::get<SMath::Vector4>(material.albedo);
 			albedo_is_texture = false;
 
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
@@ -154,14 +155,14 @@ public:
 			auto textureUnit = albedo.getTextureUnitNum();
 			if (textureUnit == -1) {
 				//TODO: automatic texture unit creation could be implemented in the future
-				Vector3 albedo(1.0, 0.0, 1.0);
+				SMath::Vector4 albedo(1.0, 0.0, 1.0);
 				albedo_is_texture = false;
 
 				setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
 				setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", albedo);
 			}
 			albedo_is_texture = true;
-			setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", Vector3(0.0, 0.0, 0.0));
+			setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", SMath::Vector4(0.0, 0.0, 0.0));
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", textureUnit);
 		}
 

@@ -53,9 +53,9 @@ public:
 		double curCursorX, curCursorY;
 		glfwGetCursorPos(window, &curCursorX, &curCursorY);
 
-		Vector3 forward(0.0, 0.0, -1.0);
-		Vector3 up(0.0, 1.0, 0.0);
-		Vector3 right = cross(forward, up);
+		SMath::Vector3 forward(0.0, 0.0, -1.0);
+		SMath::Vector3 up(0.0, 1.0, 0.0);
+		SMath::Vector3 right = cross(forward, up);
 
 		double diffX = (- curCursorX + cursorX)*cursorSpeed;
 		double diffY = (- curCursorY + cursorY)*cursorSpeed;
@@ -68,13 +68,13 @@ public:
 		
 		//std::cout << "X:" << xDeg << " Y:" << yDeg << "\n";
 
-		auto yRot = Quaternion::rotation(math::toRadians(yDeg), right).getRotationMatrix();
-		auto xRot = Quaternion::rotation(math::toRadians(xDeg), up).getRotationMatrix();
+		auto yRot = SMath::Quaternion::rotation(math::toRadians(yDeg), right).getRotationMatrix();
+		auto xRot = SMath::Quaternion::rotation(math::toRadians(xDeg), up).getRotationMatrix();
 
-		Vector3 newForward = xRot * (yRot * forward);
-		Vector3 newUp = xRot * (yRot * up);
-		camera.setForward(Vector4(newForward.x, newForward.y, newForward.z, 0.0));
-		camera.setUp(Vector4(newUp.x, newUp.y, newUp.z, 0.0));
+		SMath::Vector3 newForward = xRot * (yRot * forward);
+		SMath::Vector3 newUp = xRot * (yRot * up);
+		camera.setForward( SMath::Vector4(newForward.x, newForward.y, newForward.z, 0.0));
+		camera.setUp( SMath::Vector4(newUp.x, newUp.y, newUp.z, 0.0));
 		cursorX = curCursorX;
 		cursorY = curCursorY;
 	}
