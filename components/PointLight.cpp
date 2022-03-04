@@ -1,4 +1,7 @@
 #include "PointLight.h"
+#include <core\OpenGL\TextureUnit.h>
+#include <components\DirectionalLight.h>
+#include <components\Camera.h>
 
 PointLight::PointLight() {
 	farPlane = global::shadowProjEdgeSize;
@@ -23,20 +26,20 @@ PointLight::PointLight() {
 	texUnit->unbind();
 }
 
-std::vector<Matrix4> PointLight::getLightSpaceMatrices() const {
-	auto proj = math::perspective(90.0, 1.0, 1.0, farPlane);
-	auto rightward = math::getLookAt(Vector3(1.0, 0.0, 0.0), Vector3(0.0, -1.0, 0.0), position);
-	auto leftward = math::getLookAt(Vector3(-1.0, 0.0, 0.0), Vector3(0.0, -1.0, 0.0), position);
+std::vector<SMath::Matrix4> PointLight::getLightSpaceMatrices() const {
+	auto proj = SMath::perspective(90.0, 1.0, 1.0, farPlane);
+	auto rightward = SMath::getLookAt(SMath::Vector3(1.0, 0.0, 0.0), SMath::Vector3(0.0, -1.0, 0.0), position);
+	auto leftward = SMath::getLookAt(SMath::Vector3(-1.0, 0.0, 0.0), SMath::Vector3(0.0, -1.0, 0.0), position);
 
-	auto upward = math::getLookAt(Vector3(0.0, 1.0, 0.0), Vector3(0.0, 0.0, 1.0), position);
-	auto downward = math::getLookAt(Vector3(0.0, -1.0, 0.0), Vector3(0.0, 0.0, -1.0), position);
+	auto upward = SMath::getLookAt(SMath::Vector3(0.0, 1.0, 0.0), SMath::Vector3(0.0, 0.0, 1.0), position);
+	auto downward = SMath::getLookAt(SMath::Vector3(0.0, -1.0, 0.0), SMath::Vector3(0.0, 0.0, -1.0), position);
 
-	auto backward = math::getLookAt(Vector3(0.0, 0.0, 1.0), Vector3(0.0, -1.0, 0.0), position);
-	auto forward = math::getLookAt(Vector3(0.0, 0.0, -1.0), Vector3(0.0, -1.0, 0.0), position);
+	auto backward = SMath::getLookAt(SMath::Vector3(0.0, 0.0, 1.0), SMath::Vector3(0.0, -1.0, 0.0), position);
+	auto forward = SMath::getLookAt(SMath::Vector3(0.0, 0.0, -1.0), SMath::Vector3(0.0, -1.0, 0.0), position);
 
 	std::shared_ptr<TextureCube> shadowMap;
 
-	std::vector<Matrix4> matrices;
+	std::vector<SMath::Matrix4> matrices;
 
 	matrices.reserve(6);
 

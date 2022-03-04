@@ -1,9 +1,6 @@
 #include "Vector3.h"
 
 namespace SMath {
-	Vector3::Vector3(const SMath::Vector4& vec4)
-	{
-	}
 	Vector3 Vector3::operator-() const {
 		return Vector3(-x, -y, -z);
 	}
@@ -88,9 +85,9 @@ namespace SMath {
 		return sqrtf(dot(*this));
 	}
 
-	Vector3::Vector3(const Vector3& vec3) {
-		x = vec3.x;
-		y = vec3.y;
-		z = vec3.z;
+	Vector3::Vector3(const Vector4& vec4) {
+		x = vec4.x;
+		y = vec4.y;
+		z = vec4.z;
 	}
 }

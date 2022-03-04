@@ -3,7 +3,7 @@
 #include "linear_algebra.hpp"
 #include "Quaternion.h"
 
-namespace math {
+namespace SMath {
 	static inline double toRadians(double degree) {
 		return degree *= (PI/180.0);
 	}
@@ -94,7 +94,7 @@ namespace math {
 	#pragma warning (push)
 	#pragma warning (disable : 4244)
 	static SMath::Matrix4 perspective(real_t fov, real_t aspect, real_t nearPlane, real_t farPlane) {
-		real_t fovDiv2 = math::toRadians(((double)fov) / 2.0);
+		real_t fovDiv2 = toRadians(((double)fov) / 2.0);
 		real_t x = 1.0 / (tan((double)fovDiv2) * aspect);
 		real_t y = 1.0 / (tan(fovDiv2));
 		real_t A = -(nearPlane + farPlane) / (nearPlane - farPlane);

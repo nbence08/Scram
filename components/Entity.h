@@ -12,7 +12,7 @@
 #include "components/Transform.h"
 class Mesh;
 
-class Entity{
+class Entity {
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	std::vector<std::shared_ptr<Texture2D>> textures;
 
@@ -23,7 +23,7 @@ class Entity{
 	Entity* parent;
 
 public:
-	inline std::vector<std::shared_ptr<Mesh>>& getMeshes(){ return meshes; }
+	inline std::vector<std::shared_ptr<Mesh>>& getMeshes() { return meshes; }
 	inline std::vector<std::shared_ptr<Texture2D>>& getTextures() { return textures; }
 
 	Entity();
@@ -86,4 +86,3 @@ public:
 
 	SMath::Matrix4 model();
 };
-

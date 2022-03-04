@@ -6,7 +6,7 @@ Entity::Entity() {
 	parent = nullptr;
 }
 
-std::shared_ptr<Entity> Entity::addChild() {
+std::shared_ptr<Entity> Entity::createChild() {
 	children.push_back(std::make_shared<Entity>());
 	auto child = children[children.size() - 1];
 	child->parent = this;

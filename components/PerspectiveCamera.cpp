@@ -20,10 +20,10 @@ PerspectiveCamera::PerspectiveCamera(const  SMath::Vector4& position,
 	fov(fov), aspect(aspect), Camera(position, forward, up, nearPlane, farPlane) {}
 
 SMath::Matrix4 PerspectiveCamera::view() {
-	SMath::Vector3 p = math::homogenDivide(position);
-	return math::getLookAt(forward , up, p);
+	SMath::Vector3 p = SMath::homogenDivide(position);
+	return SMath::getLookAt(forward , up, p);
 }
 
 SMath::Matrix4 PerspectiveCamera::projection() {
-	return math::perspective(fov, aspect, nearPlane, farPlane);
+	return SMath::perspective(fov, aspect, nearPlane, farPlane);
 }

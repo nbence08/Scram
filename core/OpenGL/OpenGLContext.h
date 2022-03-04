@@ -68,8 +68,8 @@ public:
 		
 		//std::cout << "X:" << xDeg << " Y:" << yDeg << "\n";
 
-		auto yRot = SMath::Quaternion::rotation(math::toRadians(yDeg), right).getRotationMatrix();
-		auto xRot = SMath::Quaternion::rotation(math::toRadians(xDeg), up).getRotationMatrix();
+		auto yRot = SMath::Quaternion::rotation(SMath::toRadians(yDeg), right).getRotationMatrix();
+		auto xRot = SMath::Quaternion::rotation(SMath::toRadians(xDeg), up).getRotationMatrix();
 
 		SMath::Vector3 newForward = xRot * (yRot * forward);
 		SMath::Vector3 newUp = xRot * (yRot * up);

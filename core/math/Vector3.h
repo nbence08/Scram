@@ -2,6 +2,7 @@
 #include <cmath>
 #include <stdexcept>
 #include "core/Preprocess_Definitions.h"
+#include "Vector4.h"
 
 namespace SMath {
 	class Vector4;

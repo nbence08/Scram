@@ -16,11 +16,11 @@ public:
 			scale(scale), rotation(rotation), translation(translation) {}
 
 	SMath::Matrix4 model() {
-		return math::translate(translation)*
-			   math::rotate(rotation.x, SMath::Vector3(1.0, 0.0, 0.0))*
-			   math::rotate(rotation.y, SMath::Vector3(0.0, 1.0, 0.0))*
-			   math::rotate(rotation.z, SMath::Vector3(0.0, 0.0, 1.0))*
-			   math::scale(scale.x, scale.y, scale.z);
+		return SMath::translate(translation)*
+			SMath::rotate(rotation.x, SMath::Vector3(1.0, 0.0, 0.0))*
+			SMath::rotate(rotation.y, SMath::Vector3(0.0, 1.0, 0.0))*
+			SMath::rotate(rotation.z, SMath::Vector3(0.0, 0.0, 1.0))*
+			SMath::scale(scale.x, scale.y, scale.z);
 	}
 
 	void setScale(const SMath::Vector3& scale){ this->scale = scale; }
