@@ -17,8 +17,8 @@ public:
 		smoothness = 0.5;
 	}
 
-	std::variant<Vector3, std::shared_ptr<Texture2D>> albedo;
-	std::variant<Vector3, std::shared_ptr<Texture2D>> emission;
+	std::variant<SMath::Vector3, std::shared_ptr<Texture2D>> albedo;
+	std::variant<SMath::Vector3, std::shared_ptr<Texture2D>> emission;
 	real_t smoothness;
 	real_t metalness;
 

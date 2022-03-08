@@ -11,9 +11,9 @@ class PerspectiveCamera : public Camera<PerspectiveCamera>{
 public:
 	PerspectiveCamera();
 
-	PerspectiveCamera(const Vector4& position,
-		const Vector4& forward,
-		const Vector4& up,
+	PerspectiveCamera(const  SMath::Vector4& position,
+		const  SMath::Vector4& forward,
+		const  SMath::Vector4& up,
 		const real_t fov,
 		const real_t aspect,
 		const real_t nearPlane,
@@ -25,8 +25,8 @@ public:
 	inline real_t getAspect(){return aspect;}
 	inline void setAspect(const real_t aspect){this->aspect = aspect;}
 
-	Matrix4 view();
+	SMath::Matrix4 view();
 
-	Matrix4 projection();
+	SMath::Matrix4 projection();
 };
 

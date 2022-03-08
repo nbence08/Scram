@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "core/OpenGL/TextureCube.h"
 #include "core/math/linear_algebra.hpp"
 #include "ComponentBase.hpp"
@@ -10,10 +9,10 @@
 class PointLight : public ComponentBase{
 public:
 
-	Vector3 intensity;
-	Vector3 attenuation;
+	SMath::Vector3 intensity;
+	SMath::Vector3 attenuation;
 
-	Vector3 position;
+	SMath::Vector3 position;
 
 	real_t farPlane;
 	std::shared_ptr<TextureCube> shadowMap;
@@ -24,6 +23,7 @@ public:
 		return shadowMap.get() != nullptr;
 	}
 
-	std::vector<Matrix4> getLightSpaceMatrices() const;
-};
+	std::vector<SMath::Matrix4> getLightSpaceMatrices() const;
 
+
+};

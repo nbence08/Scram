@@ -5,10 +5,10 @@
 class SpotLight : public ComponentBase{
 public:
 
-	Vector3 intensity;
-	Vector3 attenuation;
-	Vector3 position;
-	Vector3 direction;
+	SMath::Vector3 intensity;
+	SMath::Vector3 attenuation;
+	SMath::Vector3 position;
+	SMath::Vector3 direction;
 
 	float dimAngle;
 	float angle;
