@@ -1,7 +1,4 @@
 #include "PointLight.h"
-#include <core\OpenGL\TextureUnit.h>
-#include <components\DirectionalLight.h>
-#include <components\Camera.h>
 
 PointLight::PointLight() {
 	farPlane = global::shadowProjEdgeSize;

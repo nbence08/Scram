@@ -5,7 +5,7 @@
 
 namespace SMath {
 	class Vector3;
-	class  Vector4 {
+	class Vector4{
 	public:
 		real_t x, y, z, w;
 		inline  Vector4(real_t x = 0.0f, real_t y = 0.0f, real_t z = 0.0f, real_t w = 1.0f) : x(x), y(y), z(z), w(w) {}

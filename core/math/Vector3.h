@@ -11,7 +11,7 @@ namespace SMath {
 		real_t x, y, z;
 
 		inline Vector3(real_t x = 0.0f, real_t y = 0.0f, real_t z = 0.0f) : x(x), y(y), z(z) {}
-		Vector3(const  SMath::Vector4& vec4);
+		Vector3(const Vector4& vec4);
 
 		Vector3 operator-() const;
 
