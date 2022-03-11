@@ -8,6 +8,8 @@ class PerspectiveCamera : public Camera<PerspectiveCamera>{
 	real_t fov;
 	real_t aspect;
 
+	double xDeg, yDeg;
+
 public:
 	PerspectiveCamera();
 
@@ -18,6 +20,8 @@ public:
 		const real_t aspect,
 		const real_t nearPlane,
 		const real_t farPlane);
+
+	void updateForward(double diffX, double diffY);
 
 	inline real_t getFov() {return fov;}
 	inline void setFov(const real_t fov) {this->fov = fov;}
