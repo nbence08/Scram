@@ -47,8 +47,7 @@ Framebuffer::Framebuffer(int width, int height, FboCreateInfo createInfo) : fram
 	}
 
 	if (createInfo.depthStencilBuffer) {
-		//create joint depth-stencil buffer
-		//TODO: implement it
+		createDepthStencilBuffer();
 	}
 	if (createInfo.depthBuffer && !createInfo.depthStencilBuffer) {
 		createDepthBuffer();
@@ -99,6 +98,34 @@ void Framebuffer::createColorBuffer() {
 	texUnit->unbind();
 }
 
+void Framebuffer::createDepthStencilBuffer() {
+	this->hollowBind();
+
+	ImageData2D dsInfo;
+	dsInfo.format = GL_DEPTH_STENCIL;
+	dsInfo.height = frameHeight;
+	dsInfo.width = frameWidth;
+	dsInfo.internalFormat = GL_DEPTH_STENCIL;
+	dsInfo.level = 0;
+	dsInfo.type = GL_UNSIGNED_BYTE;
+	dsInfo.pixels = nullptr;
+
+	dsBuffer = std::make_shared<Texture2D>();
+	auto texUnit = TextureUnit::getNewInstance();
+	texUnit->bind();
+	texUnit->bindTexture(dsBuffer);
+	texUnit->loadTexture(dsInfo);
+
+	
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, dsBuffer->getId(), 0);
+	hasDepthStencilBuffer = true;
+
+	texUnit->unbindTexture();
+	texUnit->unbind();
+
+	this->hollowUnbind();
+}
+
 void Framebuffer::createDepthBuffer() {
 	this->hollowBind();
 
@@ -106,6 +133,7 @@ void Framebuffer::createDepthBuffer() {
 	auto texUnit = TextureUnit::getNewInstance();
 	texUnit->bind();
 	texUnit->bindTexture(colorBuffer);
+
 	ImageData2D allocData;
 	allocData.format = GL_DEPTH_COMPONENT;
 	allocData.internalFormat = GL_DEPTH_COMPONENT;
