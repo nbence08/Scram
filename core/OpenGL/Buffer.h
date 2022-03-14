@@ -21,8 +21,9 @@ static bool isValidUsage(GLenum usage) {
 	return (validUsages.find(usage) != validUsages.end());
 }
 
-//TODO: modify so that buffer can count its references to the actual buffer in the GPU memory, so that when one object gets deleted, it
-// doesnt pull al the others with itself, basically goes for almost every class in OpenGL filter
+/// <summary>
+/// Buffer class representing a buffer object in OpenGL
+/// </summary>
 class Buffer{
 	unsigned int id;
 	VertexArray* vao;

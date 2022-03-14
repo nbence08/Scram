@@ -48,6 +48,11 @@ public:
 	inline real_t getFarPlane() const { return farPlane; }
 	inline void setFarPlane(const real_t farPlane) { this->farPlane = farPlane; }
 
+	inline void updateForward(double xDiff, double yDiff) {
+		T& t = static_cast<T>(*this);
+		t.updateForward(xDiff, yDiff);
+	}
+
 	Matrix4 view() {
 		T& t = static_cast<T>(*this);
 		return t.view();

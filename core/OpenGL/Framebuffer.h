@@ -26,6 +26,9 @@ struct FboCreateInfo {
 class Framebuffer;
 static int boundFramebuffer;
 
+/// <summary>
+/// Framebuffer class which represents a framebuffer in OpenGL
+/// </summary>
 class Framebuffer {
 private:
 
@@ -41,6 +44,7 @@ private:
 	std::shared_ptr<Texture2D> stencilBuffer;
 
 	bool hasDepthStencilBuffer;
+	std::shared_ptr<Texture2D> dsBuffer;
 
 	int frameWidth;
 	int frameHeight;
@@ -68,6 +72,7 @@ public:
 	Framebuffer(FboCreateInfo createInfo);
 
 	void createColorBuffer();
+	void createDepthStencilBuffer();
 	void createDepthBuffer();
 	void createStencilBuffer();
 
