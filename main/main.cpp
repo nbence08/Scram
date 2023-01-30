@@ -35,8 +35,6 @@ int main() {
 	entTransform.setScale(Vector3(0.5, 0.5, 0.5));
 	ent2Transform.setTranslation(Vector3(0.0, 40.0f, 0.0));
 
-
-
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
 

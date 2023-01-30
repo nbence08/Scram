@@ -1,0 +1,9 @@
+set(RESOURCES
+   tex.png
+)
+
+foreach(res ${RESOURCES})
+
+    file(COPY ${res} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+endforeach()
