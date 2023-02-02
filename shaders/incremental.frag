@@ -265,7 +265,5 @@ void main(){
 		emission = texture(materials[0].emissionTexture, fTex).xyz;
 	}
 
-	float tcLength = length(texColor.xyz);
-
 	color = vec4(pow(drawScene(texColor) + 0.1*texColor.xyz + emission, vec3(1/gamma)), 1.0);
 }
