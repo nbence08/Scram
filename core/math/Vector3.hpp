@@ -1,8 +1,8 @@
 #pragma once
 #include <cmath>
 #include <stdexcept>
-#include "core/Preprocess_Definitions.h"
-#include "Vector4.h"
+#include "core/Preprocess_Definitions.hpp"
+#include "Vector4.hpp"
 
 class Vector4;
 

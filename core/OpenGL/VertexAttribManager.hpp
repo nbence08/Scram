@@ -1,7 +1,7 @@
 #pragma once
 #include "GL/glew.h"
-#include "core/Preprocess_Definitions.h"
-#include "core/OpenGL/VertexArray.h"
+#include "core/Preprocess_Definitions.hpp"
+#include "core/OpenGL/VertexArray.hpp"
 
 #include <vector>
 #include <stdexcept>

@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "GL/glew.h"
-#include "TextureUnit.h"
+#include "TextureUnit.hpp"
 
 /*static const std::set<GLenum> validTextureTypes = {
 	 GL_TEXTURE_1D,

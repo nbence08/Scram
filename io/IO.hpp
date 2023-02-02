@@ -17,7 +17,7 @@
 #include "assimp/postprocess.h"
 #include "core/Struct_Definitions.hpp"
 
-#include "components/Entity.h"
+#include "components/Entity.hpp"
 
 namespace IO{
 	//reads a file of path given as parameter

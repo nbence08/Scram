@@ -6,11 +6,11 @@
 
 #include "GL/glew.h"
 #include "core/math/linear_algebra.hpp"
-#include "TextureUnit.h"
-#include "components/PointLight.h"
-#include "components/DirectionalLight.h"
-#include "components/Material.h"
-#include "main/Logger.h"
+#include "TextureUnit.hpp"
+#include "components/PointLight.hpp"
+#include "components/DirectionalLight.hpp"
+#include "components/Material.hpp"
+#include "main/Logger.hpp"
 
 class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;

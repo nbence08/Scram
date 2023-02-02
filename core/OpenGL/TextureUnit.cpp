@@ -1,4 +1,4 @@
-#include "TextureUnit.h"
+#include "TextureUnit.hpp"
 
 void TextureUnit::hollowBind() {
 	if(bindStack->size() == 0 && activeTexUnit == unitNum) return;

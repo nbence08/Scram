@@ -1,9 +1,9 @@
 #pragma once
-#include "components/Entity.h"
-#include "components/SpotLight.h"
-#include "components/PointLight.h"
-#include "components/DirectionalLight.h"
-#include "components/PerspectiveCamera.h"
+#include "components/Entity.hpp"
+#include "components/SpotLight.hpp"
+#include "components/PointLight.hpp"
+#include "components/DirectionalLight.hpp"
+#include "components/PerspectiveCamera.hpp"
 
 class Scene{
 	std::vector<std::shared_ptr<Entity>> objects;

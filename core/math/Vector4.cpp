@@ -1,4 +1,4 @@
-#include "Vector4.h"
+#include "Vector4.hpp"
 
 Vector4 Vector4::operator-() const {
 	return Vector4(-x, -y, -z, -w);

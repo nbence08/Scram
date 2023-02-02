@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <set>
 #include <stdexcept>
-#include "Buffer.h"
-#include "VertexAttribManager.h"
+#include "Buffer.hpp"
+#include "VertexAttribManager.hpp"
 #include <memory>
 
 class Buffer;

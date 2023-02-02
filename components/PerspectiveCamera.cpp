@@ -1,4 +1,4 @@
-#include "PerspectiveCamera.h"
+#include "PerspectiveCamera.hpp"
 
 PerspectiveCamera::PerspectiveCamera() {
 	position = Vector4(0.0f, 0.0f, 2.0f, 1.0f);

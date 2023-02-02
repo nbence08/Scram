@@ -6,8 +6,8 @@
 #include <stack>
 #include <variant>
 
-#include "Texture2D.h"
-#include "TextureCube.h"
+#include "Texture2D.hpp"
+#include "TextureCube.hpp"
 #include "core/Struct_Definitions.hpp"
 
 class Texture2D;

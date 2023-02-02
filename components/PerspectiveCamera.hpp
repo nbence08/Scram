@@ -1,7 +1,7 @@
 #pragma once
-#include "core/Preprocess_Definitions.h"
+#include "core/Preprocess_Definitions.hpp"
 #include "core/math/linear_algebra.hpp"
-#include "Camera.h"
+#include "Camera.hpp"
 #include "ComponentBase.hpp"
 
 class PerspectiveCamera : public Camera<PerspectiveCamera>{

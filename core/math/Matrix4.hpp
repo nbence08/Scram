@@ -1,7 +1,7 @@
 #pragma once
-#include "Vector4.h"
-#include "core/Preprocess_Definitions.h"
-#include "Matrix3.h"
+#include "Vector4.hpp"
+#include "core/Preprocess_Definitions.hpp"
+#include "Matrix3.hpp"
 
 class Matrix4{
 	//column vectors

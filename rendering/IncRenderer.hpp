@@ -5,22 +5,22 @@
 #include <memory>
 
 #include "GL/glew.h"
-#include "core/OpenGL/VertexArray.h"
-#include "core/OpenGL/Buffer.h"
-#include "core/OpenGL/ShaderProgram.h"
-#include "core/OpenGL/Framebuffer.h"
+#include "core/OpenGL/VertexArray.hpp"
+#include "core/OpenGL/Buffer.hpp"
+#include "core/OpenGL/ShaderProgram.hpp"
+#include "core/OpenGL/Framebuffer.hpp"
 #include "core/CubeData.hpp"
 #include "core/Global_Props.hpp"
 #include "core/math/linear_algebra.hpp"
 
-#include "io/IO.h"
+#include "io/IO.hpp"
 
-#include "components/PerspectiveCamera.h"
-#include "components/Transform.h"
+#include "components/PerspectiveCamera.hpp"
+#include "components/Transform.hpp"
 
-#include "Scene.h"
-#include "Pass.h"
-#include "PassBuilder.h"
+#include "Scene.hpp"
+#include "Pass.hpp"
+#include "PassBuilder.hpp"
 
 //incremental renderer
 class IncRenderer {

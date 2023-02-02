@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#include "core/OpenGL/ShaderProgram.h"
-#include "rendering/Pass.h"
+#include "core/OpenGL/ShaderProgram.hpp"
+#include "rendering/Pass.hpp"
 #include "core/math/linear_algebra.hpp"
 
 class PassBuilder {

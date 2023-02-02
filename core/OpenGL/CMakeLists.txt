@@ -1,26 +1,26 @@
 set(OPENGL_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/Buffer.cpp
-	${CMAKE_CURRENT_LIST_DIR}/Buffer.h
+	${CMAKE_CURRENT_LIST_DIR}/Buffer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Framebuffer.cpp
-	${CMAKE_CURRENT_LIST_DIR}/Framebuffer.h
+	${CMAKE_CURRENT_LIST_DIR}/Framebuffer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/OpenGLContext.cpp
-	${CMAKE_CURRENT_LIST_DIR}/OpenGLContext.h
+	${CMAKE_CURRENT_LIST_DIR}/OpenGLContext.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Renderbuffer.cpp
-	${CMAKE_CURRENT_LIST_DIR}/Renderbuffer.h
+	${CMAKE_CURRENT_LIST_DIR}/Renderbuffer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/ShaderProgram.cpp
-	${CMAKE_CURRENT_LIST_DIR}/ShaderProgram.h
+	${CMAKE_CURRENT_LIST_DIR}/ShaderProgram.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Texture2D.cpp
-	${CMAKE_CURRENT_LIST_DIR}/Texture2D.h
+	${CMAKE_CURRENT_LIST_DIR}/Texture2D.hpp
 	${CMAKE_CURRENT_LIST_DIR}/TextureCube.cpp
-	${CMAKE_CURRENT_LIST_DIR}/TextureCube.h
+	${CMAKE_CURRENT_LIST_DIR}/TextureCube.hpp
 	${CMAKE_CURRENT_LIST_DIR}/TextureUnit.cpp
-	${CMAKE_CURRENT_LIST_DIR}/TextureUnit.h
+	${CMAKE_CURRENT_LIST_DIR}/TextureUnit.hpp
 	${CMAKE_CURRENT_LIST_DIR}/UniformProvider.cpp
-	${CMAKE_CURRENT_LIST_DIR}/UniformProvider.h
+	${CMAKE_CURRENT_LIST_DIR}/UniformProvider.hpp
 	${CMAKE_CURRENT_LIST_DIR}/VertexArray.cpp
-	${CMAKE_CURRENT_LIST_DIR}/VertexArray.h
+	${CMAKE_CURRENT_LIST_DIR}/VertexArray.hpp
 	${CMAKE_CURRENT_LIST_DIR}/VertexAttribManager.cpp
-	${CMAKE_CURRENT_LIST_DIR}/VertexAttribManager.h
+	${CMAKE_CURRENT_LIST_DIR}/VertexAttribManager.hpp
 )
 
 target_sources(Scram

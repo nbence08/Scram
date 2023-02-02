@@ -1,7 +1,7 @@
 set(CORE_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/CubeData.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Global_Props.hpp
-	${CMAKE_CURRENT_LIST_DIR}/Preprocess_Definitions.h
+	${CMAKE_CURRENT_LIST_DIR}/Preprocess_Definitions.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Struct_Definitions.hpp
 )
 

@@ -6,8 +6,8 @@ extern int componentTypeCounter = 0;
 #include <fstream>
 #include <iterator>
 
-#include "core/OpenGL/OpenGLContext.h"
-#include "rendering/IncRenderer.h"
+#include "core/OpenGL/OpenGLContext.hpp"
+#include "rendering/IncRenderer.hpp"
 
 int main() {
 

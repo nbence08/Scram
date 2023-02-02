@@ -5,11 +5,11 @@
 #include <string>
 
 #include "core/math/linear_algebra.hpp"
-#include "core/OpenGL/Texture2D.h"
+#include "core/OpenGL/Texture2D.hpp"
 
-#include "components/Mesh.h"
+#include "components/Mesh.hpp"
 #include "components/ComponentBase.hpp"
-#include "components/Transform.h"
+#include "components/Transform.hpp"
 class Mesh;
 
 class Entity{

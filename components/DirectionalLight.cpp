@@ -1,4 +1,4 @@
-#include "DirectionalLight.h"
+#include "DirectionalLight.hpp"
 #include "glm/matrix.hpp"
 #include "core/Global_Props.hpp"
 

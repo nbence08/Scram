@@ -1,6 +1,6 @@
 target_sources(Scram
 	PUBLIC
-	${CMAKE_CURRENT_LIST_DIR}/IO.h
+	${CMAKE_CURRENT_LIST_DIR}/IO.hpp
 )
 
 target_include_directories(Scram

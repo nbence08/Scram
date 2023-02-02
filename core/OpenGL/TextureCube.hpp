@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "GL/glew.h"
-#include "TextureUnit.h"
+#include "TextureUnit.hpp"
 
 class TextureUnit;
 

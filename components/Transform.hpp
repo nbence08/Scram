@@ -1,6 +1,6 @@
 #pragma once
 #include "core/math/linear_algebra.hpp"
-#include "core/math/Quaternion.h"
+#include "core/math/Quaternion.hpp"
 #include "ComponentBase.hpp"
 
 class Transform : public ComponentBase{

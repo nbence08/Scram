@@ -7,7 +7,7 @@
 #include "GLFW/glfw3.h"
 
 #include "core/Global_Props.hpp"
-#include "Texture2D.h"
+#include "Texture2D.hpp"
 
 
 /// <summary>

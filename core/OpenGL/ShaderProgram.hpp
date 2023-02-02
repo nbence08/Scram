@@ -2,7 +2,7 @@
 #include "GL/glew.h"
 #include <string>
 #include <stdexcept>
-#include "UniformProvider.h"
+#include "UniformProvider.hpp"
 
 static unsigned int programInUse = 0;
 

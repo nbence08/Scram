@@ -1,7 +1,7 @@
 #pragma once
 #include <stdexcept>
-#include "core/Preprocess_Definitions.h"
-#include "Vector3.h"
+#include "core/Preprocess_Definitions.hpp"
+#include "Vector3.hpp"
 
 class Vector3;
 

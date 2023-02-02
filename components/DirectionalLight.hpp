@@ -1,7 +1,7 @@
 #pragma once
-#include "core/math/Vector3.h"
+#include "core/math/Vector3.hpp"
 #include "core/math/Math_Functions.hpp"
-#include "core/OpenGL/Texture2D.h"
+#include "core/OpenGL/Texture2D.hpp"
 #include "core/Global_Props.hpp"
 #include "ComponentBase.hpp"
 

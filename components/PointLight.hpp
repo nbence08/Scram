@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "core/OpenGL/TextureCube.h"
+#include "core/OpenGL/TextureCube.hpp"
 #include "core/math/linear_algebra.hpp"
 #include "ComponentBase.hpp"
 #include "core/Global_Props.hpp"

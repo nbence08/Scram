@@ -1,5 +1,5 @@
 #pragma once
-#include "core/math/Vector3.h"
+#include "core/math/Vector3.hpp"
 #include "ComponentBase.hpp"
 
 class SpotLight : public ComponentBase{

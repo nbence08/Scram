@@ -1,10 +1,10 @@
 #pragma once
 #include <functional>
-#include "core/OpenGL/ShaderProgram.h"
-#include "core/OpenGL/Framebuffer.h"
-#include "main/Logger.h"
-#include "rendering/Scene.h"
-#include "io/io.h"
+#include "core/OpenGL/ShaderProgram.hpp"
+#include "core/OpenGL/Framebuffer.hpp"
+#include "main/Logger.hpp"
+#include "rendering/Scene.hpp"
+#include "io/io.hpp"
 
 enum class PassType {
 	preProcess,
