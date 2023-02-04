@@ -1,4 +1,4 @@
-#include "PassBuilder.h"
+#include "PassBuilder.hpp"
 
 std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 	FboCreateInfo createInfo;

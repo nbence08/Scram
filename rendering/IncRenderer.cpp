@@ -1,4 +1,4 @@
-#include "IncRenderer.h"
+#include "IncRenderer.hpp"
 
 IncRenderer::IncRenderer(std::string defaultShaderPath) {
 

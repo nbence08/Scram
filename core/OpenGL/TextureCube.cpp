@@ -1,4 +1,4 @@
-#include "TextureCube.h"
+#include "TextureCube.hpp"
 
 TextureCube::TextureCube(GLenum magFilter, GLenum minFilter,
 	GLenum wrapR, GLenum wrapS, GLenum wrapT) {

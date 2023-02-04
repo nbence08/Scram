@@ -6,8 +6,8 @@ extern int componentTypeCounter = 0;
 #include <fstream>
 #include <iterator>
 
-#include "core/OpenGL/OpenGLContext.h"
-#include "rendering/IncRenderer.h"
+#include "core/OpenGL/OpenGLContext.hpp"
+#include "rendering/IncRenderer.hpp"
 
 int main() {
 
@@ -34,8 +34,6 @@ int main() {
 	entTransform.setRotation(Smath::Vector3(PI / 2.0, 0.0, 0.0));
 	entTransform.setScale(Smath::Vector3(0.5, 0.5, 0.5));
 	ent2Transform.setTranslation(Smath::Vector3(0.0, 40.0f, 0.0));
-
-
 
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);

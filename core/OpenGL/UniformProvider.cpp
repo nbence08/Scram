@@ -1,4 +1,4 @@
-#include "UniformProvider.h"
+#include "UniformProvider.hpp"
 
 /// <summary>
 /// Gets the location identifier of a uniform variable in the shader 

@@ -1,4 +1,4 @@
-#include "Texture2D.h"
+#include "Texture2D.hpp"
 
 Texture2D::Texture2D(GLenum magFilter, GLenum minFilter,
 	GLenum wrapR, GLenum wrapS) {

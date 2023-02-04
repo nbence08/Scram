@@ -1,4 +1,4 @@
-#include "Matrix3.h"
+#include "Matrix3.hpp"
 
 namespace Smath {
 	Matrix3::Matrix3(real_t x1, real_t x2, real_t x3,

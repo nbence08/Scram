@@ -32,6 +32,7 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+Scram.dir/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -361,11 +362,18 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/rendering/ShaderUniformManager.h
-/rendering/ShaderUniformManager.cpp
-/rendering/ShaderOutput.h
-/rendering/ShaderOutput.cpp
-/rendering/ShaderInput.h
-/rendering/ShaderInput.cpp
-/rendering/AttribDescriptor.h
-/rendering/AttribDescriptor.cpp
+
+# cmake files
+**/cmake_install.cmake
+**/CMakeFiles/
+**/CMakeCache.txt
+
+# visual studio files
+**.vcxproj
+**.vcxproj.filters
+**.sln
+.vs/
+bin/
+
+# temporary files
+**.bak
