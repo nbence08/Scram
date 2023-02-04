@@ -1,6 +1,4 @@
-#include "Vector2.h"
-
-#include "Vector2.h"
+#include "Vector2.hpp"
 
 Vector2 Vector2::operator-() const {
 	return Vector2(-x, -y);
