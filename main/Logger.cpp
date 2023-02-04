@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include "Logger.hpp"
 
 void Logger::message(std::string message){
 	auto nowPoint = std::chrono::system_clock::now();

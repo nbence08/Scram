@@ -1,1 +1,1 @@
-#include "SpotLight.h"
+#include "SpotLight.hpp"

@@ -1,4 +1,4 @@
-#include "Pass.h"
+#include "Pass.hpp"
 
 Pass::Pass() :programUniforms(nullptr), object(nullptr) {
 	passMeshLambda = [](Mesh& mesh) {

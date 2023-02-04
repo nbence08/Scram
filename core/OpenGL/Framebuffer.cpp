@@ -1,4 +1,4 @@
-#include "Framebuffer.h"
+#include "Framebuffer.hpp"
 
 Framebuffer::Framebuffer(unsigned int id) {
 	if (id == 0) {

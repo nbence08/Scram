@@ -1,4 +1,4 @@
-#include "Buffer.h"
+#include "Buffer.hpp"
 
 Buffer::Buffer(Buffer&& other) noexcept{
 	*this = std::forward<Buffer>(other);
