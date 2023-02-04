@@ -23,13 +23,14 @@ set(COMPONENT_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/PerspectiveCamera.hpp
 )
 
-target_sources(Scram 
+target_sources(${CURRENT_TARGET} 
 	PUBLIC
 	${COMPONENT_SOURCES}
 )
 
-target_include_directories(Scram
+target_include_directories(${CURRENT_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
 )
 
+copyHeadersToInclude(${COMPONENT_SOURCES})

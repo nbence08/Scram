@@ -377,3 +377,4 @@ bin/
 
 # temporary files
 **.bak
+include/*.hpp

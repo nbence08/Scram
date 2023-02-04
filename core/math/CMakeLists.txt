@@ -1,7 +1,4 @@
-target_sources(Scram
-	PUBLIC
-
-	# math
+set(MATH_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/linear_algebra.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Math_Functions.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Matrix3.cpp
@@ -18,7 +15,14 @@ target_sources(Scram
 	${CMAKE_CURRENT_LIST_DIR}/Vector4.hpp
 )
 
-target_include_directories(Scram
+target_sources(${CURRENT_TARGET}
+	PUBLIC
+	${MATH_SOURCES}
+)
+
+target_include_directories(${CURRENT_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
  )
+
+copyHeadersToInclude(${MATH_SOURCES})

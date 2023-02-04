@@ -8,33 +8,75 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-option(use_double_opt "use double as real type" OFF)
+set(PRIMARY_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+option(use_double_opt "use double as real type" OFF)
+option(verbose "verbose" OFF)
+
+function(copyHeadersToInclude <files>...)
+	foreach(s ${ARGN})
+		string(REGEX MATCH ".*\.hpp" isHeader ${s} )
+		if(isHeader)
+			if(verbose)
+				message("copying header "${s}" to "${PRIMARY_INCLUDE_DIR})
+			endif()
+			file(COPY ${s} DESTINATION ${PRIMARY_INCLUDE_DIR})
+		endif()
+
+	endforeach()
+endfunction()
+
+set(CURRENT_TARGET Scram)
 add_executable(Scram)
+add_subdirectory(main)
+add_subdirectory(resources)
 
 if(use_double_opt)
-add_compile_definitions(USE_DOUBLE)
+	add_compile_definitions(USE_DOUBLE)
 else()
-add_compile_definitions(USE_FLOAT)
+	add_compile_definitions(USE_FLOAT)
 endif()
 
-target_include_directories(Scram 
+target_include_directories(${CURRENT_TARGET}
 	PUBLIC 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_LIST_DIR}
 )
 
 target_link_directories(Scram PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+target_link_directories(Scram PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/Debug)
 
-target_link_libraries(Scram PUBLIC glew32 glfw3 assimp OpenGL32)
+target_link_libraries(Scram PUBLIC glew32 glfw3 assimp OpenGL32 core IO GPU)
 
+set(CURRENT_TARGET core)
+add_library(core)
+target_include_directories(${CURRENT_TARGET}
+	PUBLIC 
+	${PRIMARY_INCLUDE_DIR}
+	${CMAKE_CURRENT_LIST_DIR}
+)
 add_subdirectory(components)
 add_subdirectory(core)
+
+set(CURRENT_TARGET IO)
+add_library(IO INTERFACE)
+target_include_directories(${CURRENT_TARGET}
+	INTERFACE 
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_LIST_DIR}
+)
 add_subdirectory(io)
-add_subdirectory(main)
+
+set(CURRENT_TARGET GPU)
+add_library(GPU)
+target_include_directories(${CURRENT_TARGET}
+	PUBLIC 
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_LIST_DIR}
+)
 add_subdirectory(rendering)
-add_subdirectory(resources)
 add_subdirectory(shaders)
+
 
 set(SCRAM_SRC_ROOT "${CMAKE_SOURCE_DIR}")
 file(GLOB_RECURSE SCRAM_SRC

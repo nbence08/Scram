@@ -18,4 +18,4 @@ foreach(res ${SHADERS})
 
 endforeach()
 
-target_sources(Scram PRIVATE ${SHADERS})
+target_sources(${CURRENT_TARGET} PRIVATE ${SHADERS})

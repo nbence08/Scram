@@ -1,6 +1,4 @@
-target_sources( Scram
-	PUBLIC
-	
+set(RENDERING_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.cpp
 	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Pass.cpp
@@ -10,8 +8,16 @@ target_sources( Scram
 	${CMAKE_CURRENT_LIST_DIR}/Scene.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Scene.hpp
 )
+	
 
-target_include_directories(Scram
+target_sources(${CURRENT_TARGET}
+	PUBLIC
+	${RENDERING_SOURCES}
+)
+
+target_include_directories(${CURRENT_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
  )
+
+copyHeadersToInclude(${RENDERING_SOURCES})
