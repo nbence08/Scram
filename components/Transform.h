@@ -5,25 +5,25 @@
 
 class Transform : public ComponentBase{
 	//rotation around x, y, z axes
-	Vector3 translation;
-	Vector3 rotation;
-	Vector3 scale;
+	Smath::Vector3 translation;
+	Smath::Vector3 rotation;
+	Smath::Vector3 scale;
 public:
 
-	Transform(): scale(Vector3(1.0, 1.0, 1.0)), rotation(Vector3(0.0, 0.0, 0.0)), translation(Vector3(0.0, 0.0, 0.0)) {}
+	Transform(): scale(Smath::Vector3(1.0, 1.0, 1.0)), rotation(Smath::Vector3(0.0, 0.0, 0.0)), translation(Smath::Vector3(0.0, 0.0, 0.0)) {}
 
-	Transform(const Vector3& translation, const Vector3& rotation, const Vector3& scale):
+	Transform(const Smath::Vector3& translation, const Smath::Vector3& rotation, const Smath::Vector3& scale):
 			scale(scale), rotation(rotation), translation(translation) {}
 
-	Matrix4 model() {
+	Smath::Matrix4 model() {
 		return math::translate(translation)*
-			   math::rotate(rotation.x, Vector3(1.0, 0.0, 0.0))*
-			   math::rotate(rotation.y, Vector3(0.0, 1.0, 0.0))*
-			   math::rotate(rotation.z, Vector3(0.0, 0.0, 1.0))*
+			   math::rotate(rotation.x, Smath::Vector3(1.0, 0.0, 0.0))*
+			   math::rotate(rotation.y, Smath::Vector3(0.0, 1.0, 0.0))*
+			   math::rotate(rotation.z, Smath::Vector3(0.0, 0.0, 1.0))*
 			   math::scale(scale.x, scale.y, scale.z);
 	}
 
-	void setScale(const Vector3& scale){ this->scale = scale; }
-	void setTranslation(const Vector3& translation) { this->translation = translation; }
-	void setRotation(const Vector3& rotation) { this->rotation = rotation; }
+	void setScale(const Smath::Vector3& scale){ this->scale = scale; }
+	void setTranslation(const Smath::Vector3& translation) { this->translation = translation; }
+	void setRotation(const Smath::Vector3& rotation) { this->rotation = rotation; }
 };

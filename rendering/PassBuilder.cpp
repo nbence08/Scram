@@ -108,7 +108,7 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 		auto& camera = scene.getCamera();
 		program->setUniform("view", camera.view());
 		program->setUniform("projection", camera.projection());
-		program->setUniform("cameraPos", Vector3(camera.getPosition()));
+		program->setUniform("cameraPos", Smath::Vector3(camera.getPosition()));
 	};
 
 	pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](Entity& entity) {

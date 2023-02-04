@@ -8,12 +8,12 @@
 class DirectionalLight : public ComponentBase {
 public:
 
-	Vector3 intensity;
+	Smath::Vector3 intensity;
 	//direction of fragments to light source
-	Vector3 direction;
+	Smath::Vector3 direction;
 	std::shared_ptr<Texture2D> shadowMap;
 
-	Matrix4 getLightSpaceMatrix() const;
+	Smath::Matrix4 getLightSpaceMatrix() const;
 
 	DirectionalLight();
 

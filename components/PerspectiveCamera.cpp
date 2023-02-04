@@ -1,9 +1,9 @@
 #include "PerspectiveCamera.h"
 
 PerspectiveCamera::PerspectiveCamera() {
-	position = Vector4(0.0f, 0.0f, 2.0f, 1.0f);
-	forward = Vector4(0.0f, 0.0f, -1.0f, 0.0f);
-	up = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
+	position = Smath::Vector4(0.0f, 0.0f, 2.0f, 1.0f);
+	forward = Smath::Vector4(0.0f, 0.0f, -1.0f, 0.0f);
+	up = Smath::Vector4(0.0f, 1.0f, 0.0f, 0.0f);
 	fov = 80.0f;
 	aspect = (real_t) (800.0 / 600.0);
 	nearPlane = (real_t) 0.01;
@@ -12,9 +12,9 @@ PerspectiveCamera::PerspectiveCamera() {
 	yDeg = 0.0;
 }
 
-PerspectiveCamera::PerspectiveCamera(const Vector4& position,
-	const Vector4& forward,
-	const Vector4& up,
+PerspectiveCamera::PerspectiveCamera(const Smath::Vector4& position,
+	const Smath::Vector4& forward,
+	const Smath::Vector4& up,
 	const real_t nearPlane,
 	const real_t farPlane,
 	const real_t fov,
@@ -31,9 +31,9 @@ PerspectiveCamera::PerspectiveCamera(const Vector4& position,
 /// <param name="diffY">Difference in vertical orientation</param>
 void PerspectiveCamera::updateForward(double diffX, double diffY) {
 
-	Vector3 forward(0.0, 0.0, -1.0);
-	Vector3 up(0.0, 1.0, 0.0);
-	Vector3 right = cross(forward, up);
+	Smath::Vector3 forward(0.0, 0.0, -1.0);
+	Smath::Vector3 up(0.0, 1.0, 0.0);
+	Smath::Vector3 right = cross(forward, up);
 
 	xDeg += diffX;
 	yDeg += diffY;
@@ -43,22 +43,22 @@ void PerspectiveCamera::updateForward(double diffX, double diffY) {
 
 	//std::cout << "X:" << xDeg << " Y:" << yDeg << "\n";
 
-	auto yRot = Quaternion::rotation(math::toRadians(yDeg), right).getRotationMatrix();
-	auto xRot = Quaternion::rotation(math::toRadians(xDeg), up).getRotationMatrix();
+	auto yRot = Smath::Quaternion::rotation(math::toRadians(yDeg), right).getRotationMatrix();
+	auto xRot = Smath::Quaternion::rotation(math::toRadians(xDeg), up).getRotationMatrix();
 
 
-	Vector3 newForward = xRot * (yRot * forward);
-	Vector3 newUp = xRot * (yRot * up);
+	Smath::Vector3 newForward = xRot * (yRot * forward);
+	Smath::Vector3 newUp = xRot * (yRot * up);
 
-	setForward(Vector4(newForward.x, newForward.y, newForward.z, 0.0));
-	setUp(Vector4(newUp.x, newUp.y, newUp.z, 0.0));
+	setForward(Smath::Vector4(newForward.x, newForward.y, newForward.z, 0.0));
+	setUp(Smath::Vector4(newUp.x, newUp.y, newUp.z, 0.0));
 }
 
-Matrix4 PerspectiveCamera::view() {
-	Vector3 p = math::homogenDivide(position);
+Smath::Matrix4 PerspectiveCamera::view() {
+	Smath::Vector3 p = math::homogenDivide(position);
 	return math::getLookAt(forward , up, p);
 }
 
-Matrix4 PerspectiveCamera::projection() {
+Smath::Matrix4 PerspectiveCamera::projection() {
 	return math::perspective(fov, aspect, nearPlane, farPlane);
 }

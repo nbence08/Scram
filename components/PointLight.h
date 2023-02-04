@@ -10,10 +10,10 @@
 class PointLight : public ComponentBase{
 public:
 
-	Vector3 intensity;
-	Vector3 attenuation;
+	Smath::Vector3 intensity;
+	Smath::Vector3 attenuation;
 
-	Vector3 position;
+	Smath::Vector3 position;
 
 	real_t farPlane;
 	std::shared_ptr<TextureCube> shadowMap;
@@ -24,6 +24,6 @@ public:
 		return shadowMap.get() != nullptr;
 	}
 
-	std::vector<Matrix4> getLightSpaceMatrices() const;
+	std::vector<Smath::Matrix4> getLightSpaceMatrices() const;
 };
 

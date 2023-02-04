@@ -2,18 +2,18 @@
 #include "glm/matrix.hpp"
 #include "core/Global_Props.hpp"
 
-Matrix4 DirectionalLight::getLightSpaceMatrix() const {
+Smath::Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 
 	auto normDir = direction.normalized();
-	Vector3 up;
+	Smath::Vector3 up;
 	if (normDir.x == 0 && normDir.y == 1 && normDir.z == 0) {
-		up = Vector3(0, 0, 1);
+		up = Smath::Vector3(0, 0, 1);
 	}
 	else if (normDir.x == 0 && normDir.y == -1 && normDir.z == 0) {
-		up = Vector3(0, 0, -1);
+		up = Smath::Vector3(0, 0, -1);
 	}
 	else {
-		up = Vector3(0, 1, 0);
+		up = Smath::Vector3(0, 1, 0);
 	}
 
 	auto right = cross(-up, -normDir);
@@ -22,9 +22,9 @@ Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 	float edgeRight = (float)global::shadowProjEdgeSize/1.5f;
 	float edgeTop = (float)global::shadowProjEdgeSize/1.5f;
 
-	Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
+	Smath::Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
 	//ideally position for the getLookAt would be ahead of the position of the camera, in its direction
-	Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize);
+	Smath::Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize);
 
 	return mat4_1 * mat4_2;
 }

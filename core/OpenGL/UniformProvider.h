@@ -16,7 +16,7 @@ class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;
 	
 	/*std::unordered_map<std::string,
-		std::variant<float, double, int, Vector2, Vector3, Vector4, Matrix3, Matrix4>
+		std::variant<float, double, int, Vector2, Smath::Vector3, Smath::Vector4, Matrix3, Smath::Matrix4>
 	> valueCache;*/
 	
 	unsigned int programId;
@@ -72,8 +72,8 @@ public:
 	/// based on the preprocessor configuration
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
-	/// <param name="value">Vector3 value set as uniform</param>
-	void setUniform(std::string name, const Vector3& value);
+	/// <param name="value">Smath::Vector3 value set as uniform</param>
+	void setUniform(std::string name, const Smath::Vector3& value);
 
 	/// <summary>
 	/// Sets vec4 uniform value, identified by the name specified as parameter, in the 
@@ -81,8 +81,8 @@ public:
 	/// based on the preprocessor configuration
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
-	/// <param name="value">Vector4 value set as uniform</param>
-	void setUniform(std::string name, const Vector4& value);
+	/// <param name="value">Smath::Vector4 value set as uniform</param>
+	void setUniform(std::string name, const Smath::Vector4& value);
 
 	/// <summary>
 	/// Sets mat4 uniform value, identified by the name specified as parameter, in the 
@@ -90,8 +90,8 @@ public:
 	/// based on the preprocessor configuration
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
-	/// <param name="value">Matrix4 value set as uniform</param>
-	void setUniform(std::string name, const Matrix4& value);
+	/// <param name="value">Smath::Matrix4 value set as uniform</param>
+	void setUniform(std::string name, const Smath::Matrix4& value);
 
 	/// <summary>
 	/// Sets int uniform value, identified by the name specified as parameter, in the 

@@ -75,8 +75,8 @@ void UniformProvider::setUniform(std::string name, const real_t x, const real_t 
 /// based on the preprocessor configuration
 /// </summary>
 /// <param name="name">Name of the uniform variable in the shader</param>
-/// <param name="value">Vector3 value set as uniform</param>
-void UniformProvider::setUniform(std::string name, const Vector3& value) {
+/// <param name="value">Smath::Vector3 value set as uniform</param>
+void UniformProvider::setUniform(std::string name, const Smath::Vector3& value) {
 	unsigned int location = getUniformLocation(name);
 	if (GL_REAL == GL_FLOAT) {
 		glUniform3f(location, value.x, value.y, value.z);
@@ -93,7 +93,7 @@ void UniformProvider::setUniform(std::string name, const Vector3& value) {
 /// </summary>
 /// <param name="name">Name of the uniform variable in the shader</param>
 /// <param name="value">Vector4 value set as uniform</param>
-void UniformProvider::setUniform(std::string name, const Vector4& value) {
+void UniformProvider::setUniform(std::string name, const Smath::Vector4& value) {
 	unsigned int location = getUniformLocation(name);
 	if (GL_REAL == GL_FLOAT) {
 		glUniform4f(location, value.x, value.y, value.z, value.w);
@@ -109,8 +109,8 @@ void UniformProvider::setUniform(std::string name, const Vector4& value) {
 /// based on the preprocessor configuration
 /// </summary>
 /// <param name="name">Name of the uniform variable in the shader</param>
-/// <param name="value">Matrix4 value set as uniform</param>
-void UniformProvider::setUniform(std::string name, const Matrix4& value) {
+/// <param name="value">Smath::Matrix4 value set as uniform</param>
+void UniformProvider::setUniform(std::string name, const Smath::Matrix4& value) {
 	unsigned int location = getUniformLocation(name);
 
 	if (GL_REAL == GL_FLOAT) {
@@ -216,9 +216,9 @@ void UniformProvider::setUniform(const PointLight& light, int index, std::string
 /// <param name="arrayName">Name of the arra containing the materials in the shader. Default=["materials"].</param>
 void UniformProvider::setMaterial(const Material& material, int index, std::string arrayName) {
 	bool albedo_is_texture;
-	if (material.albedo.index() == 0) { //Vector3
+	if (material.albedo.index() == 0) { //Smath::Vector3
 
-		Vector3 albedo = std::get<Vector3>(material.albedo);
+		Smath::Vector3 albedo = std::get<Smath::Vector3>(material.albedo);
 		albedo_is_texture = false;
 
 		setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
@@ -230,14 +230,14 @@ void UniformProvider::setMaterial(const Material& material, int index, std::stri
 		auto textureUnit = albedo.getTextureUnitNum();
 		if (textureUnit == -1) {
 			//TODO: automatic texture unit creation could be implemented in the future
-			Vector3 albedo(1.0, 0.0, 1.0);
+			Smath::Vector3 albedo(1.0, 0.0, 1.0);
 			albedo_is_texture = false;
 
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", albedo);
 		}
 		albedo_is_texture = true;
-		setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", Vector3(0.0, 0.0, 0.0));
+		setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", Smath::Vector3(0.0, 0.0, 0.0));
 		setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", textureUnit);
 	}
 
