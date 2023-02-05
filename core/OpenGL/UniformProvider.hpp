@@ -116,7 +116,7 @@ public:
 	/// <param name="light">Point light source to bet set</param>
 	/// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 	/// <param name="arrayName">Name of the array containing the point light data in the shader</param>
-	void setLight(const PointLight& light, int index, std::string arrayName = "pointLights");
+	void setLight(const SComponent::PointLight& light, int index, std::string arrayName = "pointLights");
 
 	/// <summary>
 	/// Sets directional light source in the shader. Performs shadow map setting as well if
@@ -125,7 +125,7 @@ public:
 	/// <param name="light">Directional light source to bet set</param>
 	/// <param name="index">Index of the directional light source to be set in the shader, in the array of point lights</param>
 	/// <param name="arrayName">Name of the array containing the directional light data in the shader</param>
-	void setLight(const DirectionalLight& light, int index, std::string arrayName = "dirLights");
+	void setLight(const SComponent::DirectionalLight& light, int index, std::string arrayName = "dirLights");
 
 	/// <summary>
 	/// Same as overload of setLight for directional lights.
@@ -135,7 +135,7 @@ public:
 	/// <param name="light">Point light source to bet set</param>
 	/// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 	/// <param name="arrayName">Name of the array containing the point light data in the shader</param>
-	void setUniform(const DirectionalLight& light, int index, std::string arrayName = "dirLights");
+	void setUniform(const SComponent::DirectionalLight& light, int index, std::string arrayName = "dirLights");
 
 	/// <summary>
 	/// Same as overload of setLight for point lights.
@@ -145,7 +145,7 @@ public:
 	/// <param name="light">Point light source to bet set</param>
 	/// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 	/// <param name="arrayName">Name of the array containing the point light data in the shader</param>
-	void setUniform(const PointLight& light, int index, std::string arrayName = "pointLights");
+	void setUniform(const SComponent::PointLight& light, int index, std::string arrayName = "pointLights");
 
 	//TODO: add setLight for SpotLights
 
@@ -155,7 +155,7 @@ public:
 	/// <param name="material">Material object to be set</param>
 	/// <param name="index">Index of material to be set in the shader</param>
 	/// <param name="arrayName">Name of the arra containing the materials in the shader.</param>
-	void setMaterial(const Material& material,int index, std::string arrayName = "materials");
+	void setMaterial(const SComponent::Material& material,int index, std::string arrayName = "materials");
 
 	/// <summary>
 	/// Same as setMaterial
@@ -164,6 +164,6 @@ public:
 	/// <param name="material">Material object to be set</param>
 	/// <param name="index">Index of material to be set in the shader</param>
 	/// <param name="arrayName">Name of the arra containing the materials in the shader.</param>
-	void setUniform(const Material& material, int index, std::string arrayName = "materials");
+	void setUniform(const SComponent::Material& material, int index, std::string arrayName = "materials");
 };
 

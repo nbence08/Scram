@@ -7,23 +7,24 @@
 #include "ComponentBase.hpp"
 #include "core/Global_Props.hpp"
 
-class PointLight : public ComponentBase{
-public:
+namespace SComponent {
+	class PointLight : public ComponentBase {
+	public:
 
-	Smath::Vector3 intensity;
-	Smath::Vector3 attenuation;
+		Smath::Vector3 intensity;
+		Smath::Vector3 attenuation;
 
-	Smath::Vector3 position;
+		Smath::Vector3 position;
 
-	real_t farPlane;
-	std::shared_ptr<TextureCube> shadowMap;
+		real_t farPlane;
+		std::shared_ptr<TextureCube> shadowMap;
 
-	PointLight();
+		PointLight();
 
-	inline bool hasShadowMap() const {
-		return shadowMap.get() != nullptr;
-	}
+		inline bool hasShadowMap() const {
+			return shadowMap.get() != nullptr;
+		}
 
-	std::vector<Smath::Matrix4> getLightSpaceMatrices() const;
-};
-
+		std::vector<Smath::Matrix4> getLightSpaceMatrices() const;
+	};
+}

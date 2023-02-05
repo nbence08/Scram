@@ -152,7 +152,7 @@ void UniformProvider::setTexture(std::string samplerName, const TextureUnit& uni
 /// <param name="light">Point light source to bet set</param>
 /// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 /// <param name="arrayName">Name of the array containing the point light data in the shader. Default=["pointLights"]</param>
-void UniformProvider::setLight(const PointLight& light, int index, std::string arrayName) {
+void UniformProvider::setLight(const SComponent::PointLight& light, int index, std::string arrayName) {
 	setUniform(arrayName + "[" + std::to_string(index) + "].intensity", light.intensity);
 	setUniform(arrayName + "[" + std::to_string(index) + "].attenuation", light.attenuation);
 	setUniform(arrayName + "[" + std::to_string(index) + "].position", light.position);
@@ -173,7 +173,7 @@ void UniformProvider::setLight(const PointLight& light, int index, std::string a
 /// <param name="light">Directional light source to bet set</param>
 /// <param name="index">Index of the directional light source to be set in the shader, in the array of point lights</param>
 /// <param name="arrayName">Name of the array containing the directional light data in the shader. Default=["dirLights"].</param>
-void UniformProvider::setLight(const DirectionalLight& light, int index, std::string arrayName) {
+void UniformProvider::setLight(const SComponent::DirectionalLight& light, int index, std::string arrayName) {
 	setUniform(arrayName + "[" + std::to_string(index) + "].intensity", light.intensity);
 	setUniform(arrayName + "[" + std::to_string(index) + "].direction", light.direction.normalized());
 	setUniform(arrayName + "[" + std::to_string(index) + "].lightMatrix", light.getLightSpaceMatrix());
@@ -190,7 +190,7 @@ void UniformProvider::setLight(const DirectionalLight& light, int index, std::st
 /// <param name="light">Point light source to bet set</param>
 /// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 /// <param name="arrayName">Name of the array containing the point light data in the shader. Defaultt=["dirLights"].</param>
-void UniformProvider::setUniform(const DirectionalLight& light, int index, std::string arrayName) {
+void UniformProvider::setUniform(const SComponent::DirectionalLight& light, int index, std::string arrayName) {
 	setLight(light, index, arrayName);
 }
 
@@ -202,7 +202,7 @@ void UniformProvider::setUniform(const DirectionalLight& light, int index, std::
 /// <param name="light">Point light source to bet set</param>
 /// <param name="index">Index of the point light source to be set in the shader, in the array of point lights</param>
 /// <param name="arrayName">Name of the array containing the point light data in the shader. Default=["pointLights"].</param>
-void UniformProvider::setUniform(const PointLight& light, int index, std::string arrayName) {
+void UniformProvider::setUniform(const SComponent::PointLight& light, int index, std::string arrayName) {
 	setLight(light, index, arrayName);
 }
 
@@ -214,7 +214,7 @@ void UniformProvider::setUniform(const PointLight& light, int index, std::string
 /// <param name="material">Material object to be set</param>
 /// <param name="index">Index of material to be set in the shader</param>
 /// <param name="arrayName">Name of the arra containing the materials in the shader. Default=["materials"].</param>
-void UniformProvider::setMaterial(const Material& material, int index, std::string arrayName) {
+void UniformProvider::setMaterial(const SComponent::Material& material, int index, std::string arrayName) {
 	bool albedo_is_texture;
 	if (material.albedo.index() == 0) { //Smath::Vector3
 
@@ -265,6 +265,6 @@ void UniformProvider::setMaterial(const Material& material, int index, std::stri
 /// <param name="material">Material object to be set</param>
 /// <param name="index">Index of material to be set in the shader</param>
 /// <param name="arrayName">Name of the arra containing the materials in the shader. Default=["materials"].</param>
-void UniformProvider::setUniform(const Material& material, int index, std::string arrayName) {
+void UniformProvider::setUniform(const SComponent::Material& material, int index, std::string arrayName) {
 	setMaterial(material, index, arrayName);
 }

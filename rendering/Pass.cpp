@@ -1,13 +1,13 @@
 #include "Pass.hpp"
 
 Pass::Pass() :programUniforms(nullptr), object(nullptr) {
-	passMeshLambda = [](Mesh& mesh) {
+	passMeshLambda = [](SComponent::Mesh& mesh) {
 		glDrawElements(GL_TRIANGLES, (GLsizei)mesh.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 	};
 
-	passEntityLambda = [this](Entity& entity) {
-		if (entity.hasComponent<Mesh>()) {
-			passMesh(entity.getComponent<Mesh>());
+	passEntityLambda = [this](SComponent::Entity& entity) {
+		if (entity.hasComponent<SComponent::Mesh>()) {
+			passMesh(entity.getComponent<SComponent::Mesh>());
 		}
 	};
 
@@ -94,7 +94,7 @@ void Pass::addTextureOutput(std::string name, std::shared_ptr<TextureCube> textu
 	textureCubeOutputs[name] = texture;
 }
 
-void Pass::passMesh(Mesh& mesh) {
+void Pass::passMesh(SComponent::Mesh& mesh) {
 	auto& vao = mesh.getVao();
 	vao.bind();
 
@@ -105,7 +105,7 @@ void Pass::passMesh(Mesh& mesh) {
 	vao.unbind();
 }
 
-void Pass::passEntity(Entity& entity) {
+void Pass::passEntity(SComponent::Entity& entity) {
 	prepareEntity(entity);
 	passEntityLambda(entity);
 	/*default passEntityLambda:

@@ -34,7 +34,7 @@ public:
 	}
 	#pragma warning (push)
 	#pragma warning (disable : 4244)
-	void handleInputs(PerspectiveCamera& camera, real_t deltaTime) {
+	void handleInputs(SComponent::PerspectiveCamera& camera, real_t deltaTime) {
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			camera.moveForward(deltaTime * moveSpeed);
 		}

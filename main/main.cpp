@@ -1,13 +1,13 @@
 #pragma once
 
-extern int componentTypeCounter = 0;
-
 #include <iostream>
 #include <fstream>
 #include <iterator>
 
 #include "core/OpenGL/OpenGLContext.hpp"
 #include "rendering/IncRenderer.hpp"
+
+extern int SComponent::componentTypeCounter = 0;
 
 int main() {
 
@@ -25,11 +25,11 @@ int main() {
 	auto currentFrame = glfwGetTime();
 	auto lastFrame = glfwGetTime();
 	
-	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
-	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
+	std::shared_ptr<SComponent::Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
+	std::shared_ptr<SComponent::Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
 
-	auto& entTransform = ent->getComponent<Transform>();
-	auto& ent2Transform = ent2->getComponent<Transform>();
+	auto& entTransform = ent->getComponent<SComponent::Transform>();
+	auto& ent2Transform = ent2->getComponent<SComponent::Transform>();
 	
 	entTransform.setRotation(Smath::Vector3(PI / 2.0, 0.0, 0.0));
 	entTransform.setScale(Smath::Vector3(0.5, 0.5, 0.5));
@@ -38,12 +38,12 @@ int main() {
 	Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
 
-	DirectionalLight sun;
+	SComponent::DirectionalLight sun;
 	sun.direction = Smath::Vector3(1.0f, 1.0f, 1.0f);
 	sun.intensity = Smath::Vector3(10.0f, 10.0f, 9.0f);
 	scene.getDirLights().push_back(sun);
 
-	PointLight intense;
+	SComponent::PointLight intense;
 	intense.attenuation = Smath::Vector3(0.0, 0.0, 0.2);
 	intense.intensity = Smath::Vector3(1.0, 100.0, 1.0);
 	intense.position = Smath::Vector3(0.0, -30.0, -78.0);

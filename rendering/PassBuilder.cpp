@@ -13,7 +13,7 @@ std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 
 	auto pass = std::make_shared<Pass>(shaderName, createInfo);
 
-	pass->prepareEntity = [program = pass->getProgram().get()](Entity& entity) {
+	pass->prepareEntity = [program = pass->getProgram().get()](SComponent::Entity& entity) {
 		program->setUniform("model", entity.model());
 	};
 
@@ -111,9 +111,9 @@ std::shared_ptr<Pass> PassBuilder::buildStandardPass(bool defaultFbo) {
 		program->setUniform("cameraPos", Smath::Vector3(camera.getPosition()));
 	};
 
-	pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](Entity& entity) {
-		if (entity.hasComponent<Material>()) {
-			auto material = entity.getComponent<Material>();
+	pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](SComponent::Entity& entity) {
+		if (entity.hasComponent<SComponent::Material>()) {
+			auto material = entity.getComponent<SComponent::Material>();
 			program->setUniform(material, 0);
 		}
 		program->setUniform("model", entity.model());
@@ -134,7 +134,7 @@ std::shared_ptr<Pass> PassBuilder::buildPointShadowPass() {
 
 	auto pass = std::make_shared<Pass>(shaderName, createInfo);
 
-	pass->prepareEntity = [program = pass->getProgram().get()](Entity& entity) {
+	pass->prepareEntity = [program = pass->getProgram().get()](SComponent::Entity& entity) {
 		program->setUniform("model", entity.model());
 	};
 

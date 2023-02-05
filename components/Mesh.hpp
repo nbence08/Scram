@@ -7,57 +7,58 @@
 #include "core/OpenGL/Buffer.hpp"
 #include "ComponentBase.hpp"
 
-struct Vertex {
-	Smath::Vector3 position;
-	Smath::Vector3 normal;
-	Smath::Vector2 texCoord;
-};
+namespace SComponent {
+	struct Vertex {
+		Smath::Vector3 position;
+		Smath::Vector3 normal;
+		Smath::Vector2 texCoord;
+	};
 
-static uint64_t topMeshId = 0;
+	static uint64_t topMeshId = 0;
 
-class Mesh : public ComponentBase{
+	class Mesh : public ComponentBase {
 
-	VertexArray vao;
-	Buffer vbo;
-	Buffer ebo;
+		VertexArray vao;
+		Buffer vbo;
+		Buffer ebo;
 
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
 
-public:
+	public:
 
-	const uint64_t uid;
+		const uint64_t uid;
 
-	inline Mesh():uid(topMeshId++) { 
-		vao = (VertexArray());
-		vbo = (Buffer());
-		ebo = (Buffer());
+		inline Mesh() :uid(topMeshId++) {
+			vao = (VertexArray());
+			vbo = (Buffer());
+			ebo = (Buffer());
 
-		vao.addReal(3);
-		vao.addReal(3);
-		vao.addReal(2);
+			vao.addReal(3);
+			vao.addReal(3);
+			vao.addReal(2);
 
-		vao.bindVertexBuffer(vbo);
-		vao.bindIndexBuffer(ebo);
-	}
+			vao.bindVertexBuffer(vbo);
+			vao.bindIndexBuffer(ebo);
+		}
 
-	inline std::vector<Vertex>& getVertices() { return vertices; }
-	inline std::vector<unsigned int>& getIndices(){ return indices; }
+		inline std::vector<Vertex>& getVertices() { return vertices; }
+		inline std::vector<unsigned int>& getIndices() { return indices; }
 
-	inline void setIndices(std::vector<unsigned int>& indices) { this->indices = indices; }
-	inline void setIndices(std::vector<unsigned int>&& indices) { this->indices = indices; }
+		inline void setIndices(std::vector<unsigned int>& indices) { this->indices = indices; }
+		inline void setIndices(std::vector<unsigned int>&& indices) { this->indices = indices; }
 
-	inline VertexArray& getVao() { return vao; }
-	inline Buffer& getVbo() { return vbo; }
-	inline Buffer& getEbo() { return ebo; }
+		inline VertexArray& getVao() { return vao; }
+		inline Buffer& getVbo() { return vbo; }
+		inline Buffer& getEbo() { return ebo; }
 
-	void bufferVertices() {
-		vbo.bufferData(&vertices.data()[0], sizeof(Vertex) * vertices.size());
-		vao.attributePointer();
-	}
+		void bufferVertices() {
+			vbo.bufferData(&vertices.data()[0], sizeof(Vertex) * vertices.size());
+			vao.attributePointer();
+		}
 
-	void bufferIndices() {
-		ebo.bufferData(&indices.data()[0], sizeof(unsigned int)*indices.size());
-	}
-};
-
+		void bufferIndices() {
+			ebo.bufferData(&indices.data()[0], sizeof(unsigned int) * indices.size());
+		}
+	};
+}

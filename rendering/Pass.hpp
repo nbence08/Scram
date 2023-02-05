@@ -28,8 +28,8 @@ class Pass {
 	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeInputs;
 	std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeOutputs;
 
-	std::function<void(Mesh&)> passMeshLambda;
-	std::function<void(Entity&)> passEntityLambda;
+	std::function<void(SComponent::Mesh&)> passMeshLambda;
+	std::function<void(SComponent::Entity&)> passEntityLambda;
 	std::function<void(Scene&)> passSceneLambda;
 
 public:
@@ -41,7 +41,7 @@ public:
 	/// <summary>
 	/// lambda to be called before passing each Entity
 	/// </summary>
-	std::function<void(Entity&)> prepareEntity;
+	std::function<void(SComponent::Entity&)> prepareEntity;
 
 	/// <summary>
 	/// Pointer to a custom object, which can be used to store custom data.
@@ -168,7 +168,7 @@ public:
 	/// see passMesh definition.
 	/// </summary>
 	/// <param name="lambda">passMesh function to be set</param>
-	inline void setPassMesh(std::function<void(Mesh&)> lambda) {
+	inline void setPassMesh(std::function<void(SComponent::Mesh&)> lambda) {
 		this->passMeshLambda = lambda;
 	}
 
@@ -178,7 +178,7 @@ public:
 	/// see passEntity definition.
 	/// </summary>
 	/// <param name="lambda">passEntity function to be set</param>
-	inline void setPassEntity(std::function<void(Entity&)> lambda) {
+	inline void setPassEntity(std::function<void(SComponent::Entity&)> lambda) {
 		this->passEntityLambda = lambda;
 	}
 
@@ -196,13 +196,13 @@ public:
 	/// Executes the pass for the mesh provided as parameter.
 	/// </summary>
 	/// <param name="mesh"></param>
-	void passMesh(Mesh& mesh);
+	void passMesh(SComponent::Mesh& mesh);
 
 	/// <summary>
 	/// Executes the pass for the entity provided as parameter.
 	/// </summary>
 	/// <param name="entity"></param>
-	void passEntity(Entity& entity);
+	void passEntity(SComponent::Entity& entity);
 
 	/// <summary>
 	/// Executes the pass for the scene provided as parameter.

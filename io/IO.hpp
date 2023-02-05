@@ -59,7 +59,7 @@ namespace IO{
 	}
 
 
-	static void parseMeshVertices(const aiMesh& aiMesh, Mesh& mesh) {
+	static void parseMeshVertices(const aiMesh& aiMesh, SComponent::Mesh& mesh) {
 		auto& vertices = mesh.getVertices();
 		vertices.resize(aiMesh.mNumVertices);
 		const aiVector3D* aiVertices = aiMesh.mVertices;
@@ -121,7 +121,7 @@ namespace IO{
 		return texture;
 	}
 
-	static void parseMeshIndices(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh) {
+	static void parseMeshIndices(const aiScene& scene, const aiMesh& aiMesh, SComponent::Mesh& mesh) {
 		if (aiMesh.HasFaces()) {
 			std::vector<unsigned int> indices;
 			indices.reserve(((uint64_t)aiMesh.mNumFaces)*((uint64_t)3));
@@ -143,7 +143,7 @@ namespace IO{
 	}
 
 	//TODO: this function is long, should be broken down into smaller components
-	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Entity& entity) {
+	static void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, SComponent::Entity& entity) {
 		if (scene.HasMaterials()) {
 
 			int materialIndex = aiMesh.mMaterialIndex;
@@ -155,8 +155,8 @@ namespace IO{
 
 			//const auto albedoLoadRes = aiMaterial->GetTexture(aiTextureType_BASE_COLOR, 0, );
 
-			entity.addComponent<Material>();
-			Material& ctMat = entity.getComponent<Material>();
+			entity.addComponent<SComponent::Material>();
+			SComponent::Material& ctMat = entity.getComponent<SComponent::Material>();
 
 
 			if (albedoTexCount > 0) {
@@ -228,7 +228,7 @@ namespace IO{
 		}
 	}
 
-	static void processNode(const aiScene& scene, const aiNode& node, Entity& entity) {
+	static void processNode(const aiScene& scene, const aiNode& node, SComponent::Entity& entity) {
 		auto& meshes = entity.getMeshes();
 
 		if (node.mNumMeshes > 1) {
@@ -239,13 +239,13 @@ namespace IO{
 			
 			const auto& aiMesh = *scene.mMeshes[node.mMeshes[i]];
 
-			Mesh mesh;
+			SComponent::Mesh mesh;
 			parseMeshVertices(aiMesh, mesh);
 			parseMeshIndices(scene, aiMesh, mesh);
 
 			parseSceneMaterials(scene, aiMesh, entity);
 
-			entity.addComponent<Mesh>(std::move(mesh));
+			entity.addComponent<SComponent::Mesh>(std::move(mesh));
 		}
 
 		for (int i = 0; i < node.mNumChildren; i++) {
@@ -255,14 +255,14 @@ namespace IO{
 
 	}
 
-	static void parseScene(const aiScene& scene, Entity& rootEntity) {
+	static void parseScene(const aiScene& scene, SComponent::Entity& rootEntity) {
 
 		const auto& rootNode = *scene.mRootNode;
 
 		processNode(scene, rootNode, rootEntity);
 	}
 
-	static std::shared_ptr<Entity> importModelFromFile(const std::string& path) {
+	static std::shared_ptr<SComponent::Entity> importModelFromFile(const std::string& path) {
 		Assimp::Importer importer;
 		std::ifstream in(path.c_str());
 
@@ -283,7 +283,7 @@ namespace IO{
 
 		auto& scene = *scenePtr;
 
-		std::shared_ptr<Entity> entity = std::make_shared<Entity>();
+		std::shared_ptr<SComponent::Entity> entity = std::make_shared<SComponent::Entity>();
 
 		parseScene(scene, *entity);
 
