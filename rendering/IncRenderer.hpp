@@ -22,28 +22,30 @@
 #include "Pass.hpp"
 #include "PassBuilder.hpp"
 
-//incremental renderer
-class IncRenderer {
+namespace ScRendering {
+	//incremental renderer
+	class IncRenderer {
 
-	std::vector<std::shared_ptr<Pass>> preProcess;
-	std::shared_ptr<Pass> process;
-	std::vector<std::shared_ptr<Pass>> postProcess;
+		std::vector<std::shared_ptr<Pass>> preProcess;
+		std::shared_ptr<Pass> process;
+		std::vector<std::shared_ptr<Pass>> postProcess;
 
-	void addDefaultPasses();
-	inline void addPreProcessPass(Pass&& pass) {
-		preProcess.emplace_back(std::make_shared<Pass>(pass));
-	}
+		void addDefaultPasses();
+		inline void addPreProcessPass(Pass&& pass) {
+			preProcess.emplace_back(std::make_shared<Pass>(pass));
+		}
 
-	inline void addProcessPass(Pass&& pass) {
-		process = std::make_shared<Pass>(pass);
-	}
+		inline void addProcessPass(Pass&& pass) {
+			process = std::make_shared<Pass>(pass);
+		}
 
-	inline void addPostProcessPass(Pass&& pass) {
-		postProcess.emplace_back(std::make_shared<Pass>(pass));
-	}
+		inline void addPostProcessPass(Pass&& pass) {
+			postProcess.emplace_back(std::make_shared<Pass>(pass));
+		}
 
-public:
-	IncRenderer(std::string defaultShaderName = "shaders/incremental");
-	void setCullFace(bool cullFace);
-	void draw(Scene& scene);
-};
+	public:
+		IncRenderer(std::string defaultShaderName = "shaders/incremental");
+		void setCullFace(bool cullFace);
+		void draw(Scene& scene);
+	};
+}

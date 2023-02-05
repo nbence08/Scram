@@ -19,7 +19,7 @@
 
 #include "components/Entity.hpp"
 
-namespace IO{
+namespace ScIO{
 	//reads a file of path given as parameter
 	//throws std::ios_base::failure if 
 	static std::string readFile(const std::string& path) {

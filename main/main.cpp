@@ -25,8 +25,9 @@ int main() {
 	auto currentFrame = glfwGetTime();
 	auto lastFrame = glfwGetTime();
 	
-	std::shared_ptr<SComponent::Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
-	std::shared_ptr<SComponent::Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
+	std::shared_ptr<SComponent::Entity> ent = 
+		ScIO::importModelFromFile("resources/models/bsg_pegasus.glb");
+	std::shared_ptr<SComponent::Entity> ent2 = ScIO::importModelFromFile("resources/models/box.glb");
 
 	auto& entTransform = ent->getComponent<SComponent::Transform>();
 	auto& ent2Transform = ent2->getComponent<SComponent::Transform>();
@@ -35,7 +36,7 @@ int main() {
 	entTransform.setScale(Smath::Vector3(0.5, 0.5, 0.5));
 	ent2Transform.setTranslation(Smath::Vector3(0.0, 40.0f, 0.0));
 
-	Scene scene;
+	ScRendering::Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
 
 	SComponent::DirectionalLight sun;
@@ -49,7 +50,7 @@ int main() {
 	intense.position = Smath::Vector3(0.0, -30.0, -78.0);
 	scene.getPointLights().push_back(intense);
 
-	IncRenderer renderer;
+	ScRendering::IncRenderer renderer;
 
 	scene.addObject((ent));
 	scene.addObject((ent2));
