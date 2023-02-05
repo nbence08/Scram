@@ -1,6 +1,4 @@
-#include "Vector2.h"
-
-#include "Vector2.h"
+#include "Vector2.hpp"
 
 namespace Smath {
 	Vector2 Vector2::operator-() const {
