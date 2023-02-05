@@ -22,6 +22,11 @@ Pass::Pass() :programUniforms(nullptr), object(nullptr) {
 	onDestroy = []() {};
 }
 
+Pass::Pass(std::string& shaderName, FboCreateInfo& fboInfo) :Pass() {
+	makeShaderProgram(shaderName);
+	makeFramebuffer(fboInfo);
+}
+
 Pass::Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo) :Pass() {
 	makeShaderProgram(shaderName);
 	this->fbo = fbo;
@@ -92,6 +97,34 @@ void Pass::addTextureOutput(std::string name, std::shared_ptr<TextureCube> textu
 	}
 
 	textureCubeOutputs[name] = texture;
+}
+
+std::shared_ptr<ShaderProgram> Pass::getProgram() { return program; }
+
+std::shared_ptr<Framebuffer> Pass::getFbo() { return fbo; }
+
+void Pass::setFbo(std::shared_ptr<Framebuffer> fbo) { this->fbo = fbo; }
+
+void Pass::setProgram(std::shared_ptr<ShaderProgram> program) { this->program = program; }
+
+auto& Pass::get2DTextureInputs() { return texture2DInputs; }
+
+auto& Pass::get2DTextureOutputs() { return texture2DOutputs; }
+
+auto& Pass::getCubeTextureInputs() { return textureCubeInputs; }
+
+auto& Pass::getCubeTextureOutputs() { return textureCubeOutputs; }
+
+void Pass::setPassMesh(std::function<void(Mesh&)> lambda) {
+	this->passMeshLambda = lambda;
+}
+
+void Pass::setPassEntity(std::function<void(Entity&)> lambda) {
+	this->passEntityLambda = lambda;
+}
+
+void Pass::setPassScene(std::function<void(Scene&)> lambda) {
+	this->passSceneLambda = lambda;
 }
 
 void Pass::passMesh(Mesh& mesh) {

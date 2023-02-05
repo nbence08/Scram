@@ -150,6 +150,8 @@ void TextureUnit::loadTexture(const ImageDataCube& d) {
 	}
 }
 
+int TextureUnit::getUnitNum() const { return unitNum; }
+
 bool TextureUnit::isBoundTextureEmpty() {
 	if (boundTexture.valueless_by_exception()) return true;
 	return std::visit([](auto& arg){ return arg.get() == nullptr;}, boundTexture);

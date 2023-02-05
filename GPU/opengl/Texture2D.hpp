@@ -43,7 +43,7 @@ public:
 	int getTextureUnitNum();
 	void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);
 	static void bindToNewTextureUnit(std::shared_ptr<Texture2D> self);
-	inline std::shared_ptr<TextureUnit> getTextureUnit(){ return textureUnit.lock(); }
+	std::shared_ptr<TextureUnit> getTextureUnit();
 	void unsetTextureUnit();
 	unsigned int getId() { return id; }
 	void initialize();

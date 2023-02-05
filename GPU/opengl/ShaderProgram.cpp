@@ -8,6 +8,19 @@ ShaderProgram::ShaderProgram() {
 	up = UniformProvider(id);
 }
 
+ShaderProgram::ShaderProgram(ShaderProgram&& other) noexcept {
+	*this = std::forward<ShaderProgram>(other);
+}
+
+ShaderProgram& ShaderProgram::operator=(ShaderProgram&& other) noexcept {
+	if (this == &other) return *this;
+
+	id = other.id;
+	other.id = 0;
+
+
+	return *this;
+}
 
 void ShaderProgram::addFragment(const char** source) {
 	addShader(source, GL_FRAGMENT_SHADER);
@@ -54,6 +67,10 @@ void ShaderProgram::linkProgram() {
 void ShaderProgram::use() {
 	glUseProgram(id);
 	programInUse = id;
+}
+
+unsigned int ShaderProgram::getId() const {
+	return id;
 }
 
 ShaderProgram::~ShaderProgram() {

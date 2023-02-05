@@ -1,5 +1,5 @@
 #include "Framebuffer.hpp"
-#include "./TextureUnit.hpp"
+#include "TextureUnit.hpp"
 #include "Texture2D.hpp"
 #include "TextureCube.hpp"
 
@@ -265,6 +265,8 @@ void Framebuffer::setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer) {
 
 	setAttachment(GL_STENCIL_ATTACHMENT, this->stencilBuffer);
 }
+
+unsigned int Framebuffer::getId() { return id; }
 
 Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept {
 	if(this == &other) return *this;

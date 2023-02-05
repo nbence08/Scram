@@ -27,10 +27,10 @@ public:
 	int getTextureUnitNum();
 	void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);
 	static void bindToNewTextureUnit(std::shared_ptr<TextureCube> self);
-	inline std::shared_ptr<TextureUnit> getTextureUnit() { return textureUnit.lock(); }
+	std::shared_ptr<TextureUnit> getTextureUnit();
 	void unsetTextureUnit();
 	void initialize();
-	unsigned int getId() { return id; }
+	unsigned int getId();
 
 	~TextureCube();
 	bool isBoundToTextureUnit();

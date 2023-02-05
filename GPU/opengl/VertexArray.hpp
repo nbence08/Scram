@@ -32,13 +32,7 @@ class VertexArray{
 
 	bool boundBuffersHasBufferType(GLenum bufferType);
 
-	inline auto findVertexBuffer(Buffer& buffer) {
-		auto i = begin(vertexBuffers);
-		for (;i != end(vertexBuffers); i++) {
-			if (i->second == &buffer) return i;
-		}
-		return i;
-	}
+	auto findVertexBuffer(Buffer& buffer);
 
 	friend Buffer;
 	friend VertexAttribManager;

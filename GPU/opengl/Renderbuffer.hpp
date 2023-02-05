@@ -10,33 +10,20 @@ class Renderbuffer {
 	unsigned int id;
 
 public:
-	inline unsigned int getId(){ return id; }
+	unsigned int getId();
 
-	Renderbuffer() {
-		glGenRenderbuffers(1, &id);
-	}
+	Renderbuffer();
 
 	Renderbuffer& operator=(Renderbuffer& other) = delete;
 	Renderbuffer(Renderbuffer& other) = delete;
 
-	inline Renderbuffer& operator=(Renderbuffer&& other) noexcept {
-		this->id = other.id;
-		other.id = 0;
-	};
+	Renderbuffer& operator=(Renderbuffer&& other) noexcept;
 
-	inline Renderbuffer(Renderbuffer&& other) noexcept {
-		*this = std::forward<Renderbuffer>(other);
-	};
+	Renderbuffer(Renderbuffer&& other) noexcept;
 
-	inline ~Renderbuffer() {
-		glDeleteRenderbuffers(1, &id);
-	}
+	~Renderbuffer();
 
-	inline void bind() {
-		glBindRenderbuffer(GL_RENDERBUFFER, id);
-	}
+	void bind();
 
-	static inline void unbind() {
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-	}
+	static void unbind();
 };

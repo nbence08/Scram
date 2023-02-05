@@ -21,6 +21,8 @@ Buffer::Buffer(Buffer&& other) noexcept{
 	*this = std::forward<Buffer>(other);
 }
 
+unsigned int Buffer::getId() const { return id; }
+
 Buffer& Buffer::operator=(Buffer&& other) noexcept {
 	if(this == &other) return *this;
 	this->id = other.id;
@@ -48,6 +50,9 @@ void Buffer::setVao(VertexArray* vao) {
 	this->vao = vao;
 }
 
+VertexArray* Buffer::getVao() { return vao; }
+GLenum Buffer::getBufferType() { return bufferType; }
+
 void Buffer::bufferData(const void* data, GLsizeiptr size, GLenum usage) {
 	if (!isValidUsage(usage)) {
 		throw std::runtime_error("Invalid usage: " + usage);
@@ -55,3 +60,6 @@ void Buffer::bufferData(const void* data, GLsizeiptr size, GLenum usage) {
 	glNamedBufferData(id, size, data, usage);
 }
 
+void Buffer::setBufferType(GLenum bufferType) {
+	this->bufferType = bufferType;
+}

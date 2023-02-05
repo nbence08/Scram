@@ -25,19 +25,9 @@ public:
 
 	ShaderProgram& operator=(const ShaderProgram&) = delete;
 
-	ShaderProgram(ShaderProgram&& other) noexcept {
-		*this = std::forward<ShaderProgram>(other);
-	}
+	ShaderProgram(ShaderProgram&& other) noexcept;
 
-	ShaderProgram& operator=(ShaderProgram&& other) noexcept {
-		if(this == &other) return *this;
-
-		id = other.id;
-		other.id = 0;
-
-
-		return *this;
-	}
+	ShaderProgram& operator=(ShaderProgram&& other) noexcept;
 
 
 	void addFragment(const char** source);
@@ -50,9 +40,7 @@ public:
 
 	void use();
 
-	inline unsigned int getId() const {
-		return id;
-	}
+	unsigned int getId() const;
 
 	/// <summary>
 	/// Variadic function which invokes the proper overload

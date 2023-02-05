@@ -45,7 +45,7 @@ public:
 	void loadTexture(const ImageData2D& d);
 	void loadTexture(const ImageDataCube& d);
 
-	inline int getUnitNum() const {return unitNum;}
+	int getUnitNum() const;
 
 	template <typename T>
 	bool doesBoundTextureMatch(T* tex);

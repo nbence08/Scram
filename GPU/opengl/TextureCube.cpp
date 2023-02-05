@@ -55,16 +55,18 @@ void TextureCube::bindToNewTextureUnit(std::shared_ptr<TextureCube> self) {
 	texUnit->bindTexture(self);
 }
 
+std::shared_ptr<TextureUnit> TextureCube::getTextureUnit() { return textureUnit.lock(); }
+
 void TextureCube::unsetTextureUnit() {
 	textureUnit.reset();
 }
 
 void TextureCube::initialize() {
-
 	glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
 	glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
 	glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
 	glTexParameteri(type, GL_TEXTURE_WRAP_T, wrapT);
-
 }
+
+unsigned int TextureCube::getId() { return id; }

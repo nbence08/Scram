@@ -63,13 +63,8 @@ public:
 	/// </summary>
 	/// <param name="shaderName">std::string&</param>
 	/// <param name="fboInfo">FboCreateInfo&</param>
-	inline Pass(std::string& shaderName, FboCreateInfo& fboInfo):Pass() {
-		makeShaderProgram(shaderName);
-		makeFramebuffer(fboInfo);
-	}
-	
+	Pass(std::string& shaderName, FboCreateInfo& fboInfo);
 	Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo);
-
 	~Pass();
 
 	/// <summary>
@@ -118,49 +113,49 @@ public:
 	/// Returns a shared pointer to the program used by the pass.
 	/// </summary>
 	/// <returns>std::shared_ptr to ShaderProgram used by the pass</returns>
-	inline std::shared_ptr<ShaderProgram> getProgram() { return program; }
+	std::shared_ptr<ShaderProgram> getProgram();
 
 	/// <summary>
 	/// Returns a shared pointer to the Framebuffer used by the pass.
 	/// </summary>
 	/// <returns>std::shared_ptr to Framebuffer used by the pass</returns>
-	inline std::shared_ptr<Framebuffer> getFbo() { return fbo; }
+	std::shared_ptr<Framebuffer> getFbo();
 
 	/// <summary>
 	/// Sets FBO of Pass to the object supplied as parameter.
 	/// </summary>
 	/// <param name="fbo">std::shared_ptr to object, to which the fbo of the pass will be set</param>
-	inline void setFbo(std::shared_ptr<Framebuffer> fbo){ this->fbo = fbo; }
+	void setFbo(std::shared_ptr<Framebuffer> fbo);
 
 	/// <summary>
 	/// Sets ShaderProgram of Pass to the object supplied as parameter.
 	/// </summary>
 	/// <param name="program">std::shared_ptr to object, to which the ShaderProgram of the pass will be set</param>
-	inline void setProgram(std::shared_ptr<ShaderProgram> program) { this->program = program; }
+	void setProgram(std::shared_ptr<ShaderProgram> program);
 
 	/// <summary>
 	/// Getter for 2D texture inputs
 	/// </summary>
 	/// <returns>std::unordered_map<std::string, std::shared_ptr<Texture2D>></returns>
-	inline auto& get2DTextureInputs() { return texture2DInputs; }
+	auto& get2DTextureInputs();
 
 	/// <summary>
 	/// Getter for 2D texture outputs
 	/// </summary>
 	/// <returns>std::unordered_map<std::string, std::shared_ptr<Texture2D>></returns>
-	inline auto& get2DTextureOutputs() { return texture2DOutputs; }
+	auto& get2DTextureOutputs();
 
 	/// <summary>
 	/// Getter for cube texture inputs
 	/// </summary>
 	/// <returns>std::unordered_map<std::string, std::shared_ptr<TextureCube>></returns>
-	inline auto& getCubeTextureInputs() { return textureCubeInputs; }
+	auto& getCubeTextureInputs();
 	
 	/// <summary>
 	/// Getter for cube texture outputs
 	/// </summary>
 	/// <returns>std::unordered_map<std::string, std::shared_ptr<TextureCube>></returns>
-	inline auto& getCubeTextureOutputs() { return textureCubeOutputs; }
+	auto& getCubeTextureOutputs();
 	
 	/// <summary>
 	/// Setter for passMesh method. Note, that the function provided will not be the only
@@ -168,9 +163,7 @@ public:
 	/// see passMesh definition.
 	/// </summary>
 	/// <param name="lambda">passMesh function to be set</param>
-	inline void setPassMesh(std::function<void(Mesh&)> lambda) {
-		this->passMeshLambda = lambda;
-	}
+	void setPassMesh(std::function<void(Mesh&)> lambda);
 
 	/// <summary>
 	/// Setter for passEntity method. Note, that the function provided will not be the only
@@ -178,9 +171,7 @@ public:
 	/// see passEntity definition.
 	/// </summary>
 	/// <param name="lambda">passEntity function to be set</param>
-	inline void setPassEntity(std::function<void(Entity&)> lambda) {
-		this->passEntityLambda = lambda;
-	}
+	void setPassEntity(std::function<void(Entity&)> lambda);
 
 	/// <summary>
 	/// Setter for passScene method. Note, that the function provided will not be the only
@@ -188,9 +179,7 @@ public:
 	/// see passScene definition.
 	/// </summary>
 	/// <param name="lambda">passScene function to be set</param>
-	inline void setPassScene(std::function<void(Scene&)> lambda) {
-		this->passSceneLambda = lambda;
-	}
+	void setPassScene(std::function<void(Scene&)> lambda);
 	
 	/// <summary>
 	/// Executes the pass for the mesh provided as parameter.

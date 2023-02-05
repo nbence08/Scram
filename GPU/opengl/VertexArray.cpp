@@ -108,6 +108,14 @@ bool VertexArray::boundBuffersHasBufferType(GLenum bufferType) {
 	return boundBuffers.find(bufferType) != boundBuffers.end();
 }
 
+auto VertexArray::findVertexBuffer(Buffer& buffer) {
+	auto i = begin(vertexBuffers);
+	for (; i != end(vertexBuffers); i++) {
+		if (i->second == &buffer) return i;
+	}
+	return i;
+}
+
 void VertexArray::bind() {
 	boundArray = id;
 	glBindVertexArray(id);

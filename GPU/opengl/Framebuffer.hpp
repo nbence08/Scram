@@ -84,7 +84,7 @@ public:
 	void setColorBuffer(std::shared_ptr<Texture2D> colorBuffer);
 	void setStencilBuffer(std::shared_ptr<Texture2D> stencilBuffer);
 
-	inline unsigned int getId() { return id; }
+	unsigned int getId();
 
 	template <typename T>
 	inline std::shared_ptr<T> getDepthBuffer(){ return std::get<std::shared_ptr<T>>(depthBuffer); }

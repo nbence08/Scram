@@ -17,7 +17,7 @@ class Buffer{
 
 	friend VertexArray;
 public:
-	inline unsigned int getId() const { return id; }
+	unsigned int getId() const;
 
 	Buffer(const Buffer&) = delete;
 	Buffer& operator=(const Buffer&) = delete;
@@ -30,13 +30,11 @@ public:
 	~Buffer();
 
 	void setVao(VertexArray* vao);
-	inline VertexArray* getVao() { return vao; }
-	inline GLenum getBufferType() { return bufferType; }
+	VertexArray* getVao();
+	GLenum getBufferType();
 
 	void bufferData(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
 
-	inline void setBufferType(GLenum bufferType) {
-		this->bufferType = bufferType;
-	}
+	void setBufferType(GLenum bufferType);
 };
 

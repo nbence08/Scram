@@ -15,20 +15,18 @@ class Scene{
 public:
 	Scene();
 
-	inline void addObject(std::shared_ptr<Entity> model) {
-		objects.emplace_back(model);
-	}
+	void addObject(std::shared_ptr<Entity> model);
 
-	inline std::vector<std::shared_ptr<Entity>>& getObjects(){ return objects; }
+	std::vector<std::shared_ptr<Entity>>& getObjects();
 
 	//these getter functions could be modified so that there is only a single vector containing std::variants,
 	//and the std::variant defines which type of light it contains
 	//querying for specific type of lights would be like: getLights<[TYPE_OF_LIGHT]>()
-	inline std::vector<DirectionalLight>& getDirLights(){ return dirLights; }
-	inline std::vector<PointLight>& getPointLights() { return pointLights; }
-	inline std::vector<SpotLight>& getSpotLights() { return spotLights; }
-	inline PerspectiveCamera& getCamera(){ return *camera; }
-	inline void setCamera(PerspectiveCamera& camera) { this->camera = std::make_shared<PerspectiveCamera>(camera); }
-	inline void setCamera(std::shared_ptr<PerspectiveCamera> camera) { this->camera = camera; }
+	std::vector<DirectionalLight>& getDirLights();
+	std::vector<PointLight>& getPointLights();
+	std::vector<SpotLight>& getSpotLights();
+	PerspectiveCamera& getCamera();
+	void setCamera(PerspectiveCamera& camera);
+	void setCamera(std::shared_ptr<PerspectiveCamera> camera);
 };
 

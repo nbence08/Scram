@@ -54,6 +54,8 @@ void Texture2D::bindToNewTextureUnit(std::shared_ptr<Texture2D> self){
 	texUnit->bindTexture(self);
 }
 
+std::shared_ptr<TextureUnit> Texture2D::getTextureUnit() { return textureUnit.lock(); }
+
 void Texture2D::unsetTextureUnit() {
 	textureUnit.reset();
 }
