@@ -1,4 +1,6 @@
 #include "VertexAttribManager.hpp"
+#include "VertexArray.hpp"
+#include "Preprocess_Definitions.hpp"
 
 VertexAttribManager::VertexAttribManager() {
 	stride = 0;

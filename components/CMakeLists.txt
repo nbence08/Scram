@@ -1,4 +1,9 @@
+set(CURRENT_TARGET components)
+add_library(${CURRENT_TARGET})
+
 set(COMPONENT_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
+	
 	${CMAKE_CURRENT_LIST_DIR}/ComponentBase.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Entity.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Entity.hpp
@@ -24,13 +29,15 @@ set(COMPONENT_SOURCES
 )
 
 target_sources(${CURRENT_TARGET} 
-	PUBLIC
+	PRIVATE
 	${COMPONENT_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}
+	${PRIMARY_INCLUDE_DIR}
 )
 
 copyHeadersToInclude(${COMPONENT_SOURCES})
+groupSources()

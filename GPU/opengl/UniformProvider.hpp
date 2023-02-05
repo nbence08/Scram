@@ -5,12 +5,17 @@
 #include <memory>
 
 #include "GL/glew.h"
-#include "core/math/linear_algebra.hpp"
-#include "TextureUnit.hpp"
-#include "components/PointLight.hpp"
-#include "components/DirectionalLight.hpp"
-#include "components/Material.hpp"
-#include "main/Logger.hpp"
+
+#include "Preprocess_Definitions.hpp"
+
+class Vector2;
+class Vector3;
+class Vector4;
+class Matrix4;
+class TextureUnit;
+class DirectionalLight;
+class PointLight;
+class Material;
 
 class UniformProvider{
 	std::unordered_map<std::string, unsigned int> locationCache;
@@ -166,4 +171,3 @@ public:
 	/// <param name="arrayName">Name of the arra containing the materials in the shader.</param>
 	void setUniform(const Material& material, int index, std::string arrayName = "materials");
 };
-

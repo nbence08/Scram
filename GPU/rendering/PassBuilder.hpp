@@ -1,9 +1,9 @@
 #pragma once
 #include <memory>
 
-#include "core/OpenGL/ShaderProgram.hpp"
-#include "rendering/Pass.hpp"
-#include "core/math/linear_algebra.hpp"
+#include "ShaderProgram.hpp"
+#include "Pass.hpp"
+#include "linear_algebra.hpp"
 
 class PassBuilder {
 public:

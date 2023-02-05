@@ -12,26 +12,7 @@ class VertexAttribManager;
 
 static unsigned int boundArray = 0;
 
-static const std::set<GLenum> validBufferTypes = {
-	GL_ARRAY_BUFFER,
-	GL_ATOMIC_COUNTER_BUFFER,
-	GL_COPY_READ_BUFFER,
-	GL_COPY_WRITE_BUFFER,
-	GL_DISPATCH_INDIRECT_BUFFER,
-	GL_DRAW_INDIRECT_BUFFER,
-	GL_ELEMENT_ARRAY_BUFFER,
-	GL_PIXEL_PACK_BUFFER,
-	GL_PIXEL_UNPACK_BUFFER,
-	GL_QUERY_BUFFER,
-	GL_SHADER_STORAGE_BUFFER,
-	GL_TEXTURE_BUFFER,
-	GL_TRANSFORM_FEEDBACK_BUFFER,
-	GL_UNIFORM_BUFFER
-};
-
-static bool isValidBufferType(GLenum bufferType) {
-	return validBufferTypes.find(bufferType) != validBufferTypes.end();
-}
+static bool isValidBufferType(GLenum bufferType);
 
 class VertexArray{
 	using BufferIndex_t = unsigned int;

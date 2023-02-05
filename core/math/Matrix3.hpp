@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector3.hpp"
-#include "core/Preprocess_Definitions.hpp"
+#include "Preprocess_Definitions.hpp"
 
 //type traits could be introduced to check whether type is a number
 class Matrix3{

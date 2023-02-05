@@ -3,9 +3,9 @@
 #include <variant>
 
 #include "ComponentBase.hpp"
-#include "core/math/vector3.hpp"
-#include "core/OpenGL/Texture2D.hpp"
-#include "core/Preprocess_Definitions.hpp"
+#include "vector3.hpp"
+#include "Texture2D.hpp"
+#include "Preprocess_Definitions.hpp"
 
 //TODO: doesn't work when using doubles as real_t
 //Cook-Torrance material

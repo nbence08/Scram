@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 
-#include "core/OpenGL/Texture2D.hpp"
-#include "core/math/linear_algebra.hpp"
-#include "core/OpenGL/VertexArray.hpp"
-#include "core/OpenGL/Buffer.hpp"
+#include "Texture2D.hpp"
+#include "linear_algebra.hpp"
+#include "VertexArray.hpp"
+#include "Buffer.hpp"
 #include "ComponentBase.hpp"
 
 struct Vertex {

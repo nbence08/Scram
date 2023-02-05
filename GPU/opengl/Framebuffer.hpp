@@ -2,12 +2,16 @@
 #pragma once
 #include <memory>
 #include <iostream>
+#include <variant>
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-#include "core/Global_Props.hpp"
-#include "Texture2D.hpp"
+#include "Global_Props.hpp"
+
+class Texture2D;
+class TextureCube;
+class TextureCube;
 
 
 /// <summary>

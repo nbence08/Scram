@@ -6,8 +6,13 @@ extern int componentTypeCounter = 0;
 #include <fstream>
 #include <iterator>
 
-#include "core/OpenGL/OpenGLContext.hpp"
-#include "rendering/IncRenderer.hpp"
+#include "OpenGLContext.hpp"
+#include "IncRenderer.hpp"
+#include "Entity.hpp"
+#include "IO.hpp"
+#include "DirectionalLight.hpp"
+#include "Scene.hpp"
+#include "TextureUnit.hpp"
 
 int main() {
 
@@ -25,8 +30,8 @@ int main() {
 	auto currentFrame = glfwGetTime();
 	auto lastFrame = glfwGetTime();
 	
-	std::shared_ptr<Entity> ent = IO::importModelFromFile("resources/models/bsg_pegasus.glb");
-	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("resources/models/box.glb");
+	std::shared_ptr<Entity> ent = IO::importModelFromFile("../resources/models/bsg_pegasus.glb");
+	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("../resources/models/box.glb");
 
 	auto& entTransform = ent->getComponent<Transform>();
 	auto& ent2Transform = ent2->getComponent<Transform>();
@@ -76,7 +81,7 @@ int main() {
 		lastFrame = currentFrame;
 	}
 
-	textureUnits.clear();
+	clearTextureUnits();
 	glfwTerminate();
 	return EXIT_SUCCESS;
 }

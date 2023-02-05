@@ -1,4 +1,14 @@
 #include "TextureUnit.hpp"
+#include "Texture2D.hpp"
+#include "TextureCube.hpp"
+
+static std::unordered_map<int, std::shared_ptr<TextureUnit>> textureUnits;
+static std::shared_ptr<std::stack<int>> bindStack = std::make_shared<std::stack<int>>();
+static int activeTexUnit = 0;
+
+void clearTextureUnits() {
+	textureUnits.clear();
+}
 
 void TextureUnit::hollowBind() {
 	if(bindStack->size() == 0 && activeTexUnit == unitNum) return;
@@ -143,4 +153,13 @@ void TextureUnit::loadTexture(const ImageDataCube& d) {
 bool TextureUnit::isBoundTextureEmpty() {
 	if (boundTexture.valueless_by_exception()) return true;
 	return std::visit([](auto& arg){ return arg.get() == nullptr;}, boundTexture);
+}
+
+bool TextureUnit::hasBoundTexture() {
+	return !boundTexture.valueless_by_exception();
+}
+
+template <typename T>
+bool TextureUnit::doesBoundTextureMatch(T* tex) {
+	return static_cast<void*>(tex) == std::visit([](auto& boundTex) { return static_cast<void*>(boundTex.get()); }, boundTexture);
 }

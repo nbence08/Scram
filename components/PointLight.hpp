@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "core/OpenGL/TextureCube.hpp"
-#include "core/math/linear_algebra.hpp"
+#include "TextureCube.hpp"
+#include "linear_algebra.hpp"
 #include "ComponentBase.hpp"
-#include "core/Global_Props.hpp"
+#include "Global_Props.hpp"
 
 class PointLight : public ComponentBase{
 public:

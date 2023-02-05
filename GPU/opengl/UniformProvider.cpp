@@ -1,5 +1,12 @@
 #include "UniformProvider.hpp"
 
+#include "linear_algebra.hpp"
+#include "TextureUnit.hpp"
+#include "PointLight.hpp"
+#include "DirectionalLight.hpp"
+#include "Material.hpp"
+#include "Logger.hpp"
+
 /// <summary>
 /// Gets the location identifier of a uniform variable in the shader 
 /// with name supplied as parameter. It caches the locations of the uniforms.

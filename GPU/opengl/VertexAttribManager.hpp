@@ -1,11 +1,8 @@
 #pragma once
 #include "GL/glew.h"
-#include "core/Preprocess_Definitions.hpp"
-#include "core/OpenGL/VertexArray.hpp"
 
 #include <vector>
 #include <stdexcept>
-
 
 struct VertexAttribProps{
 	GLint size;

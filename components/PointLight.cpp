@@ -1,4 +1,6 @@
 #include "PointLight.hpp"
+#include "TextureUnit.hpp"
+#include "Struct_Definitions.hpp"
 
 PointLight::PointLight() {
 	farPlane = global::shadowProjEdgeSize;

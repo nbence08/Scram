@@ -2,10 +2,10 @@
 #include <stdexcept>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "core/math/Quaternion.hpp"
-#include "components/PerspectiveCamera.hpp"
-#include "core/math/Vector3.hpp"
-#include "core/math/Math_Functions.hpp"
+#include "Quaternion.hpp"
+#include "PerspectiveCamera.hpp"
+#include "Vector3.hpp"
+#include "Math_Functions.hpp"
 #include <limits>
 #include <iostream>
 

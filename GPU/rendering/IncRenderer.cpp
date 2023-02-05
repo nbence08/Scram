@@ -1,5 +1,8 @@
 #include "IncRenderer.hpp"
 
+#include "GL/glew.h"
+#include "PassBuilder.hpp"
+
 IncRenderer::IncRenderer(std::string defaultShaderPath) {
 
 	glEnable(GL_DEPTH_TEST);
@@ -45,4 +48,16 @@ void IncRenderer::draw(Scene& scene) {
 
 		curPostProcess->passScene(scene);
 	}
+}
+
+void IncRenderer::addPreProcessPass(Pass&& pass) {
+	preProcess.emplace_back(std::make_shared<Pass>(pass));
+}
+
+void IncRenderer::addProcessPass(Pass&& pass) {
+	process = std::make_shared<Pass>(pass);
+}
+
+void IncRenderer::addPostProcessPass(Pass&& pass) {
+	postProcess.emplace_back(std::make_shared<Pass>(pass));
 }

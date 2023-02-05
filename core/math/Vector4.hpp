@@ -1,6 +1,6 @@
 #pragma once
 #include <stdexcept>
-#include "core/Preprocess_Definitions.hpp"
+#include "Preprocess_Definitions.hpp"
 #include "Vector3.hpp"
 
 class Vector3;

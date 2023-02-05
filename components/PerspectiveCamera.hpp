@@ -1,6 +1,6 @@
 #pragma once
-#include "core/Preprocess_Definitions.hpp"
-#include "core/math/linear_algebra.hpp"
+#include "Preprocess_Definitions.hpp"
+#include "linear_algebra.hpp"
 #include "Camera.hpp"
 #include "ComponentBase.hpp"
 

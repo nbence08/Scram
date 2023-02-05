@@ -1,5 +1,5 @@
 #pragma once
-#include "core/math/linear_algebra.hpp"
+#include "linear_algebra.hpp"
 #include "ComponentBase.hpp"
 
 template <typename T>

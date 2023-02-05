@@ -1,4 +1,7 @@
 #include "Framebuffer.hpp"
+#include "./TextureUnit.hpp"
+#include "Texture2D.hpp"
+#include "TextureCube.hpp"
 
 Framebuffer::Framebuffer(unsigned int id) {
 	if (id == 0) {

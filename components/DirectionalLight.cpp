@@ -1,6 +1,9 @@
 #include "DirectionalLight.hpp"
 #include "glm/matrix.hpp"
-#include "core/Global_Props.hpp"
+#include "Global_Props.hpp"
+
+#include "struct_definitions.hpp"
+#include "TextureUnit.hpp"
 
 Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 

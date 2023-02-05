@@ -1,5 +1,5 @@
 #include "OpenGLContext.hpp"
-#include "core/Global_Props.hpp"
+#include "Global_Props.hpp"
 
 void __stdcall errorCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
 	std::string sSource;

@@ -1,7 +1,7 @@
 #pragma once
 #include <cmath>
 #include <stdexcept>
-#include "core/Preprocess_Definitions.hpp"
+#include "Preprocess_Definitions.hpp"
 #include "Vector4.hpp"
 
 class Vector4;

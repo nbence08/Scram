@@ -1,22 +1,24 @@
 set(RENDERING_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
+	
 	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.cpp
-	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Pass.cpp
-	${CMAKE_CURRENT_LIST_DIR}/Pass.hpp
 	${CMAKE_CURRENT_LIST_DIR}/PassBuilder.cpp
-	${CMAKE_CURRENT_LIST_DIR}/PassBuilder.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Scene.cpp
+
+	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.hpp
+	${CMAKE_CURRENT_LIST_DIR}/Pass.hpp
+	${CMAKE_CURRENT_LIST_DIR}/PassBuilder.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Scene.hpp
 )
-	
 
 target_sources(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${RENDERING_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}
  )
 

@@ -1,4 +1,6 @@
 set(MATH_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
+	
 	${CMAKE_CURRENT_LIST_DIR}/linear_algebra.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Math_Functions.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Matrix3.cpp
@@ -16,13 +18,13 @@ set(MATH_SOURCES
 )
 
 target_sources(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${MATH_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}
- )
+)
 
 copyHeadersToInclude(${MATH_SOURCES})

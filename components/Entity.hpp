@@ -4,12 +4,12 @@
 #include <stdexcept>
 #include <string>
 
-#include "core/math/linear_algebra.hpp"
-#include "core/OpenGL/Texture2D.hpp"
+#include "linear_algebra.hpp"
+#include "Texture2D.hpp"
 
-#include "components/Mesh.hpp"
-#include "components/ComponentBase.hpp"
-#include "components/Transform.hpp"
+#include "Mesh.hpp"
+#include "ComponentBase.hpp"
+#include "Transform.hpp"
 class Mesh;
 
 class Entity{

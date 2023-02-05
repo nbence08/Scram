@@ -1,25 +1,10 @@
 #pragma once
 #include <set>
 #include "GL/glew.h"
-#include "VertexArray.hpp"
 
 class VertexArray;
 
-static std::set<GLenum> validUsages = {
-	GL_STREAM_DRAW,
-	GL_STREAM_READ,
-	GL_STREAM_COPY,
-	GL_STATIC_DRAW,
-	GL_STATIC_READ,
-	GL_STATIC_COPY,
-	GL_DYNAMIC_DRAW,
-	GL_DYNAMIC_READ,
-	GL_DYNAMIC_COPY
-};
-
-static bool isValidUsage(GLenum usage) {
-	return (validUsages.find(usage) != validUsages.end());
-}
+static bool isValidUsage(GLenum usage);
 
 /// <summary>
 /// Buffer class representing a buffer object in OpenGL

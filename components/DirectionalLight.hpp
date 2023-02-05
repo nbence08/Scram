@@ -1,8 +1,8 @@
 #pragma once
-#include "core/math/Vector3.hpp"
-#include "core/math/Math_Functions.hpp"
-#include "core/OpenGL/Texture2D.hpp"
-#include "core/Global_Props.hpp"
+#include "Vector3.hpp"
+#include "Math_Functions.hpp"
+#include "Texture2D.hpp"
+#include "Global_Props.hpp"
 #include "ComponentBase.hpp"
 
 class DirectionalLight : public ComponentBase {

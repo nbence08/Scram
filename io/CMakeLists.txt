@@ -1,15 +1,25 @@
+set(CURRENT_TARGET IO)
+add_library(${CURRENT_TARGET})
+
+set_target_properties(${CURRENT_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
+
 set(IO_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
+	
 	${CMAKE_CURRENT_LIST_DIR}/IO.hpp
+	${CMAKE_CURRENT_LIST_DIR}/IO.cpp
 )
 
 target_sources(${CURRENT_TARGET}
-	PUBLIC
+	PRIVATE
 	${IO_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	INTERFACE
+	PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}
+	${PRIMARY_INCLUDE_DIR}
 )
 
 copyHeadersToInclude(${IO_SOURCES})
+groupSources()

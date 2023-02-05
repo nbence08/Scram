@@ -6,18 +6,13 @@
 #include <stack>
 #include <variant>
 
-#include "Texture2D.hpp"
-#include "TextureCube.hpp"
-#include "core/Struct_Definitions.hpp"
+#include "Struct_Definitions.hpp"
 
 class Texture2D;
 class TextureCube;
-
 class TextureUnit;
 
-static std::unordered_map<int, std::shared_ptr<TextureUnit>> textureUnits;
-static std::shared_ptr<std::stack<int>> bindStack = std::make_shared<std::stack<int>>();
-static int activeTexUnit = 0;
+void clearTextureUnits();
 
 /// <summary>
 /// Class representing an OpenGL texture unit 
@@ -53,24 +48,7 @@ public:
 	inline int getUnitNum() const {return unitNum;}
 
 	template <typename T>
-	inline bool doesBoundTextureMatch(T* tex){
-
-		return static_cast<void*>(tex) == std::visit([](auto& boundTex){ return static_cast<void*>(boundTex.get());}, boundTexture);
-		//auto texPtr = std::get<std::shared_ptr<Texture2D>>(boundTexture);
-
-	}
-	/*
-	inline bool doesBoundTextureMatch(TextureCube* tex) {
-		if (boundTexture.index() == 1) {
-			auto texPtr = std::get<std::shared_ptr<TextureCube>>(boundTexture);
-			return texPtr.get() == tex;
-		}
-		return false;
-	}
-	*/
-	inline bool hasBoundTexture() {
-		return !boundTexture.valueless_by_exception();
-	}
-
+	bool doesBoundTextureMatch(T* tex);
+	bool hasBoundTexture();
 	bool isBoundTextureEmpty();
 };
