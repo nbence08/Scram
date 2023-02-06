@@ -13,7 +13,7 @@ namespace SComponent {
 		Smath::Vector3 intensity;
 		//direction of fragments to light source
 		Smath::Vector3 direction;
-		std::shared_ptr<Texture2D> shadowMap;
+		std::shared_ptr<ScOpenGL::Texture2D> shadowMap;
 
 		Smath::Matrix4 getLightSpaceMatrix() const;
 

@@ -11,7 +11,7 @@ extern int SComponent::componentTypeCounter = 0;
 
 int main() {
 
-	OpenGLContext context;
+	ScOpenGL::OpenGLContext context;
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
 	try {
@@ -77,7 +77,7 @@ int main() {
 		lastFrame = currentFrame;
 	}
 
-	textureUnits.clear();
+	ScOpenGL::textureUnits.clear();
 	glfwTerminate();
 	return EXIT_SUCCESS;
 }

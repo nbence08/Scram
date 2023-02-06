@@ -16,7 +16,7 @@ namespace SComponent {
 
 	class Entity {
 		std::vector<std::shared_ptr<Mesh>> meshes;
-		std::vector<std::shared_ptr<Texture2D>> textures;
+		std::vector<std::shared_ptr<ScOpenGL::Texture2D>> textures;
 
 		std::vector<std::shared_ptr<ComponentBase>> components;
 		std::bitset<MAX_COMPONENTS> componentBits;
@@ -26,7 +26,7 @@ namespace SComponent {
 
 	public:
 		inline std::vector<std::shared_ptr<Mesh>>& getMeshes() { return meshes; }
-		inline std::vector<std::shared_ptr<Texture2D>>& getTextures() { return textures; }
+		inline std::vector<std::shared_ptr<ScOpenGL::Texture2D>>& getTextures() { return textures; }
 
 		Entity();
 

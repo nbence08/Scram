@@ -17,7 +17,7 @@ namespace SComponent {
 		Smath::Vector3 position;
 
 		real_t farPlane;
-		std::shared_ptr<TextureCube> shadowMap;
+		std::shared_ptr<ScOpenGL::TextureCube> shadowMap;
 
 		PointLight();
 

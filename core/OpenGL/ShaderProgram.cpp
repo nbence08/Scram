@@ -5,7 +5,7 @@ ShaderProgram::ShaderProgram() {
 	if (id == 0) {
 		throw std::runtime_error("glCreateProgram return 0");
 	}
-	up = UniformProvider(id);
+	up = ScOpenGL::UniformProvider(id);
 }
 
 

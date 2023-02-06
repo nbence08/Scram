@@ -103,13 +103,13 @@ namespace ScIO{
 		return data;
 	}
 
-	static std::shared_ptr<Texture2D> transferTextureToOpenGL(const aiScene& scene, std::string& strPath) {
+	static std::shared_ptr<ScOpenGL::Texture2D> transferTextureToOpenGL(const aiScene& scene, std::string& strPath) {
 		std::string idxStr = strPath.substr(1, std::string::npos);
 		int idxInt = std::stoi(idxStr);
 
 		aiTexture& aiTex = *scene.mTextures[idxInt];
-		auto texture = std::make_shared<Texture2D>();
-		auto texUnit = TextureUnit::getNewInstance();
+		auto texture = std::make_shared<ScOpenGL::Texture2D>();
+		auto texUnit = ScOpenGL::TextureUnit::getNewInstance();
 		texUnit->bind();
 		texUnit->bindTexture(texture);
 
@@ -167,7 +167,7 @@ namespace ScIO{
 				}
 				std::string strPath(path.C_Str());
 				if (strPath[0] == '*') {
-					std::shared_ptr<Texture2D> texture = transferTextureToOpenGL(scene, strPath);
+					std::shared_ptr<ScOpenGL::Texture2D> texture = transferTextureToOpenGL(scene, strPath);
 
 					ctMat.albedo = texture;
 					entity.getTextures().push_back(texture);
@@ -212,7 +212,7 @@ namespace ScIO{
 				if (emissionTexLoadRes == aiReturn_SUCCESS) {
 					std::string strPath(path.C_Str());
 					if (strPath[0] == '*') {
-						std::shared_ptr<Texture2D> texture = transferTextureToOpenGL(scene, strPath);
+						std::shared_ptr<ScOpenGL::Texture2D> texture = transferTextureToOpenGL(scene, strPath);
 
 						ctMat.emission = texture;
 						entity.getTextures().push_back(texture);

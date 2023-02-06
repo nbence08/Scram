@@ -23,7 +23,7 @@ namespace ScRendering {
 		onDestroy = []() {};
 	}
 
-	Pass::Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo) :Pass() {
+	Pass::Pass(std::string& shaderName, std::shared_ptr<ScOpenGL::Framebuffer> fbo) :Pass() {
 		makeShaderProgram(shaderName);
 		this->fbo = fbo;
 	}
@@ -55,11 +55,11 @@ namespace ScRendering {
 		program->linkProgram();
 	}
 
-	void Pass::makeFramebuffer(FboCreateInfo& fboInfo) {
-		this->fbo = std::make_shared<Framebuffer>(fboInfo);
+	void Pass::makeFramebuffer(ScOpenGL::FboCreateInfo& fboInfo) {
+		this->fbo = std::make_shared<ScOpenGL::Framebuffer>(fboInfo);
 	}
 
-	void Pass::addTextureInput(std::string name, std::shared_ptr<Texture2D> texture) {
+	void Pass::addTextureInput(std::string name, std::shared_ptr<ScOpenGL::Texture2D> texture) {
 		auto input = texture2DInputs.find(name);
 		if (input != texture2DInputs.end() && input->second == texture) {
 			return;
@@ -68,7 +68,7 @@ namespace ScRendering {
 		texture2DInputs[name] = texture;
 	}
 
-	void Pass::addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture) {
+	void Pass::addTextureOutput(std::string name, std::shared_ptr<ScOpenGL::Texture2D> texture) {
 		auto output = texture2DOutputs.find(name);
 		if (output != texture2DOutputs.end() && output->second == texture) {
 			return;
@@ -77,7 +77,7 @@ namespace ScRendering {
 		texture2DOutputs[name] = texture;
 	}
 
-	void Pass::addTextureInput(std::string name, std::shared_ptr<TextureCube> texture) {
+	void Pass::addTextureInput(std::string name, std::shared_ptr<ScOpenGL::TextureCube> texture) {
 		auto input = textureCubeInputs.find(name);
 		if (input != textureCubeInputs.end() && input->second == texture) {
 			return;
@@ -86,7 +86,7 @@ namespace ScRendering {
 		textureCubeInputs[name] = texture;
 	}
 
-	void Pass::addTextureOutput(std::string name, std::shared_ptr<TextureCube> texture) {
+	void Pass::addTextureOutput(std::string name, std::shared_ptr<ScOpenGL::TextureCube> texture) {
 		auto input = textureCubeOutputs.find(name);
 		if (input != textureCubeOutputs.end() && input->second == texture) {
 			return;

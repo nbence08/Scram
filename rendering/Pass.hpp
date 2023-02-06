@@ -20,14 +20,14 @@ namespace ScRendering {
 		std::string shaderName;
 
 		std::shared_ptr<ShaderProgram> program;
-		UniformProvider* programUniforms;
-		std::shared_ptr<Framebuffer> fbo;
+		ScOpenGL::UniformProvider* programUniforms;
+		std::shared_ptr<ScOpenGL::Framebuffer> fbo;
 
-		std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DInputs;
-		std::unordered_map<std::string, std::shared_ptr<Texture2D>> texture2DOutputs;
+		std::unordered_map<std::string, std::shared_ptr<ScOpenGL::Texture2D>> texture2DInputs;
+		std::unordered_map<std::string, std::shared_ptr<ScOpenGL::Texture2D>> texture2DOutputs;
 
-		std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeInputs;
-		std::unordered_map<std::string, std::shared_ptr<TextureCube>> textureCubeOutputs;
+		std::unordered_map<std::string, std::shared_ptr<ScOpenGL::TextureCube>> textureCubeInputs;
+		std::unordered_map<std::string, std::shared_ptr<ScOpenGL::TextureCube>> textureCubeOutputs;
 
 		std::function<void(SComponent::Mesh&)> passMeshLambda;
 		std::function<void(SComponent::Entity&)> passEntityLambda;
@@ -64,12 +64,12 @@ namespace ScRendering {
 		/// </summary>
 		/// <param name="shaderName">std::string&</param>
 		/// <param name="fboInfo">FboCreateInfo&</param>
-		inline Pass(std::string& shaderName, FboCreateInfo& fboInfo) :Pass() {
+		inline Pass(std::string& shaderName, ScOpenGL::FboCreateInfo& fboInfo) :Pass() {
 			makeShaderProgram(shaderName);
 			makeFramebuffer(fboInfo);
 		}
 
-		Pass(std::string& shaderName, std::shared_ptr<Framebuffer> fbo);
+		Pass(std::string& shaderName, std::shared_ptr<ScOpenGL::Framebuffer> fbo);
 
 		~Pass();
 
@@ -85,35 +85,35 @@ namespace ScRendering {
 		/// Creates a framebuffer for the pass.
 		/// </summary>
 		/// <param name="fboInfo">Create info for the FBO to be created for the pass.</param>
-		void makeFramebuffer(FboCreateInfo& fboInfo);
+		void makeFramebuffer(ScOpenGL::FboCreateInfo& fboInfo);
 
 		/// <summary>
 		/// Adds a texture as texture input.
 		/// </summary>
 		/// <param name="name">Name of the texture input.</param>
 		/// <param name="texture">Texture to be added as input.</param>
-		void addTextureInput(std::string name, std::shared_ptr<Texture2D> texture);
+		void addTextureInput(std::string name, std::shared_ptr<ScOpenGL::Texture2D> texture);
 
 		/// <summary>
 		/// Adds a texture as texture input.
 		/// </summary>
 		/// <param name="name">Name of the texture input.</param>
 		/// <param name="texture">Texture to be added as input.</param>
-		void addTextureInput(std::string name, std::shared_ptr<TextureCube> texture);
+		void addTextureInput(std::string name, std::shared_ptr<ScOpenGL::TextureCube> texture);
 
 		/// <summary>
 		/// Adds a texture as texture output.
 		/// </summary>
 		/// <param name="name">Name of the texture output.</param>
 		/// <param name="texture">Texture to be added as output.</param>
-		void addTextureOutput(std::string name, std::shared_ptr<Texture2D> texture);
+		void addTextureOutput(std::string name, std::shared_ptr<ScOpenGL::Texture2D> texture);
 
 		/// <summary>
 		/// Adds a texture as texture output.
 		/// </summary>
 		/// <param name="name">Name of the texture output.</param>
 		/// <param name="texture">Texture to be added as output.</param>
-		void addTextureOutput(std::string name, std::shared_ptr<TextureCube> texture);
+		void addTextureOutput(std::string name, std::shared_ptr<ScOpenGL::TextureCube> texture);
 
 		/// <summary>
 		/// Returns a shared pointer to the program used by the pass.
@@ -125,13 +125,13 @@ namespace ScRendering {
 		/// Returns a shared pointer to the Framebuffer used by the pass.
 		/// </summary>
 		/// <returns>std::shared_ptr to Framebuffer used by the pass</returns>
-		inline std::shared_ptr<Framebuffer> getFbo() { return fbo; }
+		inline std::shared_ptr<ScOpenGL::Framebuffer> getFbo() { return fbo; }
 
 		/// <summary>
 		/// Sets FBO of Pass to the object supplied as parameter.
 		/// </summary>
 		/// <param name="fbo">std::shared_ptr to object, to which the fbo of the pass will be set</param>
-		inline void setFbo(std::shared_ptr<Framebuffer> fbo) { this->fbo = fbo; }
+		inline void setFbo(std::shared_ptr<ScOpenGL::Framebuffer> fbo) { this->fbo = fbo; }
 
 		/// <summary>
 		/// Sets ShaderProgram of Pass to the object supplied as parameter.

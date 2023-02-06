@@ -31,8 +31,8 @@ namespace SComponent {
 	}
 
 	DirectionalLight::DirectionalLight() {
-		shadowMap = std::make_shared<Texture2D>();
-		auto texUnit = TextureUnit::getNewInstance();
+		shadowMap = std::make_shared<ScOpenGL::Texture2D>();
+		auto texUnit = ScOpenGL::TextureUnit::getNewInstance();
 
 		texUnit->bind();
 		texUnit->bindTexture(shadowMap);

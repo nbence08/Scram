@@ -9,63 +9,64 @@
 #include <limits>
 #include <iostream>
 
-/// <summary>
-/// class which creates the GLFW openglcontext and opengl window
-/// it also handles mouse and keyboard inputs
-/// </summary>
-class OpenGLContext {
-public:
-	GLFWwindow* window;
-	void init();
-	double cursorX, cursorY;
-	double xDeg, yDeg;
-	double moveSpeed, cursorSpeed;
-	bool first;
+namespace ScOpenGL {
+	/// <summary>
+	/// class which creates the GLFW openglcontext and opengl window
+	/// it also handles mouse and keyboard inputs
+	/// </summary>
+	class OpenGLContext {
+	public:
+		GLFWwindow* window;
+		void init();
+		double cursorX, cursorY;
+		double xDeg, yDeg;
+		double moveSpeed, cursorSpeed;
+		bool first;
 
-	OpenGLContext():window(nullptr) {
-		
-		cursorX = 0.0;
-		cursorY = 0.0;
-		xDeg = 0.0;
-		yDeg = 0;
-		first = false;
-		moveSpeed = 1.0;
-		cursorSpeed = 1.0;
-	}
-	#pragma warning (push)
-	#pragma warning (disable : 4244)
-	void handleInputs(SComponent::PerspectiveCamera& camera, real_t deltaTime) {
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			camera.moveForward(deltaTime * moveSpeed);
-		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			camera.moveBackward(deltaTime * moveSpeed);
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			camera.moveRightward(deltaTime * moveSpeed);
-		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			camera.moveLeftward(deltaTime * moveSpeed);
-		}
+		OpenGLContext() :window(nullptr) {
 
-		if (first) {
+			cursorX = 0.0;
+			cursorY = 0.0;
+			xDeg = 0.0;
+			yDeg = 0;
 			first = false;
-			glfwGetCursorPos(window, &cursorX, &cursorY);
-			return;
+			moveSpeed = 1.0;
+			cursorSpeed = 1.0;
 		}
-		
-		double curCursorX, curCursorY;
-		glfwGetCursorPos(window, &curCursorX, &curCursorY);
+#pragma warning (push)
+#pragma warning (disable : 4244)
+		void handleInputs(SComponent::PerspectiveCamera& camera, real_t deltaTime) {
+			if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+				camera.moveForward(deltaTime * moveSpeed);
+			}
+			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+				camera.moveBackward(deltaTime * moveSpeed);
+			}
+			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+				camera.moveRightward(deltaTime * moveSpeed);
+			}
+			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+				camera.moveLeftward(deltaTime * moveSpeed);
+			}
 
-		double diffX = (- curCursorX + cursorX)*cursorSpeed;
-		double diffY = (- curCursorY + cursorY)*cursorSpeed;
+			if (first) {
+				first = false;
+				glfwGetCursorPos(window, &cursorX, &cursorY);
+				return;
+			}
 
-		camera.updateForward(diffX, diffY);
+			double curCursorX, curCursorY;
+			glfwGetCursorPos(window, &curCursorX, &curCursorY);
 
-		cursorX = curCursorX;
-		cursorY = curCursorY;
-	}
-	#pragma warning (pop)
-};
+			double diffX = (-curCursorX + cursorX) * cursorSpeed;
+			double diffY = (-curCursorY + cursorY) * cursorSpeed;
 
+			camera.updateForward(diffX, diffY);
+
+			cursorX = curCursorX;
+			cursorY = curCursorY;
+		}
+#pragma warning (pop)
+	};
+}
 

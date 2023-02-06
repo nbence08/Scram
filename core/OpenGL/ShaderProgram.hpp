@@ -14,7 +14,7 @@ class ShaderProgram {
 	
 	unsigned id;
 	void checkShaderErorrs(unsigned int id);
-	UniformProvider up;
+	ScOpenGL::UniformProvider up;
 
 	void addShader(const char** source, GLenum shaderType);
 public:
@@ -76,6 +76,6 @@ public:
 		up.setUniform(t...);
 	}
 
-	UniformProvider& getUniformProvider() { return up; }
+	ScOpenGL::UniformProvider& getUniformProvider() { return up; }
 };
 

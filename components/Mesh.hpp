@@ -18,9 +18,9 @@ namespace SComponent {
 
 	class Mesh : public ComponentBase {
 
-		VertexArray vao;
-		Buffer vbo;
-		Buffer ebo;
+		ScOpenGL::VertexArray vao;
+		ScOpenGL::Buffer vbo;
+		ScOpenGL::Buffer ebo;
 
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
@@ -30,9 +30,9 @@ namespace SComponent {
 		const uint64_t uid;
 
 		inline Mesh() :uid(topMeshId++) {
-			vao = (VertexArray());
-			vbo = (Buffer());
-			ebo = (Buffer());
+			vao = (ScOpenGL::VertexArray());
+			vbo = (ScOpenGL::Buffer());
+			ebo = (ScOpenGL::Buffer());
 
 			vao.addReal(3);
 			vao.addReal(3);
@@ -48,9 +48,9 @@ namespace SComponent {
 		inline void setIndices(std::vector<unsigned int>& indices) { this->indices = indices; }
 		inline void setIndices(std::vector<unsigned int>&& indices) { this->indices = indices; }
 
-		inline VertexArray& getVao() { return vao; }
-		inline Buffer& getVbo() { return vbo; }
-		inline Buffer& getEbo() { return ebo; }
+		inline ScOpenGL::VertexArray& getVao() { return vao; }
+		inline ScOpenGL::Buffer& getVbo() { return vbo; }
+		inline ScOpenGL::Buffer& getEbo() { return ebo; }
 
 		void bufferVertices() {
 			vbo.bufferData(&vertices.data()[0], sizeof(Vertex) * vertices.size());

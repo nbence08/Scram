@@ -4,8 +4,8 @@ namespace SComponent {
 	PointLight::PointLight() {
 		farPlane = global::shadowProjEdgeSize;
 
-		shadowMap = std::make_shared<TextureCube>();
-		auto texUnit = TextureUnit::getNewInstance();
+		shadowMap = std::make_shared<ScOpenGL::TextureCube>();
+		auto texUnit = ScOpenGL::TextureUnit::getNewInstance();
 
 		texUnit->bind();
 		texUnit->bindTexture(shadowMap);
@@ -35,7 +35,7 @@ namespace SComponent {
 		auto backward = math::getLookAt(Smath::Vector3(0.0, 0.0, 1.0), Smath::Vector3(0.0, -1.0, 0.0), position);
 		auto forward = math::getLookAt(Smath::Vector3(0.0, 0.0, -1.0), Smath::Vector3(0.0, -1.0, 0.0), position);
 
-		std::shared_ptr<TextureCube> shadowMap;
+		std::shared_ptr<ScOpenGL::TextureCube> shadowMap;
 
 		std::vector<Smath::Matrix4> matrices;
 

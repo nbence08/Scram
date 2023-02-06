@@ -2,7 +2,7 @@
 
 namespace ScRendering {
 	std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
-		FboCreateInfo createInfo;
+		ScOpenGL::FboCreateInfo createInfo;
 		createInfo.colorBuffer = false;
 		createInfo.depthStencilBuffer = false;
 		createInfo.stencilBuffer = false;
@@ -31,7 +31,7 @@ namespace ScRendering {
 					pass->addTextureOutput("dirLightShadow[" + i + ']', dirLight.shadowMap);
 
 					if (!dirLight.shadowMap->isBoundToTextureUnit()) {
-						Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
+						ScOpenGL::Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
 					}
 				}
 			}
@@ -65,11 +65,11 @@ namespace ScRendering {
 
 		std::shared_ptr<Pass> pass;
 		if (defaultFbo) {
-			auto defaultFbo = std::make_shared<Framebuffer>(Framebuffer::getDefault());
+			auto defaultFbo = std::make_shared<ScOpenGL::Framebuffer>(ScOpenGL::Framebuffer::getDefault());
 			pass = std::make_shared<Pass>(shaderName, defaultFbo);
 		}
 		else {
-			FboCreateInfo createInfo;
+			ScOpenGL::FboCreateInfo createInfo;
 			createInfo.colorBuffer = true;
 			createInfo.depthStencilBuffer = true;
 			createInfo.stencilBuffer = false;
@@ -123,7 +123,7 @@ namespace ScRendering {
 	}
 
 	std::shared_ptr<Pass> PassBuilder::buildPointShadowPass() {
-		FboCreateInfo createInfo;
+		ScOpenGL::FboCreateInfo createInfo;
 		createInfo.colorBuffer = false;
 		createInfo.depthStencilBuffer = false;
 		createInfo.stencilBuffer = false;
@@ -151,7 +151,7 @@ namespace ScRendering {
 					pass->addTextureOutput("pointLightShadow[" + i + ']', pointLight.shadowMap);
 
 					if (!pointLight.shadowMap->isBoundToTextureUnit()) {
-						TextureCube::bindToNewTextureUnit(pointLight.shadowMap);
+						ScOpenGL::TextureCube::bindToNewTextureUnit(pointLight.shadowMap);
 					}
 				}
 			}
