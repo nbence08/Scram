@@ -12,6 +12,6 @@ namespace global {
 	//add gamma uniform to shader, and the proper Pass lambdas
 	static float gamma = 2.2;
 
-	static std::string shaderNamePrefix = "GPU/opengl/shaders";
+	static std::string shaderNamePrefix = "../GPU/opengl/shaders/";
 	static real_t shadowProjEdgeSize = 400.0;
 }
