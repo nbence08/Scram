@@ -5,20 +5,23 @@
 #include "core/Global_Props.hpp"
 #include "ComponentBase.hpp"
 
-class DirectionalLight : public ComponentBase {
-public:
+namespace SComponent {
 
-	Vector3 intensity;
-	//direction of fragments to light source
-	Vector3 direction;
-	std::shared_ptr<Texture2D> shadowMap;
+	class DirectionalLight : public ComponentBase {
+	public:
 
-	Matrix4 getLightSpaceMatrix() const;
+		Smath::Vector3 intensity;
+		//direction of fragments to light source
+		Smath::Vector3 direction;
+		std::shared_ptr<ScOpenGL::Texture2D> shadowMap;
 
-	DirectionalLight();
+		Smath::Matrix4 getLightSpaceMatrix() const;
 
-	inline bool hasShadowMap() const {
-		return shadowMap.get() != nullptr;
-	}
-};
+		DirectionalLight();
+
+		inline bool hasShadowMap() const {
+			return shadowMap.get() != nullptr;
+		}
+	};
+}
 

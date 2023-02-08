@@ -1,5 +1,7 @@
 #include "Scene.hpp"
 
-Scene::Scene() {
-	camera = std::make_shared<PerspectiveCamera>();
+namespace ScRendering {
+	Scene::Scene() {
+		camera = std::make_shared<SComponent::PerspectiveCamera>();
+	}
 }
