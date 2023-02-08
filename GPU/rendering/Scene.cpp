@@ -1,17 +1,21 @@
 #include "Scene.hpp"
 
-Scene::Scene() {
-	camera = std::make_shared<PerspectiveCamera>();
-}
+namespace ScRendering {
 
-void Scene::addObject(std::shared_ptr<Entity> model) {
-	objects.emplace_back(model);
-}
+	Scene::Scene() {
+		camera = std::make_shared<SComponent::PerspectiveCamera>();
+	}
 
-std::vector<std::shared_ptr<Entity>>& Scene::getObjects() { return objects; }
-std::vector<DirectionalLight>& Scene::getDirLights() { return dirLights; }
-std::vector<PointLight>& Scene::getPointLights() { return pointLights; }
-std::vector<SpotLight>& Scene::getSpotLights() { return spotLights; }
-PerspectiveCamera& Scene::getCamera() { return *camera; }
-void Scene::setCamera(PerspectiveCamera& camera) { this->camera = std::make_shared<PerspectiveCamera>(camera); }
-void Scene::setCamera(std::shared_ptr<PerspectiveCamera> camera) { this->camera = camera; }
+	void Scene::addObject(std::shared_ptr<SComponent::Entity> model) {
+		objects.emplace_back(model);
+	}
+
+	std::vector<std::shared_ptr<SComponent::Entity>>& Scene::getObjects() { return objects; }
+	std::vector<SComponent::DirectionalLight>& Scene::getDirLights() { return dirLights; }
+	std::vector<SComponent::PointLight>& Scene::getPointLights() { return pointLights; }
+	std::vector<SComponent::SpotLight>& Scene::getSpotLights() { return spotLights; }
+	SComponent::PerspectiveCamera& Scene::getCamera() { return *camera; }
+	void Scene::setCamera(SComponent::PerspectiveCamera& camera) { this->camera = std::make_shared<SComponent::PerspectiveCamera>(camera); }
+	void Scene::setCamera(std::shared_ptr<SComponent::PerspectiveCamera> camera) { this->camera = camera; }
+
+}

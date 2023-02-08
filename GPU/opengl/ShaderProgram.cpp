@@ -1,96 +1,100 @@
 #include "ShaderProgram.hpp"
 
-ShaderProgram::ShaderProgram() {
-	id = glCreateProgram();
-	if (id == 0) {
-		throw std::runtime_error("glCreateProgram return 0");
+namespace ScOpenGL {
+
+	ShaderProgram::ShaderProgram() {
+		id = glCreateProgram();
+		if (id == 0) {
+			throw std::runtime_error("glCreateProgram return 0");
+		}
+		up = ScOpenGL::UniformProvider(id);
 	}
-	up = UniformProvider(id);
-}
 
-ShaderProgram::ShaderProgram(ShaderProgram&& other) noexcept {
-	*this = std::forward<ShaderProgram>(other);
-}
-
-ShaderProgram& ShaderProgram::operator=(ShaderProgram&& other) noexcept {
-	if (this == &other) return *this;
-
-	id = other.id;
-	other.id = 0;
-
-
-	return *this;
-}
-
-void ShaderProgram::addFragment(const char** source) {
-	addShader(source, GL_FRAGMENT_SHADER);
-}
-
-void ShaderProgram::addVertex(const char** source) {
-	addShader(source, GL_VERTEX_SHADER);
-}
-
-void ShaderProgram::addGeometry(const char** source) {
-	addShader(source, GL_GEOMETRY_SHADER);
-}
-
-void ShaderProgram::addShader(const char** source, GLenum shaderType) {
-	unsigned int shaderId = glCreateShader(shaderType);
-	glShaderSource(shaderId, 1, source, nullptr);
-	glCompileShader(shaderId);
-
-	checkShaderErorrs(shaderId);
-
-	glAttachShader(id, shaderId);
-
-	glDeleteShader(shaderId);
-}
-
-void ShaderProgram::linkProgram() {
-	glLinkProgram(id);
-	glValidateProgram(id);
-
-	GLint success;
-	glGetProgramiv(id, GL_LINK_STATUS, &success);
-	if (!success) {
-		int infoLength;
-		glGetProgramiv(id, GL_INFO_LOG_LENGTH, &infoLength);
-		std::string log;
-		log.resize((int64_t)(infoLength) + 1);
-		char* logPtr = const_cast<char*>(log.data());
-
-		glGetProgramInfoLog(id, infoLength, NULL, logPtr);
-		throw std::runtime_error(log);
+	ShaderProgram::ShaderProgram(ShaderProgram&& other) noexcept {
+		*this = std::forward<ShaderProgram>(other);
 	}
-}
 
-void ShaderProgram::use() {
-	glUseProgram(id);
-	programInUse = id;
-}
+	ShaderProgram& ShaderProgram::operator=(ShaderProgram&& other) noexcept {
+		if (this == &other) return *this;
 
-unsigned int ShaderProgram::getId() const {
-	return id;
-}
+		id = other.id;
+		other.id = 0;
 
-ShaderProgram::~ShaderProgram() {
-	if (programInUse == id) {
-		glUseProgram(0);
+
+		return *this;
 	}
-	glDeleteProgram(id);
-}
 
-void ShaderProgram::checkShaderErorrs(unsigned int id) {
-	GLint success;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		int infoLength;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLength);
-		std::string log;
-		log.resize((int64_t)(infoLength)+ 1);
-		char* logPtr = const_cast<char*>(log.data());
-
-		glGetShaderInfoLog(id, infoLength, NULL, logPtr);
-		throw std::runtime_error(log);
+	void ShaderProgram::addFragment(const char** source) {
+		addShader(source, GL_FRAGMENT_SHADER);
 	}
+
+	void ShaderProgram::addVertex(const char** source) {
+		addShader(source, GL_VERTEX_SHADER);
+	}
+
+	void ShaderProgram::addGeometry(const char** source) {
+		addShader(source, GL_GEOMETRY_SHADER);
+	}
+
+	void ShaderProgram::addShader(const char** source, GLenum shaderType) {
+		unsigned int shaderId = glCreateShader(shaderType);
+		glShaderSource(shaderId, 1, source, nullptr);
+		glCompileShader(shaderId);
+
+		checkShaderErorrs(shaderId);
+
+		glAttachShader(id, shaderId);
+
+		glDeleteShader(shaderId);
+	}
+
+	void ShaderProgram::linkProgram() {
+		glLinkProgram(id);
+		glValidateProgram(id);
+
+		GLint success;
+		glGetProgramiv(id, GL_LINK_STATUS, &success);
+		if (!success) {
+			int infoLength;
+			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &infoLength);
+			std::string log;
+			log.resize((int64_t)(infoLength) + 1);
+			char* logPtr = const_cast<char*>(log.data());
+
+			glGetProgramInfoLog(id, infoLength, NULL, logPtr);
+			throw std::runtime_error(log);
+		}
+	}
+
+	void ShaderProgram::use() {
+		glUseProgram(id);
+		programInUse = id;
+	}
+
+	unsigned int ShaderProgram::getId() const {
+		return id;
+	}
+
+	ShaderProgram::~ShaderProgram() {
+		if (programInUse == id) {
+			glUseProgram(0);
+		}
+		glDeleteProgram(id);
+	}
+
+	void ShaderProgram::checkShaderErorrs(unsigned int id) {
+		GLint success;
+		glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+		if (!success) {
+			int infoLength;
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLength);
+			std::string log;
+			log.resize((int64_t)(infoLength)+ 1);
+			char* logPtr = const_cast<char*>(log.data());
+
+			glGetShaderInfoLog(id, infoLength, NULL, logPtr);
+			throw std::runtime_error(log);
+		}
+	}
+
 }

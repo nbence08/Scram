@@ -1,70 +1,75 @@
 #include "Texture2D.hpp"
 #include "TextureUnit.hpp"
 
-Texture2D::Texture2D(GLenum magFilter, GLenum minFilter,
-	GLenum wrapR, GLenum wrapS) {
+namespace ScOpenGL {
+	Texture2D::Texture2D(GLenum magFilter, GLenum minFilter,
+		GLenum wrapR, GLenum wrapS) {
 
-	type = GL_TEXTURE_2D;
+		type = GL_TEXTURE_2D;
 
-	//if type not in validTextureTypes, then reject
+		//if type not in validTextureTypes, then reject
 
-	this->minFilter = minFilter;
-	this->magFilter = magFilter;
-	this->wrapR = wrapR;
-	this->wrapS = wrapS;
+		this->minFilter = minFilter;
+		this->magFilter = magFilter;
+		this->wrapR = wrapR;
+		this->wrapS = wrapS;
 
-	glGenTextures(1, &id);
+		glGenTextures(1, &id);
 
-	parametrized = false;
-}
+		parametrized = false;
+	}
 
-Texture2D::~Texture2D() {
-	glDeleteTextures(1, &id);
-	if (!textureUnit.expired()) {
+	Texture2D::~Texture2D() {
+		glDeleteTextures(1, &id);
+		if (!textureUnit.expired()) {
+			auto texUSh = textureUnit.lock();
+			texUSh->unbindTexture();
+		}
+	}
+
+	bool Texture2D::isBoundToTextureUnit() {
+		if (!this->textureUnit.expired()) {
+			return this->textureUnit.lock()->doesBoundTextureMatch(this);
+		}
+		else return false;
+	}
+
+	int Texture2D::getTextureUnitNum() {
+		if (textureUnit.expired()) {
+			throw std::logic_error("No texture unit is set!");
+		}
 		auto texUSh = textureUnit.lock();
-		texUSh->unbindTexture();
+		return texUSh->getUnitNum();
 	}
-}
 
-bool Texture2D::isBoundToTextureUnit() {
-	if(!this->textureUnit.expired()){
-		return this->textureUnit.lock()->doesBoundTextureMatch(this);
-	}
-	else return false;
-}
-
-int Texture2D::getTextureUnitNum() {
-	if (textureUnit.expired()) {
-		throw std::logic_error("No texture unit is set!");
-	}
-	auto texUSh = textureUnit.lock();
-	return texUSh->getUnitNum();
-}
-
-void Texture2D::setTextureUnit(std::shared_ptr<TextureUnit> texUnit) {
-	auto texUSh = textureUnit.lock();
+	void Texture2D::setTextureUnit(std::shared_ptr<TextureUnit> texUnit) {
+		auto texUSh = textureUnit.lock();
 		if (texUSh.get() != nullptr) {
 			texUSh->unbindTexture();
 		}
-	textureUnit = texUnit;
-}
+		textureUnit = texUnit;
+	}
 
-void Texture2D::bindToNewTextureUnit(std::shared_ptr<Texture2D> self){
-	auto texUnit = TextureUnit::getNewInstance();
-	texUnit->bindTexture(self);
-}
+	void Texture2D::bindToNewTextureUnit(std::shared_ptr<Texture2D> self) {
+		auto texUnit = TextureUnit::getNewInstance();
+		texUnit->bindTexture(self);
+	}
 
-std::shared_ptr<TextureUnit> Texture2D::getTextureUnit() { return textureUnit.lock(); }
+	std::shared_ptr<ScOpenGL::TextureUnit> Texture2D::getTextureUnit() { return textureUnit.lock(); }
 
-void Texture2D::unsetTextureUnit() {
-	textureUnit.reset();
-}
+	void Texture2D::unsetTextureUnit() {
+		textureUnit.reset();
+	}
 
-void Texture2D::initialize() {
+	unsigned int Texture2D::getId() { return id; }
 
-	glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
-	glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
-	glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
-	glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+	void Texture2D::initialize() {
+
+		glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
+		glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
+		glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
+		glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+
+	}
 
 }

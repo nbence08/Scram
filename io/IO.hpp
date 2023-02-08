@@ -21,7 +21,7 @@
 #include "TextureUnit.hpp"
 #include "Material.hpp"
 
-namespace IO{
+namespace ScIO{
 	//reads a file of path given as parameter
 	//throws std::ios_base::failure if 
 	std::string readFile(const std::string& path);
@@ -30,20 +30,20 @@ namespace IO{
 
 	void freeImage(ImageData2D& data);
 
-	void parseMeshVertices(const aiMesh& aiMesh, Mesh& mesh);
+	void parseMeshVertices(const aiMesh& aiMesh, SComponent::Mesh& mesh);
 
 	ImageData2D create2DImageData(aiTexture& aiTex);
 
-	std::shared_ptr<Texture2D> transferTextureToOpenGL(const aiScene& scene, std::string& strPath);
+	std::shared_ptr<ScOpenGL::Texture2D> transferTextureToOpenGL(const aiScene& scene, std::string& strPath);
 
-	void parseMeshIndices(const aiScene& scene, const aiMesh& aiMesh, Mesh& mesh);
+	void parseMeshIndices(const aiScene& scene, const aiMesh& aiMesh, SComponent::Mesh& mesh);
 
 	//TODO: this function is long, should be broken down into smaller components
-	void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, Entity& entity);
+	void parseSceneMaterials(const aiScene& scene, const aiMesh& aiMesh, SComponent::Entity& entity);
 
-	void processNode(const aiScene& scene, const aiNode& node, Entity& entity);
+	void processNode(const aiScene& scene, const aiNode& node, SComponent::Entity& entity);
 
-	void parseScene(const aiScene& scene, Entity& rootEntity);
+	void parseScene(const aiScene& scene, SComponent::Entity& rootEntity);
 
-	std::shared_ptr<Entity> importModelFromFile(const std::string& path);
+	std::shared_ptr<SComponent::Entity> importModelFromFile(const std::string& path);
 };

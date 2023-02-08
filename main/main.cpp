@@ -1,7 +1,5 @@
 #pragma once
 
-extern int componentTypeCounter = 0;
-
 #include <iostream>
 #include <fstream>
 #include <iterator>
@@ -14,9 +12,11 @@ extern int componentTypeCounter = 0;
 #include "Scene.hpp"
 #include "TextureUnit.hpp"
 
+extern int SComponent::componentTypeCounter = 0;
+
 int main() {
 
-	OpenGLContext context;
+	ScOpenGL::OpenGLContext context;
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
 	try {
@@ -30,31 +30,32 @@ int main() {
 	auto currentFrame = glfwGetTime();
 	auto lastFrame = glfwGetTime();
 	
-	std::shared_ptr<Entity> ent = IO::importModelFromFile("../resources/models/bsg_pegasus.glb");
-	std::shared_ptr<Entity> ent2 = IO::importModelFromFile("../resources/models/box.glb");
+	std::shared_ptr<SComponent::Entity> ent = 
+	ScIO::importModelFromFile("../resources/models/bsg_pegasus.glb");
+	std::shared_ptr<SComponent::Entity> ent2 = ScIO::importModelFromFile("../resources/models/box.glb");
 
-	auto& entTransform = ent->getComponent<Transform>();
-	auto& ent2Transform = ent2->getComponent<Transform>();
+	auto& entTransform = ent->getComponent<SComponent::Transform>();
+	auto& ent2Transform = ent2->getComponent<SComponent::Transform>();
 	
-	entTransform.setRotation(Vector3(PI / 2.0, 0.0, 0.0));
-	entTransform.setScale(Vector3(0.5, 0.5, 0.5));
-	ent2Transform.setTranslation(Vector3(0.0, 40.0f, 0.0));
+	entTransform.setRotation(Smath::Vector3(PI / 2.0, 0.0, 0.0));
+	entTransform.setScale(Smath::Vector3(0.5, 0.5, 0.5));
+	ent2Transform.setTranslation(Smath::Vector3(0.0, 40.0f, 0.0));
 
-	Scene scene;
+	ScRendering::Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
 
-	DirectionalLight sun;
-	sun.direction = Vector3(1.0f, 1.0f, 1.0f);
-	sun.intensity = Vector3(10.0f, 10.0f, 9.0f);
+	SComponent::DirectionalLight sun;
+	sun.direction = Smath::Vector3(1.0f, 1.0f, 1.0f);
+	sun.intensity = Smath::Vector3(10.0f, 10.0f, 9.0f);
 	scene.getDirLights().push_back(sun);
 
-	PointLight intense;
-	intense.attenuation = Vector3(0.0, 0.0, 0.2);
-	intense.intensity = Vector3(1.0, 100.0, 1.0);
-	intense.position = Vector3(0.0, -30.0, -78.0);
+	SComponent::PointLight intense;
+	intense.attenuation = Smath::Vector3(0.0, 0.0, 0.2);
+	intense.intensity = Smath::Vector3(1.0, 100.0, 1.0);
+	intense.position = Smath::Vector3(0.0, -30.0, -78.0);
 	scene.getPointLights().push_back(intense);
 
-	IncRenderer renderer;
+	ScRendering::IncRenderer renderer;
 
 	scene.addObject((ent));
 	scene.addObject((ent2));
@@ -81,7 +82,7 @@ int main() {
 		lastFrame = currentFrame;
 	}
 
-	clearTextureUnits();
+	ScOpenGL::clearTextureUnits();
 	glfwTerminate();
 	return EXIT_SUCCESS;
 }

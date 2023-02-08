@@ -3,45 +3,48 @@
 #include "Preprocess_Definitions.hpp"
 #include "Vector3.hpp"
 
-class Vector3;
+namespace Smath {
 
-class Vector4{
-public:
-	real_t x, y, z, w;
-	inline Vector4(real_t x = 0.0f, real_t y = 0.0f, real_t z = 0.0f, real_t w = 1.0f) : x(x), y(y), z(z), w(w) {}
-	Vector4(const Vector3& vec3, const real_t w);
+	class Vector3;
 
-	Vector4 operator-() const;
+	class Vector4 {
+	public:
+		real_t x, y, z, w;
+		inline Vector4(real_t x = 0.0f, real_t y = 0.0f, real_t z = 0.0f, real_t w = 1.0f) : x(x), y(y), z(z), w(w) {}
+		Smath::Vector4(const Smath::Vector3& vec3, const real_t w);
 
-	Vector4 operator-(const Vector4& other) const;
+		Vector4 operator-() const;
 
-	void operator-=(const Vector4& other);
+		Vector4 operator-(const Vector4& other) const;
 
-	Vector4 operator+(const Vector4& other) const;
+		void operator-=(const Vector4& other);
 
-	void operator+=(const Vector4& other);
+		Vector4 operator+(const Vector4& other) const;
 
-	void operator*=(const Vector4& other);
+		void operator+=(const Vector4& other);
 
-	Vector4 operator*(const real_t c) const;
+		void operator*=(const Vector4& other);
 
-	void operator*=(const real_t c);
+		Vector4 operator*(const real_t c) const;
 
-	Vector4 operator/(const real_t c) const;
+		void operator*=(const real_t c);
 
-	void operator/=(const real_t c);
+		Vector4 operator/(const real_t c) const;
 
-	real_t dot(const Vector4& other) const;
+		void operator/=(const real_t c);
 
-	Vector4 cross(const Vector4& other) const;
+		real_t dot(const Vector4& other) const;
 
-	Vector4 normalized() const;
+		Vector4 cross(const Vector4& other) const;
 
-	void normalize();
+		Vector4 normalized() const;
 
-	real_t length();
-};
+		void normalize();
 
-static inline real_t dot(const Vector4& left, const Vector4& right) {
-	return left.x * right.x + left.y * right.y + left.z * right.z + left.w*right.w;
+		real_t length();
+	};
+
+	static inline real_t dot(const Vector4& left, const Vector4& right) {
+		return left.x * right.x + left.y * right.y + left.z * right.z + left.w * right.w;
+	}
 }

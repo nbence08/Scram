@@ -2,39 +2,42 @@
 #include <set>
 #include "GL/glew.h"
 
-class VertexArray;
+namespace ScOpenGL {
 
-static bool isValidUsage(GLenum usage);
+	class VertexArray;
 
-/// <summary>
-/// Buffer class representing a buffer object in OpenGL
-/// </summary>
-class Buffer{
-	unsigned int id;
-	VertexArray* vao;
-	GLenum bufferType;
+	static bool isValidUsage(GLenum usage);
 
-
-	friend VertexArray;
-public:
-	unsigned int getId() const;
-
-	Buffer(const Buffer&) = delete;
-	Buffer& operator=(const Buffer&) = delete;
-
-	Buffer(Buffer&& other) noexcept;
-	Buffer& operator=(Buffer&& other) noexcept;
+	/// <summary>
+	/// Buffer class representing a buffer object in OpenGL
+	/// </summary>
+	class Buffer {
+		unsigned int id;
+		ScOpenGL::VertexArray* vao;
+		GLenum bufferType;
 
 
-	Buffer();
-	~Buffer();
+		friend ScOpenGL::VertexArray;
+	public:
+		unsigned int getId() const;
 
-	void setVao(VertexArray* vao);
-	VertexArray* getVao();
-	GLenum getBufferType();
+		Buffer(const Buffer&) = delete;
+		Buffer& operator=(const Buffer&) = delete;
 
-	void bufferData(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
+		Buffer(Buffer&& other) noexcept;
+		Buffer& operator=(Buffer&& other) noexcept;
 
-	void setBufferType(GLenum bufferType);
-};
 
+		Buffer();
+		~Buffer();
+
+		void setVao(ScOpenGL::VertexArray* vao);
+		ScOpenGL::VertexArray* getVao();
+		GLenum getBufferType();
+
+		void bufferData(const void* data, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW);
+
+		void setBufferType(GLenum bufferType);
+	};
+
+}

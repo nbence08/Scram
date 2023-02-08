@@ -7,61 +7,64 @@
 #include "VertexAttribManager.hpp"
 #include <memory>
 
-class Buffer;
-class VertexAttribManager;
+namespace ScOpenGL {
 
-static unsigned int boundArray = 0;
+	class Buffer;
+	class VertexAttribManager;
 
-static bool isValidBufferType(GLenum bufferType);
+	static unsigned int boundArray = 0;
 
-class VertexArray{
-	using BufferIndex_t = unsigned int;
+	static bool isValidBufferType(GLenum bufferType);
 
-	unsigned int id;
-	std::unordered_map<GLenum, Buffer*> boundBuffers;
-	std::unordered_map<BufferIndex_t, Buffer*> vertexBuffers;
-	std::shared_ptr<VertexAttribManager> vam;
+	class VertexArray {
+		using BufferIndex_t = unsigned int;
 
-	void hollowBind() const;
+		unsigned int id;
+		std::unordered_map<GLenum, Buffer*> boundBuffers;
+		std::unordered_map<BufferIndex_t, Buffer*> vertexBuffers;
+		std::shared_ptr<VertexAttribManager> vam;
 
-	void hollowUnbind() const;
+		void hollowBind() const;
 
-	void unbindBuffer(GLenum bufferType);
+		void hollowUnbind() const;
 
-	void bindBuffer(Buffer& buffer, GLenum bufferType);
+		void unbindBuffer(GLenum bufferType);
 
-	bool boundBuffersHasBufferType(GLenum bufferType);
+		void bindBuffer(Buffer& buffer, GLenum bufferType);
 
-	auto findVertexBuffer(Buffer& buffer);
+		bool boundBuffersHasBufferType(GLenum bufferType);
 
-	friend Buffer;
-	friend VertexAttribManager;
+		auto findVertexBuffer(Buffer& buffer);
 
-public:
-	VertexArray(const VertexArray& vao) = delete;
-	VertexArray& operator=(const VertexArray& vao) = delete;
+		friend Buffer;
+		friend VertexAttribManager;
 
-	VertexArray(VertexArray&& vao) noexcept;
-	VertexArray& operator=(VertexArray&& vao) noexcept;
+	public:
+		VertexArray(const VertexArray& vao) = delete;
+		VertexArray& operator=(const VertexArray& vao) = delete;
 
-	VertexArray();
-	~VertexArray();
+		VertexArray(VertexArray&& vao) noexcept;
+		VertexArray& operator=(VertexArray&& vao) noexcept;
 
-	void bind();
+		VertexArray();
+		~VertexArray();
 
-	static void unbind();
+		void bind();
 
-	inline unsigned int getId() { return id; }
+		static void unbind();
+
+		inline unsigned int getId() { return id; }
 
 
-	void bindIndexBuffer(Buffer& buffer);
-	void bindVertexBuffer(Buffer& buffer, unsigned int bufferIndex = 0);
-	void unbindVertexBuffer(Buffer& buffer);
+		void bindIndexBuffer(Buffer& buffer);
+		void bindVertexBuffer(Buffer& buffer, unsigned int bufferIndex = 0);
+		void unbindVertexBuffer(Buffer& buffer);
 
-	void addReal(unsigned int size, unsigned int bufferIndex = 0);
-	void attributeFormat();
-	void attributeBinding();
-	void attributePointer();
+		void addReal(unsigned int size, unsigned int bufferIndex = 0);
+		void attributeFormat();
+		void attributeBinding();
+		void attributePointer();
 
-};
+	};
 
+}

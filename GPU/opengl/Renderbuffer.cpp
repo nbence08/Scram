@@ -1,5 +1,7 @@
 #include "Renderbuffer.hpp"
 
+namespace ScOpenGL {
+
 inline unsigned int Renderbuffer::getId() { return id; }
 
 Renderbuffer::Renderbuffer() {
@@ -26,4 +28,6 @@ void Renderbuffer::bind() {
 
 void Renderbuffer::unbind() {
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
 }

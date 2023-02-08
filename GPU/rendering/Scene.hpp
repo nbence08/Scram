@@ -5,28 +5,31 @@
 #include "DirectionalLight.hpp"
 #include "PerspectiveCamera.hpp"
 
-class Scene{
-	std::vector<std::shared_ptr<Entity>> objects;
-	std::vector<DirectionalLight> dirLights;
-	std::vector<PointLight> pointLights;
-	std::vector<SpotLight> spotLights;
-	std::shared_ptr<PerspectiveCamera> camera;
+namespace ScRendering{
 
-public:
-	Scene();
+	class Scene{
+		std::vector<std::shared_ptr<SComponent::Entity>> objects;
+		std::vector<SComponent::DirectionalLight> dirLights;
+		std::vector<SComponent::PointLight> pointLights;
+		std::vector<SComponent::SpotLight> spotLights;
+		std::shared_ptr<SComponent::PerspectiveCamera> camera;
 
-	void addObject(std::shared_ptr<Entity> model);
+	public:
+		Scene();
 
-	std::vector<std::shared_ptr<Entity>>& getObjects();
+		void addObject(std::shared_ptr<SComponent::Entity> model);
 
-	//these getter functions could be modified so that there is only a single vector containing std::variants,
-	//and the std::variant defines which type of light it contains
-	//querying for specific type of lights would be like: getLights<[TYPE_OF_LIGHT]>()
-	std::vector<DirectionalLight>& getDirLights();
-	std::vector<PointLight>& getPointLights();
-	std::vector<SpotLight>& getSpotLights();
-	PerspectiveCamera& getCamera();
-	void setCamera(PerspectiveCamera& camera);
-	void setCamera(std::shared_ptr<PerspectiveCamera> camera);
-};
+		std::vector<std::shared_ptr<SComponent::Entity>>& getObjects();
 
+		//these getter functions could be modified so that there is only a single vector containing std::variants,
+		//and the std::variant defines which type of light it contains
+		//querying for specific type of lights would be like: getLights<[TYPE_OF_LIGHT]>()
+		std::vector<SComponent::DirectionalLight>& getDirLights();
+		std::vector<SComponent::PointLight>& getPointLights();
+		std::vector<SComponent::SpotLight>& getSpotLights();
+		SComponent::PerspectiveCamera& getCamera();
+		void setCamera(SComponent::PerspectiveCamera& camera);
+		void setCamera(std::shared_ptr<SComponent::PerspectiveCamera> camera);
+	};
+
+}

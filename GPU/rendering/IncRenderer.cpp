@@ -1,63 +1,66 @@
 #include "IncRenderer.hpp"
-
 #include "GL/glew.h"
 #include "PassBuilder.hpp"
 
-IncRenderer::IncRenderer(std::string defaultShaderPath) {
+namespace ScRendering {
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
+	IncRenderer::IncRenderer(std::string defaultShaderPath) {
 
-	glClearDepth(1.0);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	addDefaultPasses();
-}
-
-void IncRenderer::addDefaultPasses() {
-	preProcess.push_back(PassBuilder::buildDirShadowPass());
-	preProcess.push_back(PassBuilder::buildPointShadowPass());
-
-	process = PassBuilder::buildStandardPass();
-}
-
-void IncRenderer::setCullFace(bool cullFace) {
-	if (cullFace) {
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-	}
-	else glDisable(GL_CULL_FACE);
-}
+		glFrontFace(GL_CCW);
 
-void IncRenderer::draw(Scene& scene) {
-	auto& dirLights = scene.getDirLights();
-	auto& spotLights = scene.getSpotLights();
-	auto& pointLights = scene.getPointLights();
+		glClearDepth(1.0);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	for (size_t i = 0; i < preProcess.size(); i++) {
-		auto curPreProcess = preProcess[i];
-
-		curPreProcess->passScene(scene);
+		addDefaultPasses();
 	}
 
-	process->passScene(scene);
+	void IncRenderer::addDefaultPasses() {
+		preProcess.push_back(PassBuilder::buildDirShadowPass());
+		preProcess.push_back(PassBuilder::buildPointShadowPass());
 
-	for (size_t i = 0; i < postProcess.size(); i++) {
-		auto curPostProcess = postProcess[i];
-
-		curPostProcess->passScene(scene);
+		process = PassBuilder::buildStandardPass();
 	}
-}
 
-void IncRenderer::addPreProcessPass(Pass&& pass) {
-	preProcess.emplace_back(std::make_shared<Pass>(pass));
-}
+	void IncRenderer::setCullFace(bool cullFace) {
+		if (cullFace) {
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+		}
+		else glDisable(GL_CULL_FACE);
+	}
 
-void IncRenderer::addProcessPass(Pass&& pass) {
-	process = std::make_shared<Pass>(pass);
-}
+	void IncRenderer::draw(Scene& scene) {
+		auto& dirLights = scene.getDirLights();
+		auto& spotLights = scene.getSpotLights();
+		auto& pointLights = scene.getPointLights();
 
-void IncRenderer::addPostProcessPass(Pass&& pass) {
-	postProcess.emplace_back(std::make_shared<Pass>(pass));
+		for (size_t i = 0; i < preProcess.size(); i++) {
+			auto curPreProcess = preProcess[i];
+
+			curPreProcess->passScene(scene);
+		}
+
+		process->passScene(scene);
+
+		for (size_t i = 0; i < postProcess.size(); i++) {
+			auto curPostProcess = postProcess[i];
+
+			curPostProcess->passScene(scene);
+		}
+	}
+
+	void IncRenderer::addPreProcessPass(Pass&& pass) {
+		preProcess.emplace_back(std::make_shared<Pass>(pass));
+	}
+
+	void IncRenderer::addProcessPass(Pass&& pass) {
+		process = std::make_shared<Pass>(pass);
+	}
+
+	void IncRenderer::addPostProcessPass(Pass&& pass) {
+		postProcess.emplace_back(std::make_shared<Pass>(pass));
+	}
+
 }

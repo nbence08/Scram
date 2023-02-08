@@ -1,72 +1,76 @@
 #include "TextureCube.hpp"
 #include "TextureUnit.hpp"
 
-TextureCube::TextureCube(GLenum magFilter, GLenum minFilter,
-	GLenum wrapR, GLenum wrapS, GLenum wrapT) {
+namespace ScOpenGL {
 
-	type = GL_TEXTURE_CUBE_MAP;
+	TextureCube::TextureCube(GLenum magFilter, GLenum minFilter,
+		GLenum wrapR, GLenum wrapS, GLenum wrapT) {
 
-	//if type not in validTextureTypes, then reject
+		type = GL_TEXTURE_CUBE_MAP;
 
-	this->minFilter = minFilter;
-	this->magFilter = magFilter;
-	this->wrapR = wrapR;
-	this->wrapS = wrapS;
-	this->wrapT = wrapT;
+		//if type not in validTextureTypes, then reject
 
-	glGenTextures(1, &id);
+		this->minFilter = minFilter;
+		this->magFilter = magFilter;
+		this->wrapR = wrapR;
+		this->wrapS = wrapS;
+		this->wrapT = wrapT;
 
-	parametrized = false;
-}
+		glGenTextures(1, &id);
 
-TextureCube::~TextureCube() {
-	glDeleteTextures(1, &id);
-	if (!textureUnit.expired()) {
+		parametrized = false;
+	}
+
+	TextureCube::~TextureCube() {
+		glDeleteTextures(1, &id);
+		if (!textureUnit.expired()) {
+			auto texUSh = textureUnit.lock();
+			texUSh->unbindTexture();
+		}
+	}
+
+	bool TextureCube::isBoundToTextureUnit() {
+		if (!this->textureUnit.expired()) {
+			return textureUnit.lock()->doesBoundTextureMatch(this);
+		}
+		else return false;
+	}
+
+	int TextureCube::getTextureUnitNum() {
+		if (textureUnit.expired()) {
+			throw std::logic_error("No texture unit is set!");
+		}
 		auto texUSh = textureUnit.lock();
-		texUSh->unbindTexture();
+		return texUSh->getUnitNum();
 	}
-}
 
-bool TextureCube::isBoundToTextureUnit() {
-	if (!this->textureUnit.expired()) {
-		return textureUnit.lock()->doesBoundTextureMatch(this);
+	void TextureCube::setTextureUnit(std::shared_ptr<TextureUnit> texUnit) {
+		auto texUSh = textureUnit.lock();
+		if (texUSh.get() != nullptr) {
+			texUSh->unbindTexture();
+		}
+		textureUnit = texUnit;
 	}
-	else return false;
-}
 
-int TextureCube::getTextureUnitNum() {
-	if (textureUnit.expired()) {
-		throw std::logic_error("No texture unit is set!");
+	void TextureCube::bindToNewTextureUnit(std::shared_ptr<TextureCube> self) {
+		auto texUnit = TextureUnit::getNewInstance();
+		texUnit->bindTexture(self);
 	}
-	auto texUSh = textureUnit.lock();
-	return texUSh->getUnitNum();
-}
 
-void TextureCube::setTextureUnit(std::shared_ptr<TextureUnit> texUnit) {
-	auto texUSh = textureUnit.lock();
-	if (texUSh.get() != nullptr) {
-		texUSh->unbindTexture();
+	std::shared_ptr<ScOpenGL::TextureUnit> TextureCube::getTextureUnit() { return textureUnit.lock(); }
+
+	void TextureCube::unsetTextureUnit() {
+		textureUnit.reset();
 	}
-	textureUnit = texUnit;
+
+	void TextureCube::initialize() {
+		glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
+		glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
+		glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
+		glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+		glTexParameteri(type, GL_TEXTURE_WRAP_T, wrapT);
+	}
+
+	unsigned int TextureCube::getId() { return id; }
+
 }
-
-void TextureCube::bindToNewTextureUnit(std::shared_ptr<TextureCube> self) {
-	auto texUnit = TextureUnit::getNewInstance();
-	texUnit->bindTexture(self);
-}
-
-std::shared_ptr<TextureUnit> TextureCube::getTextureUnit() { return textureUnit.lock(); }
-
-void TextureCube::unsetTextureUnit() {
-	textureUnit.reset();
-}
-
-void TextureCube::initialize() {
-	glTexParameteri(type, GL_TEXTURE_MAG_FILTER, magFilter);
-	glTexParameteri(type, GL_TEXTURE_MIN_FILTER, minFilter);
-	glTexParameteri(type, GL_TEXTURE_WRAP_R, wrapR);
-	glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
-	glTexParameteri(type, GL_TEXTURE_WRAP_T, wrapT);
-}
-
-unsigned int TextureCube::getId() { return id; }

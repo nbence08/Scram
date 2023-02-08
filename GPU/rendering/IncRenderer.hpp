@@ -4,25 +4,29 @@
 #include <unordered_map>
 #include <memory>
 
-class Pass;
-class Scene;
+namespace ScRendering{
 
-//incremental renderer
-class IncRenderer {
+	class Pass;
+	class Scene;
 
-	std::vector<std::shared_ptr<Pass>> preProcess;
-	std::shared_ptr<Pass> process;
-	std::vector<std::shared_ptr<Pass>> postProcess;
+	//incremental renderer
+	class IncRenderer {
 
-	void addDefaultPasses();
-	void addPreProcessPass(Pass&& pass);
+		std::vector<std::shared_ptr<Pass>> preProcess;
+		std::shared_ptr<Pass> process;
+		std::vector<std::shared_ptr<Pass>> postProcess;
 
-	void addProcessPass(Pass&& pass);
+		void addDefaultPasses();
+		void addPreProcessPass(Pass&& pass);
 
-	void addPostProcessPass(Pass&& pass);
+		void addProcessPass(Pass&& pass);
 
-public:
-	IncRenderer(std::string defaultShaderName = "shaders/incremental");
-	void setCullFace(bool cullFace);
-	void draw(Scene& scene);
-};
+		void addPostProcessPass(Pass&& pass);
+
+	public:
+		IncRenderer(std::string defaultShaderName = "shaders/incremental");
+		void setCullFace(bool cullFace);
+		void draw(Scene& scene);
+	};
+
+}

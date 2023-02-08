@@ -3,35 +3,40 @@
 
 #include "GL/glew.h"
 
-class TextureUnit;
 
-/// <summary>
-/// class representing a cube texture in OpenGL
-/// </summary>
-class TextureCube {
-	unsigned int id;
-	std::weak_ptr<TextureUnit> textureUnit;
+namespace ScOpenGL {
+	class TextureUnit;
 
-	GLenum type;
-	GLenum minFilter, magFilter;
-	GLenum wrapS, wrapR, wrapT;
+	/// <summary>
+	/// class representing a cube texture in OpenGL
+	/// </summary>
+	class TextureCube {
+		unsigned int id;
+		std::weak_ptr<ScOpenGL::TextureUnit> textureUnit;
 
-	bool parametrized;
+		GLenum type;
+		GLenum minFilter, magFilter;
+		GLenum wrapS, wrapR, wrapT;
 
-	friend class TextureUnit;
-public:
+		bool parametrized;
 
-	TextureCube(GLenum magFilter = GL_NEAREST, GLenum minFilter = GL_NEAREST,
-		GLenum wrapR = GL_CLAMP_TO_EDGE, GLenum wrapS = GL_CLAMP_TO_EDGE, GLenum wrapT = GL_CLAMP_TO_EDGE);
+		friend class TextureUnit;
+	public:
 
-	int getTextureUnitNum();
-	void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);
-	static void bindToNewTextureUnit(std::shared_ptr<TextureCube> self);
-	std::shared_ptr<TextureUnit> getTextureUnit();
-	void unsetTextureUnit();
-	void initialize();
-	unsigned int getId();
 
-	~TextureCube();
-	bool isBoundToTextureUnit();
-};
+		TextureCube(GLenum magFilter = GL_NEAREST, GLenum minFilter = GL_NEAREST,
+			GLenum wrapR = GL_CLAMP_TO_EDGE, GLenum wrapS = GL_CLAMP_TO_EDGE, GLenum wrapT = GL_CLAMP_TO_EDGE);
+
+		int getTextureUnitNum();
+		void setTextureUnit(std::shared_ptr<TextureUnit> texUnit);
+		static void bindToNewTextureUnit(std::shared_ptr<TextureCube> self);
+		std::shared_ptr<ScOpenGL::TextureUnit> getTextureUnit();
+		void unsetTextureUnit();
+		void initialize();
+		unsigned int getId();
+
+		~TextureCube();
+		bool isBoundToTextureUnit();
+	};
+
+}

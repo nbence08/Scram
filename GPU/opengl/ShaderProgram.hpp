@@ -4,66 +4,69 @@
 #include <stdexcept>
 #include "UniformProvider.hpp"
 
-static unsigned int programInUse = 0;
+namespace ScOpenGL {
 
 /// <summary>
 /// Class representing an OpenGL shader program
 /// One has to link the program manually in order to be able to use it
 /// </summary>
-class ShaderProgram {
+	static unsigned int programInUse = 0;
+	class ShaderProgram {
+
 	
-	unsigned id;
-	void checkShaderErorrs(unsigned int id);
-	UniformProvider up;
+		unsigned id;
+		void checkShaderErorrs(unsigned int id);
+		ScOpenGL::UniformProvider up;
 
-	void addShader(const char** source, GLenum shaderType);
-public:
-	ShaderProgram();
-	~ShaderProgram();
+		void addShader(const char** source, GLenum shaderType);
+	public:
+		ShaderProgram();
+		~ShaderProgram();
 
-	ShaderProgram(const ShaderProgram&) = delete;
+		ShaderProgram(const ShaderProgram&) = delete;
 
-	ShaderProgram& operator=(const ShaderProgram&) = delete;
+		ShaderProgram& operator=(const ShaderProgram&) = delete;
 
-	ShaderProgram(ShaderProgram&& other) noexcept;
+		ShaderProgram(ShaderProgram&& other) noexcept;
 
-	ShaderProgram& operator=(ShaderProgram&& other) noexcept;
+		ShaderProgram& operator=(ShaderProgram&& other) noexcept;
 
 
-	void addFragment(const char** source);
+		void addFragment(const char** source);
 
-	void addVertex(const char** source);
+		void addVertex(const char** source);
 
-	void addGeometry(const char** source);
+		void addGeometry(const char** source);
 
-	void linkProgram();
+		void linkProgram();
 
-	void use();
+		void use();
 
-	unsigned int getId() const;
+		unsigned int getId() const;
 
-	/// <summary>
-	/// Variadic function which invokes the proper overload
-	/// of setUniform of the class' UniformProvider object
-	/// </summary>
-	/// <typeparam name="...T"></typeparam>
-	/// <param name="name">name of the uniform</param>
-	/// <param name="...t">params to be set</param>
-	template <typename... T>
-	void inline setUniform(std::string name, T... t) {
-		up.setUniform(name, t...);
-	}
+		/// <summary>
+		/// Variadic function which invokes the proper overload
+		/// of setUniform of the class' UniformProvider object
+		/// </summary>
+		/// <typeparam name="...T"></typeparam>
+		/// <param name="name">name of the uniform</param>
+		/// <param name="...t">params to be set</param>
+		template <typename... T>
+		void inline setUniform(std::string name, T... t) {
+			up.setUniform(name, t...);
+		}
 
-	/// <summary>
-	/// Variadic function which invokes the proper overload
-	/// of setUniform of the class' UniformProvider object	/// </summary>
-	/// <typeparam name="...T"></typeparam>
-	/// <param name="...t"></param>
-	template <typename... T>
-	void inline setUniform(T... t) {
-		up.setUniform(t...);
-	}
+		/// <summary>
+		/// Variadic function which invokes the proper overload
+		/// of setUniform of the class' UniformProvider object	/// </summary>
+		/// <typeparam name="...T"></typeparam>
+		/// <param name="...t"></param>
+		template <typename... T>
+		void inline setUniform(T... t) {
+			up.setUniform(t...);
+		}
 
-	UniformProvider& getUniformProvider() { return up; }
-};
+		ScOpenGL::UniformProvider& getUniformProvider() { return up; }
+	};
 
+}
