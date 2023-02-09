@@ -378,3 +378,14 @@ bin/
 # temporary files
 **.bak
 include/*.hpp
+
+# vscode files
+.vscode
+.vscode/**
+
+# mac files
+.DS_Store
+**Makefile
+**/Makefile
+*/**/Makefile
+**.a

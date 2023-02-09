@@ -16,7 +16,7 @@ namespace ScIO {
 
 		data.pixels = stbi_load(path.c_str(), &data.width, &data.height, &data.internalFormat, 0);
 		if (!data.pixels) {
-			throw std::exception("Could not load image.");
+			throw std::runtime_error("Could not load image.");
 		}
 		if (data.internalFormat == 3) {
 			data.internalFormat = GL_RGB;
@@ -250,14 +250,14 @@ namespace ScIO {
 		}
 		else {
 			std::string message = "Could not load file:" + path;
-			throw std::exception(message.c_str());
+			throw std::runtime_error(message.c_str());
 		}
 
 		//more postprocess flags: https://documentation.help/assimp/postprocess_8h.html#a64795260b95f5a4b3f3dc1be4f52e410
 		const aiScene* scenePtr = importer.ReadFile(path, aiProcess_ValidateDataStructure);
 		if (!scenePtr) {
 			std::string message = "Scene could not load for file: " + path;
-			throw std::exception(message.c_str());
+			throw std::runtime_error(message.c_str());
 		}
 
 		auto& scene = *scenePtr;

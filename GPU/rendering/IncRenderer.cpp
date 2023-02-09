@@ -4,7 +4,7 @@
 
 namespace ScRendering {
 
-	IncRenderer::IncRenderer(std::string defaultShaderPath) {
+	IncRenderer::IncRenderer(std::string defaultShaderPath)	{
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);

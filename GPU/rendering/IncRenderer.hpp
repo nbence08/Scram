@@ -1,12 +1,13 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
 #include <memory>
+#include <vector>
+#include <string>
+
+#include "Pass.hpp"
 
 namespace ScRendering{
 
-	class Pass;
 	class Scene;
 
 	//incremental renderer

@@ -73,7 +73,7 @@ namespace ScOpenGL {
 
 		std::cout << sSource << sType << "Id:" << id << '\n' << sSeverity << message << '\n' << std::endl;
 		if (severity == GL_DEBUG_SEVERITY_HIGH) {
-			throw std::exception(message);
+			throw std::runtime_error(message);
 		}
 	}
 

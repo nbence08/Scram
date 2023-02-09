@@ -1,5 +1,7 @@
 #include "Vector2.hpp"
 
+#include <cmath>
+
 namespace Smath {
 	Vector2 Vector2::operator-() const {
 		return Vector2(-x, -y);

@@ -1,10 +1,21 @@
 #pragma once
 #include <functional>
+
 #include "ShaderProgram.hpp"
 #include "Framebuffer.hpp"
 #include "Logger.hpp"
 #include "Scene.hpp"
 #include "io.hpp"
+
+namespace ScOpenGL{
+	class Texture2D;
+	class TextureCube;
+}
+
+namespace SComponent{
+	class Mesh;
+	class Entity;
+}
 
 namespace ScRendering {
 	enum class PassType {

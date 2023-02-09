@@ -3,7 +3,7 @@
 #include <variant>
 
 #include "ComponentBase.hpp"
-#include "vector3.hpp"
+#include "Vector3.hpp"
 #include "Texture2D.hpp"
 #include "Preprocess_Definitions.hpp"
 

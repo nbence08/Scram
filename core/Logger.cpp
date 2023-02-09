@@ -1,12 +1,17 @@
 #include "Logger.hpp"
 
+#include <time.h>
+
 namespace ScLogger {
 	void Logger::message(std::string message) {
+		
+		using tm = struct tm;
+
 		auto nowPoint = std::chrono::system_clock::now();
 		time_t now = std::chrono::system_clock::to_time_t(nowPoint);
 		char buffer[50];
 		tm time;
-		localtime_s(&time, &now);
+		localtime_r(&now, &time);
 		std::cout << std::put_time(&time, "%F %T ");
 		std::cout << message << '\n';
 	}

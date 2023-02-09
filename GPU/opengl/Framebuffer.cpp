@@ -309,7 +309,7 @@ namespace ScOpenGL {
 		auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
 			std::cout << "framebuffer not complete" << std::endl;
-			throw std::exception("Framebuffer not complete!");
+			throw std::runtime_error("Framebuffer not complete!");
 		}
 
 		boundFramebuffer = this->id;
