@@ -54,5 +54,4 @@ target_include_directories(${CURRENT_TARGET}
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE core GPU)
 
-# copyHeadersToInclude(${COMPONENT_SOURCES})
 groupSources()

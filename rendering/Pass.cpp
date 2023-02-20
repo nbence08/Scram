@@ -23,8 +23,8 @@ namespace ScRendering {
 		onDestroy = []() {};
 	}
 
-	Pass::Pass(std::string& shaderName, std::shared_ptr<ScOpenGL::Framebuffer> fbo) :Pass() {
-		makeShaderProgram(shaderName);
+	Pass::Pass(const ShaderSources& sources, std::shared_ptr<ScOpenGL::Framebuffer> fbo) :Pass() {
+		makeShaderProgram(sources);
 		this->fbo = fbo;
 	}
 
@@ -32,10 +32,10 @@ namespace ScRendering {
 		onDestroy();
 	}
 
-	void Pass::makeShaderProgram(std::string& shaderName) {
+	void Pass::makeShaderProgram(const ShaderSources& sources) {
 		this->program = std::make_shared<ScOpenGL::ShaderProgram>();
-		std::string frag = ScIO::readFile(global::shaderNamePrefix + shaderName + ".frag");
-		std::string vert = ScIO::readFile(global::shaderNamePrefix + shaderName + ".vert");
+		const std::string& frag = sources.fragment;
+		const std::string& vert = sources.vertex;
 
 		const char* fragPtr = frag.data();
 		const char* vertPtr = vert.data();
@@ -43,10 +43,11 @@ namespace ScRendering {
 		program->addVertex(&vertPtr);
 		program->addFragment(&fragPtr);
 
+		const std::string& geom = sources.geometry;
+		if (sources.geometry.size() != 0) {
+		}
 
-		std::string geom = ScIO::readFile(global::shaderNamePrefix + shaderName + ".geom");
-
-		if (geom.size() > 0) {
+		if (!geom.empty()) {
 			const char* geomPtr = geom.data();
 
 			program->addGeometry(&geomPtr);

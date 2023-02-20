@@ -1,6 +1,17 @@
 #include "PassBuilder.hpp"
+#include "Material.hpp"
+#include "IO.hpp"
 
 namespace ScRendering {
+	ShaderSources PassBuilder::readShaders(std::string& name)
+	{
+		return ShaderSources{
+			ScIO::readFile(global::shaderNamePrefix + name + ".vert"),
+			ScIO::readFile(global::shaderNamePrefix + name + ".frag"),
+			ScIO::readFile(global::shaderNamePrefix + name + ".geom"),
+			ScIO::readFile(global::shaderNamePrefix + name + ".comp")
+		};
+	}
 
 	std::shared_ptr<Pass> PassBuilder::buildDirShadowPass() {
 		ScOpenGL::FboCreateInfo createInfo;
@@ -13,7 +24,7 @@ namespace ScRendering {
 
 		std::string shaderName = "dirShadow";
 
-		auto pass = std::make_shared<Pass>(shaderName, createInfo);
+		auto pass = std::make_shared<Pass>(readShaders(shaderName), createInfo);
 
 		pass->prepareEntity = [program = pass->getProgram().get()](SComponent::Entity& entity) {
 			program->setUniform("model", entity.model());
@@ -66,8 +77,9 @@ namespace ScRendering {
 
 		std::shared_ptr<Pass> pass;
 		if (defaultFbo) {
+			
 			auto defaultFbo = std::make_shared<ScOpenGL::Framebuffer>(ScOpenGL::Framebuffer::getDefault());
-			pass = std::make_shared<Pass>(shaderName, defaultFbo);
+			pass = std::make_shared<Pass>(readShaders(shaderName), defaultFbo);
 		}
 		else {
 			ScOpenGL::FboCreateInfo createInfo;
@@ -77,7 +89,7 @@ namespace ScRendering {
 			createInfo.depthBuffer = false;
 			createInfo.height = global::screenHeight;
 			createInfo.width = global::screenWidth;
-			pass = std::make_shared<Pass>(shaderName, createInfo);
+			pass = std::make_shared<Pass>(readShaders(shaderName), createInfo);
 		}
 
 		pass->prepareScene = [pass = pass.get(), program = pass->getProgram()](Scene& scene) {
@@ -134,7 +146,7 @@ namespace ScRendering {
 
 		std::string shaderName = "pointShadow";
 
-		auto pass = std::make_shared<Pass>(shaderName, createInfo);
+		auto pass = std::make_shared<Pass>(readShaders(shaderName), createInfo);
 
 		pass->prepareEntity = [program = pass->getProgram().get()](SComponent::Entity& entity) {
 			program->setUniform("model", entity.model());

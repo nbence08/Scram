@@ -33,5 +33,4 @@ target_include_directories(${CURRENT_TARGET}
 	${PRIMARY_INCLUDE_DIR}
 )
 
-# copyHeadersToInclude(${CORE_SOURCES})
 groupSources()

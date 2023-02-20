@@ -1,3 +1,6 @@
+set(CURRENT_TARGET rendering)
+add_library(${CURRENT_TARGET})
+
 set(RENDERING_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
 	
@@ -26,6 +29,10 @@ target_sources(${CURRENT_TARGET}
 target_include_directories(${CURRENT_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
- )
+)
 
-# copyHeadersToInclude(${RENDERING_SOURCES})
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib)
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib/Debug)
+target_link_libraries(${CURRENT_TARGET} PRIVATE core components GPU IO)
+
+groupSources()

@@ -44,5 +44,3 @@ target_include_directories(${CURRENT_TARGET}
 )
 
 add_subdirectory(shaders)
-
-# copyHeadersToInclude(${OPENGL_SOURCES})

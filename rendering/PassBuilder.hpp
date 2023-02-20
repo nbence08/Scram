@@ -8,6 +8,8 @@
 namespace ScRendering {
 
 	class PassBuilder {
+	private:
+		static ShaderSources readShaders(std::string& name);
 	public:
 		static std::shared_ptr<Pass> buildDirShadowPass();
 		static std::shared_ptr<Pass> buildPointShadowPass();

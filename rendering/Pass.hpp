@@ -5,7 +5,6 @@
 #include "Framebuffer.hpp"
 #include "Logger.hpp"
 #include "Scene.hpp"
-#include "io.hpp"
 
 namespace ScOpenGL{
 	class Texture2D;
@@ -16,6 +15,13 @@ namespace SComponent{
 	class Mesh;
 	class Entity;
 }
+
+struct ShaderSources {
+	std::string vertex;
+	std::string fragment;
+	std::string geometry;
+	std::string compute;
+};
 
 namespace ScRendering {
 	enum class PassType {
@@ -75,13 +81,13 @@ namespace ScRendering {
 		/// </summary>
 		/// <param name="shaderName">std::string&</param>
 		/// <param name="fboInfo">FboCreateInfo&</param>
-		inline Pass(std::string& shaderName, ScOpenGL::FboCreateInfo& fboInfo) :Pass() {
-			makeShaderProgram(shaderName);
+		inline Pass(const ShaderSources& sources, ScOpenGL::FboCreateInfo& fboInfo) :Pass() {
+			makeShaderProgram(sources);
 			makeFramebuffer(fboInfo);
 		}
 
 
-		Pass(std::string& shaderName, std::shared_ptr<ScOpenGL::Framebuffer> fbo);
+		Pass(const ShaderSources& sources, std::shared_ptr<ScOpenGL::Framebuffer> fbo);
 
 		~Pass();
 
@@ -91,7 +97,7 @@ namespace ScRendering {
 		/// least a vertex and a fragment shader to succeed.
 		/// </summary>
 		/// <param name="shaderName">Name of the shaders to be used to create the program.</param>
-		void makeShaderProgram(std::string& shaderName);
+		void makeShaderProgram(const ShaderSources& sources);
 
 		/// <summary>
 		/// Creates a framebuffer for the pass.

@@ -1,8 +1,8 @@
 set(CURRENT_TARGET GPU)
 add_library(${CURRENT_TARGET})
 
+add_subdirectory(interfaces)
 add_subdirectory(opengl)
-add_subdirectory(rendering)
 
 target_include_directories(${CURRENT_TARGET}
 	PRIVATE
@@ -10,6 +10,6 @@ target_include_directories(${CURRENT_TARGET}
 	${PRIMARY_INCLUDE_DIR}
 )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE glew32 OpenGL32 core IO components)
+target_link_libraries(${CURRENT_TARGET} PRIVATE glew32 OpenGL32 core components)
 
 groupSources()
