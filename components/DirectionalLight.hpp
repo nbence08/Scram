@@ -10,12 +10,12 @@ namespace SComponent {
 	class DirectionalLight : public ComponentBase {
 	public:
 
-		Smath::Vector3 intensity;
+		ScMath::Vector3 intensity;
 		//direction of fragments to light source
-		Smath::Vector3 direction;
+		ScMath::Vector3 direction;
 		std::shared_ptr<ScOpenGL::Texture2D> shadowMap;
 
-		Smath::Matrix4 getLightSpaceMatrix() const;
+		ScMath::Matrix4 getLightSpaceMatrix() const;
 
 		DirectionalLight();
 

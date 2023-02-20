@@ -9,9 +9,9 @@
 
 namespace SComponent {
 	struct Vertex {
-		Smath::Vector3 position;
-		Smath::Vector3 normal;
-		Smath::Vector2 texCoord;
+		ScMath::Vector3 position;
+		ScMath::Vector3 normal;
+		ScMath::Vector2 texCoord;
 	};
 
 	static uint64_t topMeshId = 0;

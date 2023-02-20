@@ -34,5 +34,5 @@ target_include_directories(${CURRENT_TARGET}
 	${CMAKE_CURRENT_LIST_DIR}
  )
 
-copyHeadersToInclude(${MAIN_SOURCES})
+# copyHeadersToInclude(${MAIN_SOURCES})
 groupSources()

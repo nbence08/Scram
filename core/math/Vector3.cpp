@@ -1,6 +1,6 @@
 #include "Vector3.hpp"
 
-namespace Smath {
+namespace ScMath {
 	Vector3 Vector3::operator-() const {
 		return Vector3(-x, -y, -z);
 	}

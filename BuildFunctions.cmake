@@ -24,6 +24,12 @@ function(groupSources)
 		"${SCRAM_SRC_ROOT}/*.frag"
 		"${SCRAM_SRC_ROOT}/*.vert"
 		"${SCRAM_SRC_ROOT}/*.geom"
+		"${SCRAM_SRC_ROOT}/*.tess"
+
+		"${SCRAM_SRC_ROOT}/*.metal"
+
+		"${SCRAM_SRC_ROOT}/*.psh"
+		"${SCRAM_SRC_ROOT}/*.vsh"
 		"${SCRAM_SRC_ROOT}/*/CMakeLists.txt"
 	)
 

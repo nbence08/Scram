@@ -5,7 +5,9 @@ set(RENDERING_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/Pass.cpp
 	${CMAKE_CURRENT_LIST_DIR}/PassBuilder.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Scene.cpp
+)
 
+set(RENDERING_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/IncRenderer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Pass.hpp
 	${CMAKE_CURRENT_LIST_DIR}/PassBuilder.hpp
@@ -13,13 +15,17 @@ set(RENDERING_SOURCES
 )
 
 target_sources(${CURRENT_TARGET}
+	PUBLIC
+	${RENDERING_HEADERS})
+
+target_sources(${CURRENT_TARGET}
 	PRIVATE
 	${RENDERING_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	PRIVATE
+	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
  )
 
-copyHeadersToInclude(${RENDERING_SOURCES})
+# copyHeadersToInclude(${RENDERING_SOURCES})

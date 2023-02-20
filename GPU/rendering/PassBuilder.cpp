@@ -110,7 +110,7 @@ namespace ScRendering {
 			auto& camera = scene.getCamera();
 			program->setUniform("view", camera.view());
 			program->setUniform("projection", camera.projection());
-			program->setUniform("cameraPos", Smath::Vector3(camera.getPosition()));
+			program->setUniform("cameraPos", ScMath::Vector3(camera.getPosition()));
 		};
 
 		pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](SComponent::Entity& entity) {

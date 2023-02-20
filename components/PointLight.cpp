@@ -26,20 +26,20 @@ namespace SComponent {
 		texUnit->unbind();
 	}
 
-	std::vector<Smath::Matrix4> PointLight::getLightSpaceMatrices() const {
+	std::vector<ScMath::Matrix4> PointLight::getLightSpaceMatrices() const {
 		auto proj = math::perspective(90.0, 1.0, 1.0, farPlane);
-		auto rightward = math::getLookAt(Smath::Vector3(1.0, 0.0, 0.0), Smath::Vector3(0.0, -1.0, 0.0), position);
-		auto leftward = math::getLookAt(Smath::Vector3(-1.0, 0.0, 0.0), Smath::Vector3(0.0, -1.0, 0.0), position);
+		auto rightward = math::getLookAt(ScMath::Vector3(1.0, 0.0, 0.0), ScMath::Vector3(0.0, -1.0, 0.0), position);
+		auto leftward = math::getLookAt(ScMath::Vector3(-1.0, 0.0, 0.0), ScMath::Vector3(0.0, -1.0, 0.0), position);
 
-		auto upward = math::getLookAt(Smath::Vector3(0.0, 1.0, 0.0), Smath::Vector3(0.0, 0.0, 1.0), position);
-		auto downward = math::getLookAt(Smath::Vector3(0.0, -1.0, 0.0), Smath::Vector3(0.0, 0.0, -1.0), position);
+		auto upward = math::getLookAt(ScMath::Vector3(0.0, 1.0, 0.0), ScMath::Vector3(0.0, 0.0, 1.0), position);
+		auto downward = math::getLookAt(ScMath::Vector3(0.0, -1.0, 0.0), ScMath::Vector3(0.0, 0.0, -1.0), position);
 
-		auto backward = math::getLookAt(Smath::Vector3(0.0, 0.0, 1.0), Smath::Vector3(0.0, -1.0, 0.0), position);
-		auto forward = math::getLookAt(Smath::Vector3(0.0, 0.0, -1.0), Smath::Vector3(0.0, -1.0, 0.0), position);
+		auto backward = math::getLookAt(ScMath::Vector3(0.0, 0.0, 1.0), ScMath::Vector3(0.0, -1.0, 0.0), position);
+		auto forward = math::getLookAt(ScMath::Vector3(0.0, 0.0, -1.0), ScMath::Vector3(0.0, -1.0, 0.0), position);
 
 		std::shared_ptr<ScOpenGL::TextureCube> shadowMap;
 
-		std::vector<Smath::Matrix4> matrices;
+		std::vector<ScMath::Matrix4> matrices;
 
 		matrices.reserve(6);
 

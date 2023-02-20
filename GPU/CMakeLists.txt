@@ -10,4 +10,6 @@ target_include_directories(${CURRENT_TARGET}
 	${PRIMARY_INCLUDE_DIR}
 )
 
+target_link_libraries(${CURRENT_TARGET} PRIVATE glew32 OpenGL32 core IO components)
+
 groupSources()

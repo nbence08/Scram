@@ -50,9 +50,9 @@ namespace ScIO {
 			const aiVector3D aiNormal = aiNormals[i];
 			const aiVector3D aiTexCoord = aiTexCoords[i];
 
-			vertices[i].position = Smath::Vector3(aiVertex.x, aiVertex.y, aiVertex.z);
-			vertices[i].normal = Smath::Vector3(aiNormal.x, aiNormal.y, aiNormal.z);
-			vertices[i].texCoord = Smath::Vector2(aiTexCoord.x, aiTexCoord.y);
+			vertices[i].position = ScMath::Vector3(aiVertex.x, aiVertex.y, aiVertex.z);
+			vertices[i].normal = ScMath::Vector3(aiNormal.x, aiNormal.y, aiNormal.z);
+			vertices[i].texCoord = ScMath::Vector2(aiTexCoord.x, aiTexCoord.y);
 		}
 
 		mesh.bufferVertices();
@@ -161,7 +161,7 @@ namespace ScIO {
 				if (baseColorLoadRes == aiReturn_FAILURE) {
 					throw std::runtime_error("Material has neither albedo texture, nor color!");
 				}
-				ctMat.albedo = Smath::Vector3(baseColor.r, baseColor.g, baseColor.b);
+				ctMat.albedo = ScMath::Vector3(baseColor.r, baseColor.g, baseColor.b);
 			}
 
 			const auto hasMetalness = aiMaterial->Get(AI_MATKEY_METALLIC_FACTOR, metalness);

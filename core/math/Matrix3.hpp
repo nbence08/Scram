@@ -2,7 +2,7 @@
 #include "Vector3.hpp"
 #include "Preprocess_Definitions.hpp"
 
-namespace Smath {
+namespace ScMath {
 	//type traits could be introduced to check whether type is a number
 	class Matrix3 {
 		//column vectors

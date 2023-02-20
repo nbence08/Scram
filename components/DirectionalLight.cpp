@@ -6,18 +6,18 @@
 #include "TextureUnit.hpp"
 
 namespace SComponent {
-	Smath::Matrix4 DirectionalLight::getLightSpaceMatrix() const {
+	ScMath::Matrix4 DirectionalLight::getLightSpaceMatrix() const {
 
 		auto normDir = direction.normalized();
-		Smath::Vector3 up;
+		ScMath::Vector3 up;
 		if (normDir.x == 0 && normDir.y == 1 && normDir.z == 0) {
-			up = Smath::Vector3(0, 0, 1);
+			up = ScMath::Vector3(0, 0, 1);
 		}
 		else if (normDir.x == 0 && normDir.y == -1 && normDir.z == 0) {
-			up = Smath::Vector3(0, 0, -1);
+			up = ScMath::Vector3(0, 0, -1);
 		}
 		else {
-			up = Smath::Vector3(0, 1, 0);
+			up = ScMath::Vector3(0, 1, 0);
 		}
 
 		auto right = cross(-up, -normDir);
@@ -26,9 +26,9 @@ namespace SComponent {
 		float edgeRight = (float)global::shadowProjEdgeSize / 1.5f;
 		float edgeTop = (float)global::shadowProjEdgeSize / 1.5f;
 
-		Smath::Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
+		ScMath::Matrix4 mat4_1 = math::orthographic(-edgeRight, edgeRight, edgeTop, -edgeTop, 1.0, 500);
 		//ideally position for the getLookAt would be ahead of the position of the camera, in its direction
-		Smath::Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize);
+		ScMath::Matrix4 mat4_2 = math::getLookAt(-normDir, trueUp, normDir * global::shadowProjEdgeSize);
 
 		return mat4_1 * mat4_2;
 	}

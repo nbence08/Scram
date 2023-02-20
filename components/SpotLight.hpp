@@ -6,10 +6,10 @@ namespace SComponent {
 	class SpotLight : public ComponentBase {
 	public:
 
-		Smath::Vector3 intensity;
-		Smath::Vector3 attenuation;
-		Smath::Vector3 position;
-		Smath::Vector3 direction;
+		ScMath::Vector3 intensity;
+		ScMath::Vector3 attenuation;
+		ScMath::Vector3 position;
+		ScMath::Vector3 direction;
 
 		float dimAngle;
 		float angle;

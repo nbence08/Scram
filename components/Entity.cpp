@@ -18,7 +18,7 @@ namespace SComponent {
 		return children;
 	}
 
-	Smath::Matrix4 Entity::model() {
+	ScMath::Matrix4 Entity::model() {
 		if (hasComponent<Transform>()) {
 			if (parent != nullptr) {
 				return parent->model() * getComponent<Transform>().model();
@@ -28,7 +28,7 @@ namespace SComponent {
 			}
 		}
 		else {
-			return Smath::Matrix4();
+			return ScMath::Matrix4();
 		}
 	}
 }

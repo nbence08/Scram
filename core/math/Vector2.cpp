@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace Smath {
+namespace ScMath {
 	Vector2 Vector2::operator-() const {
 		return Vector2(-x, -y);
 	}

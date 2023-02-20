@@ -85,7 +85,7 @@ namespace ScOpenGL {
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
 	/// <param name="value">Vector3 value set as uniform</param>
-	void UniformProvider::setUniform(std::string name, const Smath::Vector3& value) {
+	void UniformProvider::setUniform(std::string name, const ScMath::Vector3& value) {
 		unsigned int location = getUniformLocation(name);
 		if (GL_REAL == GL_FLOAT) {
 			glUniform3f(location, value.x, value.y, value.z);
@@ -102,7 +102,7 @@ namespace ScOpenGL {
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
 	/// <param name="value">Vector4 value set as uniform</param>
-	void UniformProvider::setUniform(std::string name, const Smath::Vector4& value) {
+	void UniformProvider::setUniform(std::string name, const ScMath::Vector4& value) {
 		unsigned int location = getUniformLocation(name);
 		if (GL_REAL == GL_FLOAT) {
 			glUniform4f(location, value.x, value.y, value.z, value.w);
@@ -119,7 +119,7 @@ namespace ScOpenGL {
 	/// </summary>
 	/// <param name="name">Name of the uniform variable in the shader</param>
 	/// <param name="value">Matrix4 value set as uniform</param>
-	void UniformProvider::setUniform(std::string name, const Smath::Matrix4& value) {
+	void UniformProvider::setUniform(std::string name, const ScMath::Matrix4& value) {
 		unsigned int location = getUniformLocation(name);
 
 		if (GL_REAL == GL_FLOAT) {
@@ -227,7 +227,7 @@ namespace ScOpenGL {
 		bool albedo_is_texture;
 		if (material.albedo.index() == 0) { //Vector3
 
-			Smath::Vector3 albedo = std::get<Smath::Vector3>(material.albedo);
+			ScMath::Vector3 albedo = std::get<ScMath::Vector3>(material.albedo);
 			albedo_is_texture = false;
 
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
@@ -239,14 +239,14 @@ namespace ScOpenGL {
 			auto textureUnit = albedo.getTextureUnitNum();
 			if (textureUnit == -1) {
 				//TODO: automatic texture unit creation could be implemented in the future
-				Smath::Vector3 albedo(1.0, 0.0, 1.0);
+				ScMath::Vector3 albedo(1.0, 0.0, 1.0);
 				albedo_is_texture = false;
 
 				setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", 0);
 				setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", albedo);
 			}
 			albedo_is_texture = true;
-			setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", Smath::Vector3(0.0, 0.0, 0.0));
+			setUniform(arrayName + "[" + std::to_string(index) + "].albedoVec", ScMath::Vector3(0.0, 0.0, 0.0));
 			setUniform(arrayName + "[" + std::to_string(index) + "].albedoTexture", textureUnit);
 		}
 

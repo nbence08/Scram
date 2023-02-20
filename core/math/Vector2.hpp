@@ -2,7 +2,7 @@
 #include "Preprocess_Definitions.hpp"
 #include <stdexcept>
 
-namespace Smath {
+namespace ScMath {
 	class Vector2 {
 	public:
 		real_t x, y;

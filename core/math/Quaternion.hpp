@@ -2,7 +2,7 @@
 #include "Matrix3.hpp"
 #include "Vector3.hpp"
 
-namespace Smath {
+namespace ScMath {
 	class Quaternion {
 
 		double r, i, j, k;
@@ -38,12 +38,12 @@ namespace Smath {
 #pragma warning (push)
 #pragma warning(disable : 4244)
 		//rotation matrix, to be rotated vector should be multiplied from left with this matrix
-		Smath::Matrix3 getRotationMatrix() {
+		ScMath::Matrix3 getRotationMatrix() {
 			double iSq = i * i, jSq = j * j, kSq = k * k;
 			double s = 2.0f / (r * r + iSq + jSq + kSq);
 			double ij = i * j, kr = k * r, ik = i * k, jr = j * r, jk = j * k, ir = i * r;
 
-			return Smath::Matrix3(1.0 - s * (jSq + kSq), s * (ij - kr), s * (ik + jr),
+			return ScMath::Matrix3(1.0 - s * (jSq + kSq), s * (ij - kr), s * (ik + jr),
 				s * (ij + kr), 1.0 - s * (iSq + kSq), s * (jk - ir),
 				s * (ik - jr), s * (jk + ir), 1.0 - s * (iSq + jSq));
 		}
@@ -57,7 +57,7 @@ namespace Smath {
 			return Quaternion(cosCoeff, sinCoeff * axisX / norm2, sinCoeff * axisY / norm2, sinCoeff * axisZ / norm2);
 		}
 
-		static Quaternion rotation(double arc, Smath::Vector3 axis) {
+		static Quaternion rotation(double arc, ScMath::Vector3 axis) {
 			return rotation(arc, (double)axis.x, (double)axis.y, (double)axis.z);
 		}
 	};

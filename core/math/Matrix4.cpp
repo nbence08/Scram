@@ -1,6 +1,6 @@
 #include "Matrix4.hpp"
 
-namespace Smath {
+namespace ScMath {
 
 	Matrix4::Matrix4(
 		real_t x1, real_t x2, real_t x3, real_t x4,

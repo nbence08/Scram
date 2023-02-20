@@ -1,6 +1,6 @@
 #include "Vector4.hpp"
 
-namespace Smath {
+namespace ScMath {
 	Vector4 Vector4::operator-() const {
 		return Vector4(-x, -y, -z, -w);
 	}

@@ -11,7 +11,14 @@ namespace ScLogger {
 		time_t now = std::chrono::system_clock::to_time_t(nowPoint);
 		char buffer[50];
 		tm time;
-		localtime_r(&now, &time);
+
+		#ifdef APPLE
+			localtime_r(&now, &time);
+		#endif
+		#ifdef WINDOWS
+			localtime_s(&time, &now);
+		#endif
+
 		std::cout << std::put_time(&time, "%F %T ");
 		std::cout << message << '\n';
 	}

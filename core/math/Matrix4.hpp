@@ -3,7 +3,7 @@
 #include "Preprocess_Definitions.hpp"
 #include "Matrix3.hpp"
 
-namespace Smath {
+namespace ScMath {
 
 	class Matrix4 {
 		//column vectors

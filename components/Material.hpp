@@ -18,8 +18,8 @@ namespace SComponent {
 			smoothness = 0.5;
 		}
 
-		std::variant<Smath::Vector3, std::shared_ptr<ScOpenGL::Texture2D>> albedo;
-		std::variant<Smath::Vector3, std::shared_ptr<ScOpenGL::Texture2D>> emission;
+		std::variant<ScMath::Vector3, std::shared_ptr<ScOpenGL::Texture2D>> albedo;
+		std::variant<ScMath::Vector3, std::shared_ptr<ScOpenGL::Texture2D>> emission;
 		real_t smoothness;
 		real_t metalness;
 

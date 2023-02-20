@@ -3,7 +3,7 @@
 #include "Preprocess_Definitions.hpp"
 #include "Vector3.hpp"
 
-namespace Smath {
+namespace ScMath {
 
 	class Vector3;
 

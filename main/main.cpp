@@ -37,22 +37,22 @@ int main() {
 	auto& entTransform = ent->getComponent<SComponent::Transform>();
 	auto& ent2Transform = ent2->getComponent<SComponent::Transform>();
 	
-	entTransform.setRotation(Smath::Vector3(PI / 2.0, 0.0, 0.0));
-	entTransform.setScale(Smath::Vector3(0.5, 0.5, 0.5));
-	ent2Transform.setTranslation(Smath::Vector3(0.0, 40.0f, 0.0));
+	entTransform.setRotation(ScMath::Vector3(PI / 2.0, 0.0, 0.0));
+	entTransform.setScale(ScMath::Vector3(0.5, 0.5, 0.5));
+	ent2Transform.setTranslation(ScMath::Vector3(0.0, 40.0f, 0.0));
 
 	ScRendering::Scene scene;
 	scene.getCamera().setFarPlane(2000.0f);
 
 	SComponent::DirectionalLight sun;
-	sun.direction = Smath::Vector3(1.0f, 1.0f, 1.0f);
-	sun.intensity = Smath::Vector3(10.0f, 10.0f, 9.0f);
+	sun.direction = ScMath::Vector3(1.0f, 1.0f, 1.0f);
+	sun.intensity = ScMath::Vector3(10.0f, 10.0f, 9.0f);
 	scene.getDirLights().push_back(sun);
 
 	SComponent::PointLight intense;
-	intense.attenuation = Smath::Vector3(0.0, 0.0, 0.2);
-	intense.intensity = Smath::Vector3(1.0, 100.0, 1.0);
-	intense.position = Smath::Vector3(0.0, -30.0, -78.0);
+	intense.attenuation = ScMath::Vector3(0.0, 0.0, 0.2);
+	intense.intensity = ScMath::Vector3(1.0, 100.0, 1.0);
+	intense.position = ScMath::Vector3(0.0, -30.0, -78.0);
 	scene.getPointLights().push_back(intense);
 
 	ScRendering::IncRenderer renderer;

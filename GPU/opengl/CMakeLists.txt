@@ -12,7 +12,9 @@ set(OPENGL_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/UniformProvider.cpp
 	${CMAKE_CURRENT_LIST_DIR}/VertexArray.cpp
 	${CMAKE_CURRENT_LIST_DIR}/VertexAttribManager.cpp
-	
+)
+
+set(OPENGL_HEADERS
 	${CMAKE_CURRENT_LIST_DIR}/Buffer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/Framebuffer.hpp
 	${CMAKE_CURRENT_LIST_DIR}/OpenGLContext.hpp
@@ -27,15 +29,20 @@ set(OPENGL_SOURCES
 )
 
 target_sources(${CURRENT_TARGET}
+	PUBLIC
+	${OPENGL_HEADERS}
+)
+
+target_sources(${CURRENT_TARGET}
 	PRIVATE
 	${OPENGL_SOURCES}
 )
 
 target_include_directories(${CURRENT_TARGET}
-	PRIVATE
+	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
 )
 
 add_subdirectory(shaders)
 
-copyHeadersToInclude(${OPENGL_SOURCES})
+# copyHeadersToInclude(${OPENGL_SOURCES})

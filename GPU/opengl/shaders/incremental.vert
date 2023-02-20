@@ -27,7 +27,7 @@ uniform mat4 projection;
 void main(){
 	fragPos = (model * vec4(vPos, 1.0)).xyz;
 	gl_Position = projection*view*vec4(fragPos, 1.0);
-	fNormal = transpose(inverse(mat3(model)))*vNormal;
+	fNormal = vNormal*inverse(mat3(model));
 	fTex = vTex;
 
 	for(int i = 0; i < dirLightsLen; i++){

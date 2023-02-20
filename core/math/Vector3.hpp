@@ -4,7 +4,7 @@
 #include "Preprocess_Definitions.hpp"
 #include "Vector4.hpp"
 
-namespace Smath {
+namespace ScMath {
 	class Vector4;
 
 	class Vector3 {

@@ -86,7 +86,7 @@ namespace SComponent {
 
 		std::vector<std::shared_ptr<Entity>>& getChildren();
 
-		Smath::Matrix4 model();
+		ScMath::Matrix4 model();
 	};
 }
 
