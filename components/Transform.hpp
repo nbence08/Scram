@@ -3,8 +3,10 @@
 #include "Quaternion.hpp"
 #include "ComponentBase.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
-	class Transform : public ComponentBase {
+	class COMPONENTS_EXPORT Transform : public ComponentBase {
 		//rotation around x, y, z axes
 		ScMath::Vector3 translation;
 		ScMath::Vector3 rotation;

@@ -193,18 +193,7 @@ namespace ScOpenGL {
 		setAttachment(GL_COLOR_ATTACHMENT0, this->colorBuffer);
 	}
 
-	template <typename T>
-	void Framebuffer::setDepthBuffer(std::shared_ptr<T> depthBuffer) {
 
-		if (depthBufferEquals(depthBuffer)) return;
-
-		this->depthBuffer = depthBuffer;
-		this->hasDepthBuffer = true;
-
-		setAttachment(GL_DEPTH_ATTACHMENT, depthBuffer);
-	}
-	template void Framebuffer::setDepthBuffer<Texture2D>(std::shared_ptr<Texture2D> depthBuffer);
-	template void Framebuffer::setDepthBuffer<TextureCube>(std::shared_ptr<TextureCube> depthBuffer);
 
 	//WARNING: non-DRY friendly code ahead
 	void Framebuffer::setAttachment(GLenum attachmentType, std::shared_ptr<Texture2D> texture) {

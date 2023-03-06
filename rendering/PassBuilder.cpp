@@ -1,6 +1,7 @@
 #include "PassBuilder.hpp"
 #include "Material.hpp"
 #include "IO.hpp"
+#include <sstream>
 
 namespace ScRendering {
 	ShaderSources PassBuilder::readShaders(std::string& name)
@@ -38,9 +39,9 @@ namespace ScRendering {
 			for (size_t i = 0; i < dirLights.size(); i++) {
 				auto& dirLight = dirLights[i];
 				if (dirLight.shadowMap.get() != nullptr) {
-					program->setUniform(dirLight, i);
-
-					pass->addTextureOutput("dirLightShadow[" + i + ']', dirLight.shadowMap);
+					pass->setLight(dirLight, i);
+					
+					pass->addTextureOutput("dirLightShadow[" + std::to_string(i) + ']', dirLight.shadowMap);
 
 					if (!dirLight.shadowMap->isBoundToTextureUnit()) {
 						ScOpenGL::Texture2D::bindToNewTextureUnit(dirLight.shadowMap);
@@ -101,14 +102,14 @@ namespace ScRendering {
 			auto& dirLights = scene.getDirLights();
 			for (size_t i = 0; i < dirLights.size(); i++) {
 				auto& dirLight = dirLights[i];
-				program->setUniform(dirLight, i);
+				pass->setLight(dirLight, i);
 				pass->addTextureInput("dirLightShadow[" + std::to_string(i) + "].shadowMap", dirLight.shadowMap);
 			}
 
 			auto& pointLights = scene.getPointLights();
 			for (size_t i = 0; i < pointLights.size(); i++) {
 				auto& pointLight = pointLights[i];
-				program->setUniform(pointLight, i);
+				pass->setLight(pointLight, i);
 				pass->addTextureInput("pointLights[" + std::to_string(i) + "].shadowCube", pointLight.shadowMap);
 			}
 
@@ -128,7 +129,7 @@ namespace ScRendering {
 		pass->prepareEntity = [pass = pass.get(), program = pass->getProgram()](SComponent::Entity& entity) {
 			if (entity.hasComponent<SComponent::Material>()) {
 				auto material = entity.getComponent<SComponent::Material>();
-				program->setUniform(material, 0);
+				pass->setMaterial(material, 0);
 			}
 			program->setUniform("model", entity.model());
 		};
@@ -160,8 +161,9 @@ namespace ScRendering {
 			for (size_t i = 0; i < pointLights.size(); i++) {
 				auto& pointLight = pointLights[i];
 				if (pointLight.shadowMap.get() != nullptr) {
-					program->setUniform(pointLight, i);
-					pass->addTextureOutput("pointLightShadow[" + i + ']', pointLight.shadowMap);
+					pass->setLight(pointLight, i);
+
+					pass->addTextureOutput("pointLightShadow[" + std::to_string(i) + ']', pointLight.shadowMap);
 
 					if (!pointLight.shadowMap->isBoundToTextureUnit()) {
 						ScOpenGL::TextureCube::bindToNewTextureUnit(pointLight.shadowMap);

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "rendering_export.hpp"
+
 #include "Entity.hpp"
 #include "SpotLight.hpp"
 #include "PointLight.hpp"
@@ -7,7 +10,7 @@
 
 namespace ScRendering{
 
-	class Scene{
+	class RENDERING_EXPORT Scene{
 		std::vector<std::shared_ptr<SComponent::Entity>> objects;
 		std::vector<SComponent::DirectionalLight> dirLights;
 		std::vector<SComponent::PointLight> pointLights;

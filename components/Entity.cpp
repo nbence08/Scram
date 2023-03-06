@@ -2,7 +2,6 @@
 
 namespace SComponent {
 	Entity::Entity() {
-		components.resize(MAX_COMPONENTS);
 		addComponent<Transform>(Transform());
 		parent = nullptr;
 	}

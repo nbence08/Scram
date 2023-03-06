@@ -12,12 +12,8 @@
 #include "Scene.hpp"
 #include "TextureUnit.hpp"
 
-extern int SComponent::componentTypeCounter = 0;
-
 int main() {
-
 	ScOpenGL::OpenGLContext context;
-	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
 	try {
 		context.init();
@@ -27,11 +23,10 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	auto currentFrame = glfwGetTime();
-	auto lastFrame = glfwGetTime();
+	auto currentFrame = context.getTime();
+	auto lastFrame = context.getTime();
 	
-	std::shared_ptr<SComponent::Entity> ent = 
-	ScIO::importModelFromFile("../resources/models/bsg_pegasus.glb");
+	std::shared_ptr<SComponent::Entity> ent = ScIO::importModelFromFile("../resources/models/bsg_pegasus.glb");
 	std::shared_ptr<SComponent::Entity> ent2 = ScIO::importModelFromFile("../resources/models/box.glb");
 
 	auto& entTransform = ent->getComponent<SComponent::Transform>();
@@ -60,29 +55,35 @@ int main() {
 	scene.addObject((ent));
 	scene.addObject((ent2));
 
-	context.moveSpeed = 50.0f;
-
-	while (!glfwWindowShouldClose(context.window)) {
-		currentFrame = glfwGetTime();
+	while (!context.windowShouldClose()) {
+		currentFrame = context.getTime();
 		auto deltaTime = currentFrame - lastFrame;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		context.handleInputs(scene.getCamera(), (real_t)deltaTime);
+		auto& camera = scene.getCamera();
+		ScOpenGL::InputSinkFacade cameraFacade {
+			[&camera](real_t d) {camera.moveForward(d);},
+			[&camera](real_t d) {camera.moveBackward(d);},
+			[&camera](real_t d) {camera.moveRightward(d);},
+			[&camera](real_t d) {camera.moveLeftward(d);},
+			[&camera](real_t dx, real_t dy) {camera.updateForward(dx, dy);}
+		};
+		context.handleInputs(cameraFacade, (real_t)deltaTime);
 
 		renderer.draw(scene);
 
-		glfwSwapBuffers(context.window);
+		context.swapBuffers();
 
-		if (glfwGetKey(context.window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-			glfwSetWindowShouldClose(context.window, true);
+		if (context.getKey(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+			context.setWindowShouldClose(true);
 		}
 
-		glfwPollEvents();
+		context.pollEvents();
 		lastFrame = currentFrame;
 	}
 
 	ScOpenGL::clearTextureUnits();
-	glfwTerminate();
+	context.terminate();
 	return EXIT_SUCCESS;
 }

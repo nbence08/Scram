@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include "UniformProvider.hpp"
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 
 /// <summary>
@@ -11,7 +13,7 @@ namespace ScOpenGL {
 /// One has to link the program manually in order to be able to use it
 /// </summary>
 	static unsigned int programInUse = 0;
-	class ShaderProgram {
+	class GPU_EXPORT ShaderProgram {
 
 	
 		unsigned id;

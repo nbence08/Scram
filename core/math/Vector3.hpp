@@ -4,10 +4,12 @@
 #include "Preprocess_Definitions.hpp"
 #include "Vector4.hpp"
 
+#include "core_export.hpp"
+
 namespace ScMath {
 	class Vector4;
 
-	class Vector3 {
+	class CORE_EXPORT Vector3 {
 	public:
 		real_t x, y, z;
 

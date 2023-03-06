@@ -7,10 +7,12 @@
 #include "Texture2D.hpp"
 #include "Preprocess_Definitions.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
 	//TODO: doesn't work when using doubles as real_t
 	//Cook-Torrance material
-	class Material : public ComponentBase {
+	class COMPONENTS_EXPORT Material : public ComponentBase {
 	public:
 
 		Material() {

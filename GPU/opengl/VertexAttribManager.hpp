@@ -4,6 +4,8 @@
 #include <vector>
 #include <stdexcept>
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 	struct VertexAttribProps {
 		GLint size;
@@ -16,7 +18,7 @@ namespace ScOpenGL {
 
 	class VertexArray;
 
-	class VertexAttribManager {
+	class GPU_EXPORT VertexAttribManager {
 		std::vector<VertexAttribProps> attribs;
 		int stride;
 		VertexArray* vao;

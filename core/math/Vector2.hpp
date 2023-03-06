@@ -2,8 +2,10 @@
 #include "Preprocess_Definitions.hpp"
 #include <stdexcept>
 
+#include "core_export.hpp"
+
 namespace ScMath {
-	class Vector2 {
+	class CORE_EXPORT Vector2 {
 	public:
 		real_t x, y;
 

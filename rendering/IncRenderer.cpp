@@ -62,5 +62,4 @@ namespace ScRendering {
 	void IncRenderer::addPostProcessPass(Pass&& pass) {
 		postProcess.emplace_back(std::make_shared<Pass>(pass));
 	}
-
 }

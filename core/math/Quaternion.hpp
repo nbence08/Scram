@@ -2,8 +2,10 @@
 #include "Matrix3.hpp"
 #include "Vector3.hpp"
 
+#include "core_export.hpp"
+
 namespace ScMath {
-	class Quaternion {
+	class CORE_EXPORT Quaternion {
 
 		double r, i, j, k;
 

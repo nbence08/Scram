@@ -2,9 +2,11 @@
 #include "Vector3.hpp"
 #include "Preprocess_Definitions.hpp"
 
+#include "core_export.hpp"
+
 namespace ScMath {
 	//type traits could be introduced to check whether type is a number
-	class Matrix3 {
+	class CORE_EXPORT Matrix3 {
 		//column vectors
 		Vector3 matrix[3];
 

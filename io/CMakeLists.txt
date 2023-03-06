@@ -1,5 +1,5 @@
 set(CURRENT_TARGET IO)
-add_library(${CURRENT_TARGET})
+add_library(${CURRENT_TARGET} SHARED)
 
 set_target_properties(${CURRENT_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -29,6 +29,15 @@ target_include_directories(${CURRENT_TARGET}
 	${PRIMARY_INCLUDE_DIR}
 )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE core GPU components)
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib)
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/bin)
+target_link_libraries(${CURRENT_TARGET} PRIVATE core GPU components assimp-vc143-mtd)
+
+GENERATE_EXPORT_HEADER(${CURRENT_TARGET}
+             BASE_NAME ${CURRENT_TARGET}
+             EXPORT_MACRO_NAME ${CURRENT_TARGET}_EXPORT
+             EXPORT_FILE_NAME ${CURRENT_TARGET}_export.hpp
+             STATIC_DEFINE ${CURRENT_TARGET}_BUILT_AS_STATIC
+)
 
 groupSources()

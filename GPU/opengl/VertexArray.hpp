@@ -7,6 +7,8 @@
 #include "VertexAttribManager.hpp"
 #include <memory>
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 
 	class Buffer;
@@ -16,7 +18,7 @@ namespace ScOpenGL {
 
 	static bool isValidBufferType(GLenum bufferType);
 
-	class VertexArray {
+	class GPU_EXPORT VertexArray {
 		using BufferIndex_t = unsigned int;
 
 		unsigned int id;
