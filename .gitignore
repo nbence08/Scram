@@ -389,3 +389,6 @@ include/*.hpp
 **/Makefile
 */**/Makefile
 **.a
+
+*_export.hpp
+*/**_export.hpp
