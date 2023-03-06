@@ -15,6 +15,9 @@ option(use_double_opt "use double as real type" OFF)
 option(verbose "verbose" OFF)
 
 include(BuildFunctions.cmake)
+include(GenerateExportHeader)
+
+#TODO: make all generateExportHeader project names uppercase, but only in function calls
 
 if(use_double_opt)
 	add_compile_definitions(USE_DOUBLE)

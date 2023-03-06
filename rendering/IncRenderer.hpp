@@ -1,5 +1,7 @@
 #pragma once
 
+#include "rendering_export.hpp"
+
 #include <memory>
 #include <vector>
 #include <string>
@@ -11,7 +13,7 @@ namespace ScRendering{
 	class Scene;
 
 	//incremental renderer
-	class IncRenderer {
+	class RENDERING_EXPORT IncRenderer {
 
 		std::vector<std::shared_ptr<Pass>> preProcess;
 		std::shared_ptr<Pass> process;
@@ -23,6 +25,10 @@ namespace ScRendering{
 		void addProcessPass(Pass&& pass);
 
 		void addPostProcessPass(Pass&& pass);
+
+		void setLight(const SComponent::PointLight& light, int index, std::string arrayName);
+		void setLight(const SComponent::DirectionalLight& light, int index, std::string arrayName);
+		void setMaterial(const SComponent::Material& material, int index, std::string arrayName);
 
 	public:
 		IncRenderer(std::string defaultShaderName = "shaders/incremental");

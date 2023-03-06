@@ -1,0 +1,33 @@
+set(INTERFACES_SOURCES
+	${CMAKE_CURRENT_LIST_DIR}/Pass.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Device.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Buffer.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Texture.cpp
+)
+
+set(INTERFACES_HEADERS
+	${CMAKE_CURRENT_LIST_DIR}/Pass.hpp
+	${CMAKE_CURRENT_LIST_DIR}/Device.hpp
+	${CMAKE_CURRENT_LIST_DIR}/Buffer.hpp
+	${CMAKE_CURRENT_LIST_DIR}/Texture.hpp
+)
+
+target_sources(
+	${CURRENT_TARGET}
+	PUBLIC
+	${INTERFACES_HEADERS}
+)	
+
+target_sources(
+	${CURRENT_TARGET}
+	PRIVATE
+	${INTERFACES_SOURCES}
+)
+
+target_include_directories(
+	${CURRENT_TARGET}
+	PUBLIC
+	${CMAKE_CURRENT_LIST_DIR}
+)
+
+groupSources()

@@ -265,6 +265,7 @@ namespace ScIO {
 		std::shared_ptr<SComponent::Entity> entity = std::make_shared<SComponent::Entity>();
 
 		parseScene(scene, *entity);
+		entity->setId(path);
 
 		return entity;
 	}

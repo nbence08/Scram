@@ -1,8 +1,11 @@
 set(CURRENT_TARGET components)
-add_library(${CURRENT_TARGET})
+add_library(${CURRENT_TARGET} SHARED)
+string(TOUPPER ${CURRENT_TARGET} U_CTARGET)
 
 set(COMPONENT_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
+
+	${CMAKE_CURRENT_LIST_DIR}/ComponentBase.cpp
 	
 	${CMAKE_CURRENT_LIST_DIR}/Entity.cpp
 
@@ -15,7 +18,6 @@ set(COMPONENT_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/Material.cpp
 	${CMAKE_CURRENT_LIST_DIR}/Mesh.cpp
 
-	${CMAKE_CURRENT_LIST_DIR}/Camera.cpp
 	${CMAKE_CURRENT_LIST_DIR}/PerspectiveCamera.cpp
 )
 
@@ -52,6 +54,16 @@ target_include_directories(${CURRENT_TARGET}
 	${PRIMARY_INCLUDE_DIR}
 )
 
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib)
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/bin)
 target_link_libraries(${CURRENT_TARGET} PRIVATE core GPU)
+
+
+GENERATE_EXPORT_HEADER(${CURRENT_TARGET}
+             BASE_NAME ${CURRENT_TARGET}
+             EXPORT_MACRO_NAME ${U_CTARGET}_EXPORT
+             EXPORT_FILE_NAME ${CURRENT_TARGET}_export.hpp
+             STATIC_DEFINE ${U_CTARGET}_BUILT_AS_STATIC
+)
 
 groupSources()

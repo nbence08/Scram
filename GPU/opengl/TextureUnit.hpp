@@ -8,9 +8,11 @@
 
 #include "Struct_Definitions.hpp"
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 
-	void clearTextureUnits();
+	void GPU_EXPORT clearTextureUnits();
 
 	class Texture2D;
 	class TextureCube;
@@ -20,7 +22,7 @@ namespace ScOpenGL {
 	/// <summary>
 	/// Class representing an OpenGL texture unit 
 	/// </summary>
-	class TextureUnit {
+	class GPU_EXPORT TextureUnit {
 	public:
 		TextureUnit(const TextureUnit& other) = delete;
 		TextureUnit& operator=(const TextureUnit& other) = delete;
@@ -42,8 +44,10 @@ namespace ScOpenGL {
 		bool doesBoundTextureMatch(T* tex);
 		bool hasBoundTexture();
 		bool isBoundTextureEmpty();
+
 	private:
 		unsigned int unitNum;
+
 
 		std::variant<std::shared_ptr<Texture2D>, std::shared_ptr<TextureCube>> boundTexture;
 

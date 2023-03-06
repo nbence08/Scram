@@ -3,9 +3,11 @@
 #include "Preprocess_Definitions.hpp"
 #include "Matrix3.hpp"
 
+#include "core_export.hpp"
+
 namespace ScMath {
 
-	class Matrix4 {
+	class CORE_EXPORT Matrix4 {
 		//column vectors
 		Vector4 matrix[4];
 

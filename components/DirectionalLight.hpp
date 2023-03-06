@@ -5,9 +5,11 @@
 #include "Global_Props.hpp"
 #include "ComponentBase.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
 
-	class DirectionalLight : public ComponentBase {
+	class COMPONENTS_EXPORT DirectionalLight : public ComponentBase {
 	public:
 
 		ScMath::Vector3 intensity;

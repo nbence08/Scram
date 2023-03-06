@@ -5,6 +5,8 @@
 
 #include "GL/glew.h"
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 	/*static const std::set<GLenum> validTextureTypes = {
 		 GL_TEXTURE_1D,
@@ -25,7 +27,7 @@ namespace ScOpenGL {
 	/// <summary>
 	/// class representing a 2D texture in OpenGL
 	/// </summary>
-	class Texture2D {
+	class GPU_EXPORT Texture2D {
 		unsigned int id;
 		std::weak_ptr<TextureUnit> textureUnit;
 

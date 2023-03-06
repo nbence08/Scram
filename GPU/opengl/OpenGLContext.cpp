@@ -79,7 +79,6 @@ namespace ScOpenGL {
 
 
 	void OpenGLContext::init() {
-
 		if (glfwInit() != GLFW_TRUE) {
 			throw std::runtime_error("Unable to initialize glfw");
 		}
@@ -114,13 +113,13 @@ namespace ScOpenGL {
 		xDeg = 0.0;
 		yDeg = 0;
 		first = false;
-		moveSpeed = 1.0;
+		moveSpeed = 30.0;
 		cursorSpeed = 1.0;
 	}
 
-#pragma warning (push)
+	#pragma warning (push)
 #pragma warning (disable : 4244)
-	void OpenGLContext::handleInputs(SComponent::PerspectiveCamera& camera, real_t deltaTime) {
+	void OpenGLContext::handleInputs(InputSinkFacade& camera, real_t deltaTime) {
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			camera.moveForward(deltaTime * moveSpeed);
 		}
@@ -152,4 +151,12 @@ namespace ScOpenGL {
 		cursorY = curCursorY;
 	}
 #pragma warning (pop)
+
+	bool OpenGLContext::windowShouldClose() { return glfwWindowShouldClose(window); }
+	void OpenGLContext::swapBuffers() { glfwSwapBuffers(window); }
+	int OpenGLContext::getKey(int key) { return glfwGetKey(window, key); }
+	void OpenGLContext::setWindowShouldClose(bool value) { glfwSetWindowShouldClose(window, value); }
+	void OpenGLContext::pollEvents() { glfwPollEvents(); }
+	double OpenGLContext::getTime() { return glfwGetTime(); }
+	void OpenGLContext::terminate() { glfwTerminate(); }
 }

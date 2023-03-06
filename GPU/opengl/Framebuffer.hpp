@@ -9,6 +9,8 @@
 
 #include "Global_Props.hpp"
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 
 class Texture2D;
@@ -20,7 +22,7 @@ class TextureCube;
 	/// the types of buffers it should create, and the width, and height of those buffers
 	/// multisampled versions are to be added later for antialiasing and different postprocessing methods
 	/// </summary>
-	struct FboCreateInfo {
+	struct GPU_EXPORT FboCreateInfo {
 		bool colorBuffer;
 		bool depthBuffer;
 		bool stencilBuffer;
@@ -34,7 +36,7 @@ class TextureCube;
 	/// <summary>
 	/// Framebuffer class which represents a framebuffer in OpenGL
 	/// </summary>
-	class Framebuffer {
+	class GPU_EXPORT Framebuffer {
 	private:
 
 		unsigned int id;
@@ -97,7 +99,15 @@ class TextureCube;
 		}
 
 		template <typename T>
-		void setDepthBuffer(std::shared_ptr<T> depthBuffer);
+		void setDepthBuffer(std::shared_ptr<T> depthBuffer) {
+
+			if (depthBufferEquals(depthBuffer)) return;
+
+			this->depthBuffer = depthBuffer;
+			this->hasDepthBuffer = true;
+
+			setAttachment(GL_DEPTH_ATTACHMENT, depthBuffer);
+		}
 
 		Framebuffer& operator=(Framebuffer&& other) noexcept;
 

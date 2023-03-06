@@ -3,6 +3,8 @@
 
 #include "GL/glew.h"
 
+#include "GPU_export.hpp"
+
 
 namespace ScOpenGL {
 	class TextureUnit;
@@ -10,7 +12,7 @@ namespace ScOpenGL {
 	/// <summary>
 	/// class representing a cube texture in OpenGL
 	/// </summary>
-	class TextureCube {
+	class GPU_EXPORT TextureCube {
 		unsigned int id;
 		std::weak_ptr<ScOpenGL::TextureUnit> textureUnit;
 

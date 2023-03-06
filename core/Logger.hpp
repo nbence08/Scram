@@ -4,8 +4,10 @@
 #include <iomanip>
 #include <iostream>
 
+#include "core_export.hpp"
+
 namespace ScLogger {
-	class Logger {
+	class CORE_EXPORT Logger {
 	private:
 		static void message(std::string message);
 

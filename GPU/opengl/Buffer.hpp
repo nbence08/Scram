@@ -1,6 +1,7 @@
 #pragma once
 #include <set>
 #include "GL/glew.h"
+#include "GPU_export.hpp"
 
 namespace ScOpenGL {
 
@@ -11,7 +12,7 @@ namespace ScOpenGL {
 	/// <summary>
 	/// Buffer class representing a buffer object in OpenGL
 	/// </summary>
-	class Buffer {
+	class GPU_EXPORT Buffer {
 		unsigned int id;
 		ScOpenGL::VertexArray* vao;
 		GLenum bufferType;

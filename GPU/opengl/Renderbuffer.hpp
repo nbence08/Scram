@@ -1,12 +1,14 @@
 #include <type_traits>
 #include "GL/glew.h"
 
+#include "GPU_export.hpp"
+
 namespace ScOpenGL {
 
 	/// <summary>
 	/// class representing an OpenGL renderbuffer
 	/// </summary>s
-	class Renderbuffer {
+	class GPU_EXPORT Renderbuffer {
 		unsigned int id;
 
 	public:

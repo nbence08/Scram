@@ -7,6 +7,8 @@
 #include "Buffer.hpp"
 #include "ComponentBase.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
 	struct Vertex {
 		ScMath::Vector3 position;
@@ -16,7 +18,7 @@ namespace SComponent {
 
 	static uint64_t topMeshId = 0;
 
-	class Mesh : public ComponentBase {
+	class COMPONENTS_EXPORT Mesh : public ComponentBase {
 
 		ScOpenGL::VertexArray vao;
 		ScOpenGL::Buffer vbo;
