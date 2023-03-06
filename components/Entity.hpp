@@ -3,6 +3,10 @@
 #include <bitset>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
+
+#include <typeinfo>
+#include <typeindex>
 
 #include "linear_algebra.hpp"
 #include "Texture2D.hpp"
@@ -11,75 +15,62 @@
 #include "ComponentBase.hpp"
 #include "Transform.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
 	class Mesh;
 
-	class Entity {
+	class COMPONENTS_EXPORT Entity {
 		std::vector<std::shared_ptr<Mesh>> meshes;
 		std::vector<std::shared_ptr<ScOpenGL::Texture2D>> textures;
 
-		std::vector<std::shared_ptr<ComponentBase>> components;
-		std::bitset<MAX_COMPONENTS> componentBits;
+		//TODO: make this a multimap
+		std::unordered_map<std::type_index, std::shared_ptr<ComponentBase>> components;
 
 		std::vector<std::shared_ptr<Entity>> children;
 		Entity* parent;
+		std::string modelId;
 
 	public:
 		inline std::vector<std::shared_ptr<Mesh>>& getMeshes() { return meshes; }
 		inline std::vector<std::shared_ptr<ScOpenGL::Texture2D>>& getTextures() { return textures; }
 
+		void setId (std::string modelId){ this->modelId = modelId; }
+
 		Entity();
 
-		template <typename T>
+		template <Component T>
 		bool hasComponent() {
-			int typeId = getTypeId<T>();
-
-			return componentBits.test(typeId);
+			auto it = components.find(std::type_index(typeid(T)));
+			return it != components.end();
 		}
 
-		template <typename T>
+		template <Component T>
 		void addComponent() {
-			int typeId = getTypeId<T>();
-
-			if (componentBits.test(typeId)) {
-				components.at(typeId).reset();
-			}
-
-			components.at(typeId) = std::make_shared<T>();
-			componentBits.set(typeId);
+			auto index = std::type_index(typeid(T));
+			components[index] = std::make_shared<T>();
 		}
 
-		template <typename T>
+		template <Component T>
 		void addComponent(T&& component) {
-			int typeId = getTypeId<T>();
-
-			if (componentBits.test(typeId)) {
-				components.at(typeId).reset();
-			}
-
-			components.at(typeId) = std::make_shared<T>(std::forward<T>(component));
-			componentBits.set(typeId);
+			auto index = std::type_index(typeid(T));
+			components[index] = std::make_shared<T>(std::forward<T>(component));
 		}
 
-		template <typename T>
+		template <Component T>
 		T& getComponent() {
-			int typeId = getTypeId<T>();
-			if (componentBits.test(typeId)) {
-				T* t = static_cast<T*>(components[typeId].get());
-				return *t;
-			}
-			else {
-				throw std::domain_error("Enttiy does not contain component of type: " + std::to_string(typeId));
-			}
+				try {
+					return *static_cast<T*>(components.at(std::type_index(typeid(T))).get());
+				}
+				catch (...) {
+					//std::domain_error("Enttiy does not contain component of type: " + std::to_string(typeId));
+					throw;
+				}
 		}
 
-		template <typename T>
+		template <Component T>
 		void removeComponent() {
-			int typeId = getTypeId<T>();
-			if (componentBits.test(typeId)) {
-				components.at(typeId).reset();
-
-			}
+			components.erase(std::type_index(typeid(T)));
 		}
 
 		std::shared_ptr<Entity> createChild();

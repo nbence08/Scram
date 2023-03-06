@@ -1,5 +1,6 @@
 set(CURRENT_TARGET rendering)
 add_library(${CURRENT_TARGET})
+string(TOUPPER ${CURRENT_TARGET} U_CTARGET)
 
 set(RENDERING_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt
@@ -19,7 +20,8 @@ set(RENDERING_HEADERS
 
 target_sources(${CURRENT_TARGET}
 	PUBLIC
-	${RENDERING_HEADERS})
+	${RENDERING_HEADERS}
+)
 
 target_sources(${CURRENT_TARGET}
 	PRIVATE
@@ -32,7 +34,14 @@ target_include_directories(${CURRENT_TARGET}
 )
 
 target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib)
-target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/lib/Debug)
+target_link_directories(${CURRENT_TARGET} PRIVATE ${SCRAM_ROOT_DIR}/bin)
 target_link_libraries(${CURRENT_TARGET} PRIVATE core components GPU IO)
+
+GENERATE_EXPORT_HEADER(${CURRENT_TARGET}
+             BASE_NAME ${CURRENT_TARGET}
+             EXPORT_MACRO_NAME ${U_CTARGET}_EXPORT
+             EXPORT_FILE_NAME ${CURRENT_TARGET}_export.hpp
+             STATIC_DEFINE ${U_CTARGET}_BUILT_AS_STATIC
+)
 
 groupSources()

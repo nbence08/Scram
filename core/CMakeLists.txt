@@ -1,5 +1,7 @@
 set(CURRENT_TARGET core)
-add_library(${CURRENT_TARGET})
+add_library(${CURRENT_TARGET} SHARED)
+
+string(TOUPPER ${CURRENT_TARGET} U_CTARGET)
 
 add_subdirectory(math)
 
@@ -31,6 +33,13 @@ target_include_directories(${CURRENT_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
 	${PRIMARY_INCLUDE_DIR}
+)
+
+GENERATE_EXPORT_HEADER(${CURRENT_TARGET}
+             BASE_NAME ${CURRENT_TARGET}
+             EXPORT_MACRO_NAME ${U_CTARGET}_EXPORT
+             EXPORT_FILE_NAME ${CURRENT_TARGET}_export.hpp
+             STATIC_DEFINE ${U_CTARGET}_BUILT_AS_STATIC
 )
 
 groupSources()

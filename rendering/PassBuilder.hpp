@@ -1,4 +1,7 @@
 #pragma once
+
+#include "rendering_export.hpp"
+
 #include <memory>
 
 #include "ShaderProgram.hpp"
@@ -7,7 +10,7 @@
 
 namespace ScRendering {
 
-	class PassBuilder {
+	class RENDERING_EXPORT PassBuilder {
 	private:
 		static ShaderSources readShaders(std::string& name);
 	public:

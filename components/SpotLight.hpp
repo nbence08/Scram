@@ -2,8 +2,10 @@
 #include "Vector3.hpp"
 #include "ComponentBase.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
-	class SpotLight : public ComponentBase {
+	class COMPONENTS_EXPORT SpotLight : public ComponentBase {
 	public:
 
 		ScMath::Vector3 intensity;

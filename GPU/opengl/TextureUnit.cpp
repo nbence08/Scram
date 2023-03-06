@@ -4,9 +4,8 @@
 
 namespace ScOpenGL {
 
-
 	static std::unordered_map<int, std::shared_ptr<TextureUnit>> textureUnits;
-	static std::shared_ptr<std::stack<int>> bindStack = std::make_shared<std::stack<int>>();
+	static std::stack<int> bindStack;
 	static int activeTexUnit = 0;
 
 	void clearTextureUnits() {
@@ -14,23 +13,23 @@ namespace ScOpenGL {
 	}
 
 	void TextureUnit::hollowBind() {
-		if (bindStack->size() == 0 && activeTexUnit == unitNum) return;
-		bindStack->push(unitNum);
+		if (bindStack.size() == 0 && activeTexUnit == unitNum) return;
+		bindStack.push(unitNum);
 		glActiveTexture(GL_TEXTURE0 + unitNum);
 
 	}
 
 	void TextureUnit::hollowUnbind() {
-		if (bindStack->size() == 0 && activeTexUnit == unitNum) return;
-		if (bindStack->top() != unitNum) {
+		if (bindStack.size() == 0 && activeTexUnit == unitNum) return;
+		if (bindStack.top() != unitNum) {
 			throw std::logic_error("Trying to hollow unbind, but other unit is bound.");
 		}
-		bindStack->pop();
-		if (bindStack->size() == 0) {
+		bindStack.pop();
+		if (bindStack.size() == 0) {
 			glActiveTexture(GL_TEXTURE0 + activeTexUnit);
 		}
 		else {
-			glActiveTexture(GL_TEXTURE0 + bindStack->top());
+			glActiveTexture(GL_TEXTURE0 + bindStack.top());
 		}
 	}
 
@@ -106,8 +105,8 @@ namespace ScOpenGL {
 
 		hollowUnbind();
 	}
-	template void TextureUnit::bindTexture<Texture2D>(std::shared_ptr<Texture2D> tex);
-	template void TextureUnit::bindTexture<TextureCube>(std::shared_ptr<TextureCube> tex);
+	template void GPU_EXPORT TextureUnit::bindTexture<Texture2D>(std::shared_ptr<Texture2D> tex);
+	template void GPU_EXPORT TextureUnit::bindTexture<TextureCube>(std::shared_ptr<TextureCube> tex);
 
 	void TextureUnit::unbindTexture() {
 		if (isBoundTextureEmpty()) return;

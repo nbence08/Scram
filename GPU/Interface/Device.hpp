@@ -1,0 +1,6 @@
+
+namespace GPU {
+	class Device {
+
+	};
+}

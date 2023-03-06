@@ -7,8 +7,10 @@
 #include "ComponentBase.hpp"
 #include "Global_Props.hpp"
 
+#include "components_export.hpp"
+
 namespace SComponent {
-	class PointLight : public ComponentBase {
+	class COMPONENTS_EXPORT PointLight : public ComponentBase {
 	public:
 
 		ScMath::Vector3 intensity;
